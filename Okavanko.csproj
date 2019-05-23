@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectTypeGuids>{28993779-3132-408A-BCB0-1D78225F4824};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug32</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BDE4A203-64BB-4ED4-8D07-B41C566206B6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CSCECDEC.Plugin</RootNamespace>
+    <AssemblyName>Okavanko</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug32|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\AppData\Roaming\Grasshopper\Libraries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug64|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Personal</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus, Version=4.5.3.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EPPlus.4.5.3.1\lib\net40\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GH_IO">
+      <HintPath>..\..\..\..\..\AppData\Roaming\McNeel\Rhinoceros\5.0\Plug-ins\Grasshopper (b45a29b1-4343-4035-989e-044e8580d9cf)\0.9.76.0\GH_IO.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grasshopper">
+      <HintPath>..\..\..\..\..\AppData\Roaming\McNeel\Rhinoceros\5.0\Plug-ins\Grasshopper (b45a29b1-4343-4035-989e-044e8580d9cf)\0.9.76.0\Grasshopper.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="RhinoCommon">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Rhino 6\System\RhinoCommon.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Basic\ClassifyDataByTree.cs" />
+    <Compile Include="Basic\ClusterPts.cs" />
+    <Compile Include="Basic\CrvsClosetPoint.cs" />
+    <Compile Include="Basic\CurveCounterWise.cs" />
+    <Compile Include="Basic\ExtendSurface.cs" />
+    <Compile Include="Basic\GroupByType.cs" />
+    <Compile Include="Basic\CreateSolidByOffsetSrf.cs" />
+    <Compile Include="Hu\Hu_GetEndFirstList.cs" />
+    <Compile Include="Hu\Hu_GroupSrfByCPt.cs" />
+    <Compile Include="Hu\Hu_GroupCurveByCPt.cs" />
+    <Compile Include="Hu\Hu_Series.cs" />
+    <Compile Include="Basic\PointClosetCurve.cs" />
+    <Compile Include="Basic\TransformFromCplane.cs" />
+    <Compile Include="Basic\UniformCrvDirect.cs" />
+    <Compile Include="BIM\RemoveDictByKey.cs" />
+    <Compile Include="BIM\FindGeometryByValue.cs" />
+    <Compile Include="BIM\SetKeyValue.cs" />
+    <Compile Include="BIM\GroupGeometryByKeys.cs" />
+    <Compile Include="CutMaterial\CreateGridPoint.cs" />
+    <Compile Include="Basic\DispatchBranchs.cs" />
+    <Compile Include="CutMaterial\ExcelTitleGenerate.cs" />
+    <Compile Include="Basic\FindClosetBrep.cs" />
+    <Compile Include="Basic\GroupData.cs" />
+    <Compile Include="Basic\ListToTree.cs" />
+    <Compile Include="BIM\GetValue.cs" />
+    <Compile Include="BIM\GetValueByKey.cs" />
+    <Compile Include="BIM\GetKey.cs" />
+    <Compile Include="CutMaterial\Point2SurveryData.cs" />
+    <Compile Include="Basic\T in Length.cs" />
+    <Compile Include="CutMaterial\WriteExcel.cs" />
+    <Compile Include="Basic\DectHoleNumber.cs" />
+    <Compile Include="Basic\YZPlane.cs" />
+    <Compile Include="Basic\XZPlane.cs" />
+    <Compile Include="Hu\Hu_SortSrfByAxis.cs" />
+    <Compile Include="Hu\Hu_RemoveAt.cs" />
+    <Compile Include="Other\ExcelWriter.cs" />
+    <Compile Include="Hu\Hu_SortByArea.cs" />
+    <Compile Include="Hu\Hu_SortCrv.cs" />
+    <Compile Include="Hu\Hu_SortPts.cs" />
+    <Compile Include="Preview\CurveDirPreview.cs" />
+    <Compile Include="Other\GrasshopperPluginInfo.cs" />
+    <Compile Include="Preview\PointPreview.cs" />
+    <Compile Include="Preview\CurvePreview.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Basic\app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Basic\packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EPPlus.dll" />
+    <Content Include="Resources\2SurveyPointsString.png" />
+    <Content Include="Resources\AuxInfoBinding.png" />
+    <Content Include="Resources\AuxInfoExact.png" />
+    <None Include="Resources\PreviewCurve.png" />
+    <None Include="Resources\PreviewPoint.png" />
+    <None Include="Resources\RemoveCustomData.png" />
+    <None Include="Resources\BindDictDataToGeom.png" />
+    <Content Include="Resources\ClassifyByTree.png" />
+    <Content Include="Resources\ClusterPoints.png" />
+    <Content Include="Resources\ConbimeManualInfo.png" />
+    <Content Include="Resources\CreateDim.png" />
+    <Content Include="Resources\CreateExcelTitle.png" />
+    <Content Include="Resources\CreateManualData.png" />
+    <Content Include="Resources\CreatePointGrid.png" />
+    <None Include="Resources\CreateSolidByOffset.png" />
+    <Content Include="Resources\CreateTxtTag.png" />
+    <Content Include="Resources\CreateXZPlane.png" />
+    <Content Include="Resources\CreateYZPlane.png" />
+    <None Include="Resources\CrvClosetPt.png" />
+    <None Include="Resources\CurveDir.png" />
+    <None Include="Resources\CrvCounterWise.png" />
+    <Content Include="Resources\CurveDirDetect.png" />
+    <Content Include="Resources\DataGroup.png" />
+    <Content Include="Resources\DetectHoleNum.png" />
+    <Content Include="Resources\DispatchTree.png" />
+    <Content Include="Resources\DwgOutPut.png" />
+    <Content Include="Resources\dxfoutput.png" />
+    <None Include="Resources\EndFirstItem.png" />
+    <Content Include="Resources\ExactDiagFromBrep.png" />
+    <Content Include="Resources\ExactDiagFromPt.png" />
+    <Content Include="Resources\ExcelTitle.png" />
+    <Content Include="Resources\ExplodeDim.png" />
+    <Content Include="Resources\ExplodeTxtTag.png" />
+    <Content Include="Resources\ExportExcel.png" />
+    <None Include="Resources\ExtendSurface.png" />
+    <Content Include="Resources\FetchDictDataFromGeom.png" />
+    <None Include="Resources\FindClosetCrvs.png" />
+    <Content Include="Resources\FindClosterBrep.png" />
+    <Content Include="Resources\GetSideTag.png" />
+    <None Include="Resources\GroupByType.png" />
+    <None Include="Resources\GroupCrvByCenterPoint.png" />
+    <Content Include="Resources\GroupGeometry.png" />
+    <None Include="Resources\GroupSrfByCenterPoint.png" />
+    <Content Include="Resources\IsHydroSrf.png" />
+    <Content Include="Resources\Key.png" />
+    <Content Include="Resources\List2Tree.png" />
+    <Content Include="Resources\PlaneTransform.png" />
+    <None Include="Resources\PointPreview.png" />
+    <Content Include="Resources\ProfileSelect.png" />
+    <None Include="Resources\RemoveAtN.png" />
+    <Content Include="Resources\RemoveDupPoint.png" />
+    <Content Include="Resources\SearchGeometry.png" />
+    <None Include="Resources\SeriesString.png" />
+    <None Include="Resources\SortCrvByAxis.png" />
+    <None Include="Resources\SortPoints.png" />
+    <Content Include="Resources\SortPtOnBrep.png" />
+    <None Include="Resources\SortSrfByArea.png" />
+    <None Include="Resources\SortSrfByAxis.png" />
+    <Content Include="Resources\Squish.png" />
+    <Content Include="Resources\SrfInfoBinding.png" />
+    <Content Include="Resources\SrfInfoExact.png" />
+    <Content Include="Resources\TextTag.png" />
+    <None Include="Resources\TValueInLength.png" />
+    <Content Include="Resources\UniformCrv.png" />
+    <Content Include="Resources\Unroll.png" />
+    <Content Include="Resources\Value.png" />
+    <Content Include="Resources\wireInfoBinding.png" />
+    <Content Include="Resources\WireInfoExact.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)$(ProjectName).gha"
+Erase "$(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug32|AnyCPU' ">
+    <StartArguments>
+    </StartArguments>
+    <StartAction>Program</StartAction>
+    <StartProgram>c:\Program Files (x86)\Rhinoceros 5\System\Rhino4.exe</StartProgram>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <FallbackCulture>en-US</FallbackCulture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug64|AnyCPU'">
+    <StartProgram>c:\Program Files\Rhinoceros 5 (64-bit)\System\Rhino.exe</StartProgram>
+    <StartArguments>
+    </StartArguments>
+    <StartAction>Program</StartAction>
+    <DocumentationFile>
+    </DocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>3</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
+</Project>
