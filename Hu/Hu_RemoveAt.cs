@@ -47,7 +47,7 @@ namespace CSCECDEC.Plugin.Hu
             int RemoveNum = 0;
 
             if (!DA.GetDataList<object>(0, InputList)) return;
-            if (!DA.GetData(0,ref RemoveNum)) return;
+            if (!DA.GetData(1,ref RemoveNum)) return;
 
             List<object> OutputList = new List<object>(InputList); 
 

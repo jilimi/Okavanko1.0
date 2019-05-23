@@ -53,6 +53,7 @@ namespace CSCECDEC.Plugin.Hu
 
             if (!DA.GetDataList<Point3d>(0, Pts)) return;
             if (!DA.GetData(1, ref Sign)) return;
+
             int SortSign = Sign.ToLower() == "x"?
                           0:Sign.ToLower() == "y"?
                           1:Sign.ToLower() == "z"?

@@ -94,6 +94,7 @@
     <Compile Include="Basic\ExtendSurface.cs" />
     <Compile Include="Basic\GroupByType.cs" />
     <Compile Include="Basic\CreateSolidByOffsetSrf.cs" />
+    <Compile Include="CutMaterial\DrawFrame.cs" />
     <Compile Include="Hu\Hu_GetEndFirstList.cs" />
     <Compile Include="Hu\Hu_GroupSrfByCPt.cs" />
     <Compile Include="Hu\Hu_GroupCurveByCPt.cs" />
@@ -182,6 +183,7 @@
     <Content Include="Resources\2SurveyPointsString.png" />
     <Content Include="Resources\AuxInfoBinding.png" />
     <Content Include="Resources\AuxInfoExact.png" />
+    <None Include="Resources\Frame.3dm" />
     <None Include="Resources\PreviewCurve.png" />
     <None Include="Resources\PreviewPoint.png" />
     <None Include="Resources\RemoveCustomData.png" />

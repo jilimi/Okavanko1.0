@@ -49,7 +49,7 @@ namespace CSCECDEC.Plugin.Hu
             string Text = "x";
 
             if (!DA.GetDataList<Brep>(0, BrepList)) return;
-            if (!DA.GetData(0, ref Text)) return;
+            if (!DA.GetData(1, ref Text)) return;
 
             int IndexSign = Text.ToLower() == "x" ?
                           0 : Text.ToLower() == "y" ?
