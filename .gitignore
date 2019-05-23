@@ -1,0 +1,11 @@
+# Specify filepatterns you want git to ignore.
+
+
+/bin/
+/.vs/
+/obj/
+######################
+*.dll
+*.gha
+*.pdb
+*.config
