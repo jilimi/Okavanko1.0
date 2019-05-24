@@ -5,7 +5,8 @@
 /.vs
 /obj
 /Hudson
-/Hu
+!/Hu
+!/Hu/*
 ######################
 *.dll
 *.gha
