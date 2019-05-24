@@ -1,11 +1,11 @@
 # Specify filepatterns you want git to ignore.
 
 
-/bin/
-/.vs/
-/obj/
-/Hudson/
-/Hu/
+/bin
+/.vs
+/obj
+/Hudson
+/Hu
 ######################
 *.dll
 *.gha
