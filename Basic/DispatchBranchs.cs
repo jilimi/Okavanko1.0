@@ -34,7 +34,7 @@ namespace CSCECDEC.Plugin.Basic
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Tree", "T", "需要进行dispatch的树状数据结构", GH_ParamAccess.tree);
-            pManager.AddBooleanParameter("Dispatch Pattern", "DP", "Dispatch Pattern", GH_ParamAccess.list);
+            pManager.AddBooleanParameter("Pattern", "DP", "Dispatch Pattern", GH_ParamAccess.list);
         }
 
         /// <summary>

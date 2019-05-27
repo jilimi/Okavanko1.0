@@ -15,13 +15,13 @@ namespace CSCECDEC.Plugin
     public class GrasshopperPluginInfo : GH_AssemblyInfo
     {
         //有关版权保护的信息可以写再这里
-
-        public static string PLUGINNAME = "Okavanko";
-        public static string BASICCATATORY = "基础"; 
-        public static string BIMCATATORY = "BIM"; 
-        public static string PREVIEWCATATORY = "预览";
-        public static string CUTDOWNCATATORY = "下料";
-        public static string PERSONAL = "Hudson";
+        //C#最佳实践 使用readonly 替代const
+        public static readonly string PLUGINNAME = "Okavanko";
+        public static readonly string BASICCATATORY = "基础"; 
+        public static readonly string BIMCATATORY = "BIM"; 
+        public static readonly string PREVIEWCATATORY = "预览";
+        public static readonly string CUTDOWNCATATORY = "下料";
+        public static readonly string PERSONAL = "Hudson";
 
         public GrasshopperPluginInfo():base()
         {

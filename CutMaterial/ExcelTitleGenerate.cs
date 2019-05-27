@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if Hudson
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -134,3 +135,4 @@ namespace CSCECDEC.Plugin.CutDown
         }
     }
 }
+#endif

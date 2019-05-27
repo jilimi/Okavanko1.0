@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using Grasshopper.Kernel;
@@ -27,7 +28,7 @@ namespace CSCECDEC.Plugin.Basic
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddSurfaceParameter("Surface", "S", "曲面", GH_ParamAccess.item);
-            pManager.AddCurveParameter("Curve", "C", "曲线", GH_ParamAccess.item);
+            pManager.AddCurveParameter("Curves", "C", "曲线", GH_ParamAccess.list);
             pManager.AddNumberParameter("Num", "N", "延伸的距离", GH_ParamAccess.item,2);
             pManager.AddBooleanParameter("Smooth", "B", "是否平滑延伸", GH_ParamAccess.item,true);
         }
@@ -46,42 +47,49 @@ namespace CSCECDEC.Plugin.Basic
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+
+
             Surface Srf = default(Surface);
-            Curve Crv = default(Curve);
+            List<Curve> Crvs = new List<Curve>();
+            List<BrepTrim> TrimsList = new List<BrepTrim>();
             double Length = 2;
             bool IsSmooth = true;
 
             if (!DA.GetData(0, ref Srf)) return;
-            if (!DA.GetData(1, ref Crv)) return;
+            if (!DA.GetDataList<Curve>(1, Crvs)) return;
             if (!DA.GetData(2, ref Length)) return;
             if (!DA.GetData(3, ref IsSmooth)) return;
 
+
             Brep TempBrep = Srf.ToBrep();
-            if (!TempBrep.IsSurface)
-            {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to extend trimmed surfaces.");
-                return;
-            }
-            if(TempBrep == null)
+            if (!TempBrep.IsSurface || TempBrep == null)
             {
                 this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to extend trimmed surfaces.");
                 return;
             }
             //BrepTrimList is an reference object
-            BrepTrimList TrimList = TempBrep.Trims;
+            BrepTrimList BrepTrimList = TempBrep.Trims;
+            for(int Index = 0; Index < Crvs.Count; Index++)
+            {
+                BrepTrim TrimItem = this.GetClosetBrepTrim(BrepTrimList, Crvs[Index]);
+                TrimsList.Add(TrimItem);
 
-            BrepTrim TrimItem = this.GetClosetBrepTrim(TrimList, Crv);
-            if (TrimItem == null || TrimItem.TrimType == BrepTrimType.Seam)
+            }
+            var TempList = TrimsList.Where(item => item != null || item.TrimType == BrepTrimType.Seam).ToList();
+            if (TempList.Count != 0)
             {
                 this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to extend trimmed surfaces.");
-                return;
             }
             ///<summary>
             ///如果输入的Surface为UntrimSurface，那么Extend会对Surface进行延伸，如果输入的Surface为Untrim Surface,Extend
             ///方法就会先对Surface 执行‘untrim’操作，然后再对面进行延伸
             /// </summary>
-            Surface ResultSrf = Srf.Extend(TrimItem.IsoStatus, Length, IsSmooth);
-            DA.SetData(0, ResultSrf);
+            for(int Index = 0; Index < TrimsList.Count; Index++)
+            {
+                 Srf = Srf.Extend(TrimsList[Index].IsoStatus, Length, IsSmooth);
+
+            }
+            DA.SetData(0, Srf);
         }
         private BrepTrim GetClosetBrepTrim(BrepTrimList TrimList, Curve Crv)
         {

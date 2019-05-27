@@ -33,8 +33,8 @@ namespace CSCECDEC.Plugin.Basic
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddPointParameter("Points", "Ps", "需要进行聚类的点集合", GH_ParamAccess.tree);
-            pManager.AddNumberParameter("ThreadHold", "TH", "聚类的阈值，通过设置阈值可以获取不同的效果", GH_ParamAccess.item);
+            pManager.AddPointParameter("Points", "Pt", "需要进行聚类的点集合", GH_ParamAccess.tree);
+            pManager.AddNumberParameter("Num", "N", "聚类的阈值，通过设置阈值可以获取不同的效果", GH_ParamAccess.item);
             pManager.AddTextParameter("Sign", "S", "聚类的标志，该数值只能输入x（x 轴）,y（y轴）,z(Z 轴),d(距离)等四个数值，输入其他数值则默认为d", GH_ParamAccess.item);
         }
         /// <summary>

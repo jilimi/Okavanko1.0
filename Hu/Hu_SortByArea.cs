@@ -46,7 +46,7 @@ namespace CSCECDEC.Plugin.Hu
             List<Brep> BrepList = new List<Brep>();
             if (!DA.GetDataList<Brep>(0, BrepList)) return;
 
-            var Breps = BrepList.OrderByDescending(item => { return AreaMassProperties.Compute(item); }).ToList();
+            var Breps = BrepList.OrderByDescending(item => { return AreaMassProperties.Compute(item).Area; }).ToList();
             DA.SetDataList(0, Breps);
         }
 
