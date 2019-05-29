@@ -86,7 +86,7 @@ namespace CSCECDEC.Plugin.Hu
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
                 //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
+                //return Resources.IconForThisComponent;
                 Bitmap newImage = new Bitmap(24, 24);
                 Bitmap originalImg = Properties.Resources.GroupCrvByCenterPoint;
                 //Graphic 沒有public的構造函數，不能使用new運算符，衹能通過其他方式創建graphic
@@ -96,7 +96,6 @@ namespace CSCECDEC.Plugin.Hu
                 return newImage;
             }
         }
-
         /// <summary>
         /// Gets the unique ID for this component. Do not change this ID after release.
         /// </summary>

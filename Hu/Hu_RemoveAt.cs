@@ -13,7 +13,7 @@ namespace CSCECDEC.Plugin.Hu
         /// Initializes a new instance of the RemoveAt class.
         /// </summary>
         public Hu_RemoveAt()
-          : base("RemoveAt", "RemoveAt",
+          : base("Hu_RemoveAt", "Hu_RemoveAt",
               "移除第N个元素",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PERSONAL)
         {

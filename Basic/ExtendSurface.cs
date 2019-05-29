@@ -64,7 +64,7 @@ namespace CSCECDEC.Plugin.Basic
             Brep TempBrep = Srf.ToBrep();
             if (!TempBrep.IsSurface || TempBrep == null)
             {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to extend trimmed surfaces.");
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to extend trimmed surfaces.:line 67");
                 return;
             }
             //BrepTrimList is an reference object
@@ -75,10 +75,10 @@ namespace CSCECDEC.Plugin.Basic
                 TrimsList.Add(TrimItem);
 
             }
-            var TempList = TrimsList.Where(item => item != null || item.TrimType == BrepTrimType.Seam).ToList();
+            var TempList = TrimsList.Where(item => item == null || item.TrimType == BrepTrimType.Seam).ToList();
             if (TempList.Count != 0)
             {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to extend trimmed surfaces.");
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Unable to extend trimmed surfaces. line 81");
             }
             ///<summary>
             ///如果输入的Surface为UntrimSurface，那么Extend会对Surface进行延伸，如果输入的Surface为Untrim Surface,Extend

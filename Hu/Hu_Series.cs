@@ -17,7 +17,7 @@ namespace CSCECDEC.Plugin.Basic
         /// </summary>
         public Hu_Series()
           : base("Hu_Series", "Hu_Series",
-              "使用字符串生成系列，如0：100：0.1表示生成一个起始为0，个数为100，步距为0.1的系列",
+              "使用字符串生成系列，如0：100：0.1表示生成一个起始为0，终止数为100，步距为0.1的系列",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PERSONAL)
         {
         }
@@ -57,11 +57,12 @@ namespace CSCECDEC.Plugin.Basic
             }
             double[] ProcessResult = this.ConvertToNormalFormat(Result);
             double TempNum = ProcessResult[0];
-            double Sum = ProcessResult[1];
             double InCrement = ProcessResult[2];
+            double Count = ProcessResult[1] / InCrement;
+
             List<double> OutputList = new List<double>();
 
-            for (int Index = 0; Index < ProcessResult[1]; Index++)
+            for (int Index = 0; Index < Count; Index++)
             {
                 TempNum = TempNum + InCrement;
                 OutputList.Add(TempNum);
