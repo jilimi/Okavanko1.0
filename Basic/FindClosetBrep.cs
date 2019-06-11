@@ -36,7 +36,7 @@ namespace CSCECDEC.Plugin.Basic
         {
             pManager.AddBrepParameter("Breps", "B", "Brep集合，最近的面就从这里找出", GH_ParamAccess.list);
             pManager.AddPointParameter("Point", "P", "几何点", GH_ParamAccess.item);
-            pManager.AddIntegerParameter("Num", "N", "欲找到面的块数，如该数值为负数，系统自动会将其转换成正数", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("Num", "N", "欲找到面的块数，如该数值为负数，系统自动会将其转换成正数", GH_ParamAccess.item,1);
         }
 
         /// <summary>

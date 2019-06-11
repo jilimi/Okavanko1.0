@@ -51,6 +51,8 @@ namespace CSCECDEC.Plugin.BIM
         {
             List<GeometryBase> Geoms = new List<GeometryBase>();
             List<GeometryBase> OutputGeoms = new List<GeometryBase>();
+            List<string> TempStrList = new List<string>();
+
             string InfoKey = null;
             string InfoValue = null;
 
@@ -63,10 +65,11 @@ namespace CSCECDEC.Plugin.BIM
             for(int Index = 0; Index < TempGeoms.Count; Index++)
             {
                 GeometryBase _Geom = Geoms[Index];
-                List<string> TempStrList = _Geom.UserDictionary.Values.Select(item=>item.ToString()).ToList();
-
+                TempStrList = _Geom.UserDictionary.Values.Select(item=>item.ToString()).ToList();
                 if (TempStrList.Contains(InfoValue)) OutputGeoms.Add(_Geom);
             }
+
+            if (OutputGeoms.Count == 0) this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "未检索到任何符合要求的物体");
             DA.SetDataList(0, OutputGeoms);
         }
 

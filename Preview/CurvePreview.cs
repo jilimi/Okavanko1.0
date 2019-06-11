@@ -21,10 +21,15 @@ namespace CSCECDEC.Plugin.Preview
         public CurvePreview()
           : base("CrvPreview", "CurvePreview",
               "对曲线进行预览",
-              GrasshopperPluginInfo.PLUGINNAME, "预览")
+              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PLUGINNAME)
         {
         }
-
+        protected override void BeforeSolveInstance()
+        {
+            this.ExpirePreview(true);
+            this.ExpireSolution(true);
+            base.BeforeSolveInstance();
+        }
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>

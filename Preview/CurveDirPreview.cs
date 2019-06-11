@@ -22,7 +22,7 @@ namespace CSCECDEC.Plugin.Preview
         public CurveDirPreview()
           : base("CrvDir", "CurveDir",
               "对曲线方向进行预览",
-              GrasshopperPluginInfo.PLUGINNAME, "预览")
+              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PREVIEWCATATORY)
         {
         }
 
@@ -43,11 +43,18 @@ namespace CSCECDEC.Plugin.Preview
         {
 
         }
+        protected override void BeforeSolveInstance()
+        {
+            //这样写会出现严重的性能问题
+            //this.ExpirePreview(true);
+            //this.ExpireSolution(true);
+            base.BeforeSolveInstance();
+        }
         public override void DrawViewportWires(IGH_PreviewArgs args)
         {
             GH_Colour CurrentArrowColor;
             base.DrawViewportMeshes(args);
-            // 下面这句代码比价重要
+            // 下面这句代码比较重要，决定了
             if (this.Hidden || this.Locked) return;
             //检测Component有没有被选中
             // this.ExpireSolution(true) 会带来较高的刷新率

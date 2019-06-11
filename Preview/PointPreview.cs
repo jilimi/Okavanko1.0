@@ -25,7 +25,7 @@ namespace CSCECDEC.Plugin.Preview
         public PointPreview()
           : base("PointPreview", "PtPreview",
               "对点进行预览",
-              GrasshopperPluginInfo.PLUGINNAME, "预览")
+              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PREVIEWCATATORY)
         {
             this.Message = "Asterisk Style";
         }

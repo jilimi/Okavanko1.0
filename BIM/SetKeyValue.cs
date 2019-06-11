@@ -17,14 +17,14 @@ namespace CSCECDEC.Plugin.BIM
     /// <summary>
     /// 
     /// </summary>
-    public class SetCustomData : GH_Component
+    public class SetValue : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the AddDataToObject class.
         /// </summary>
        // GH_Archive archive = new GH_Archive();
-        public SetCustomData()
-          : base("SetCustomData", "给几何体附加信息",
+        public SetValue()
+          : base("SetValue", "给几何体附加信息",
               "为几何体添加额外的信息,'编号'为预设键值，请不要作为键值输入",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
         {
