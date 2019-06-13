@@ -54,6 +54,7 @@ namespace CSCECDEC.Plugin.Basic
         {
             //
             //不一定要进行初始化对于 out 关键字
+            //可能还存在一定的问题
             //
             GH_Structure<GH_Point> InputPtsTree;// = new GH_Structure<GH_Point>();
             GH_Structure<GH_Point> OutputPts = new GH_Structure<GH_Point>();

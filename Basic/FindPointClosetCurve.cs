@@ -26,8 +26,8 @@ namespace CSCECDEC.Plugin.Basic
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddCurveParameter("Curves", "C", "曲线集合", GH_ParamAccess.tree);
-            pManager.AddPointParameter("Point", "P", "坐标点", GH_ParamAccess.list);
+            pManager.AddCurveParameter("Curves", "C", "曲线集合", GH_ParamAccess.list);
+            pManager.AddPointParameter("Point", "P", "坐标点", GH_ParamAccess.item);
             pManager.AddIntegerParameter("Num", "N", "需要查找的数目", GH_ParamAccess.item,1);
         }
         public override GH_Exposure Exposure

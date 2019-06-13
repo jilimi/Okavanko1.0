@@ -94,7 +94,7 @@
     <Compile Include="Basic\ExtendSurface.cs" />
     <Compile Include="Basic\GroupByType.cs" />
     <Compile Include="Basic\CreateSolidByOffsetSrf.cs" />
-    <Compile Include="CutMaterial\DrawFrame.cs" />
+    <Compile Include="CutMaterial\PaperFrame.cs" />
     <Compile Include="CutMaterial\TableCeller.cs" />
     <Compile Include="Hu\Hu_GetEndFirstList.cs" />
     <Compile Include="Hu\Hu_GroupSrfByCPt.cs" />
