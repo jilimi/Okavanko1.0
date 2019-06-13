@@ -27,7 +27,13 @@ namespace CSCECDEC.Plugin.Hu
             pManager.AddGenericParameter("Ls", "L", "列表", GH_ParamAccess.list);
             pManager.AddIntegerParameter("Num", "N", "第N各元素", GH_ParamAccess.item);
         }
-
+        public override GH_Exposure Exposure
+        {
+            get
+            {
+                return GH_Exposure.secondary;
+            }
+        }
         /// <summary>
         /// Registers all the output parameters for this component.
         /// </summary>

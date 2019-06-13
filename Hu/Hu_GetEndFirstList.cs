@@ -27,7 +27,13 @@ namespace CSCECDEC.Plugin.Hu
         {
             pManager.AddGenericParameter("Objs", "O", "Objects Set", GH_ParamAccess.list);
         }
-
+        public override GH_Exposure Exposure
+        {
+            get
+            {
+                return GH_Exposure.secondary;
+            }
+        }
         /// <summary>
         /// Registers all the output parameters for this component.
         /// </summary>

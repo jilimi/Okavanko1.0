@@ -34,7 +34,7 @@ namespace CSCECDEC.Plugin.CutDown
         {
             get
             {
-                return GH_Exposure.secondary;
+                return GH_Exposure.primary;
             }
         }
         protected override string HelpDescription

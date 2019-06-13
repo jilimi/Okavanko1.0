@@ -21,7 +21,7 @@ namespace CSCECDEC.Plugin.Preview
         public CurvePreview()
           : base("CrvPreview", "CurvePreview",
               "对曲线进行预览",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PLUGINNAME)
+              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PREVIEWCATATORY)
         {
         }
         protected override void BeforeSolveInstance()

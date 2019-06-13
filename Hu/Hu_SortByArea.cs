@@ -28,7 +28,13 @@ namespace CSCECDEC.Plugin.Hu
         {
             pManager.AddBrepParameter("Brep", "B", "Brep Object", GH_ParamAccess.list);
         }
-
+        public override GH_Exposure Exposure
+        {
+            get
+            {
+                return GH_Exposure.tertiary;
+            }
+        }
         /// <summary>
         /// Registers all the output parameters for this component.
         /// </summary>
