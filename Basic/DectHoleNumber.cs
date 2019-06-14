@@ -22,7 +22,7 @@ namespace CSCECDEC.Plugin.CutDown
         {
             get
             {
-                return GH_Exposure.tertiary;
+                return GH_Exposure.secondary;
             }
         }
         protected override string HelpDescription

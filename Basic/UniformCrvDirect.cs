@@ -25,7 +25,7 @@ namespace CSCECDEC.Plugin.Basic
         {
             get
             {
-                return GH_Exposure.tertiary;
+                return GH_Exposure.secondary;
             }
         }
         /// <summary>
