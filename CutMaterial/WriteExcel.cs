@@ -25,7 +25,7 @@ namespace CSCECDEC.Plugin.CutDown
         /// </summary>
         public CreateExcelFile()
           : base("Export Excel", "导出Excel",
-              "将输入的数据导出Excel,生成的文件位于桌面的GrasshopperOutPut文件夹",
+              "将输入的数据导出Excel,生成的文件默认位于桌面的GrasshopperOutPut文件夹",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
         {
             
@@ -53,11 +53,11 @@ namespace CSCECDEC.Plugin.CutDown
             pManager.AddTextParameter("SheetName", "S", "Excel表格名称", GH_ParamAccess.list);
             pManager.AddTextParameter("Data", "D", "需要导出的数据，每个树枝会生成一个表格，有多少个树枝就会生成多少个表格,每个数据之间用逗号隔开", GH_ParamAccess.tree);
             pManager.AddTextParameter("FilePath", "P", "保存输出文件的路径,如果不输入，那么文件就默认保存在桌面的GrasshopperOutput文件夹中", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("IsOutput", "B", "是否导出Excel数据", GH_ParamAccess.item, false);
-
+            pManager.AddBooleanParameter("Output", "B", "是否导出Excel数据", GH_ParamAccess.item, false);
 
             pManager[1].Optional = true;
             pManager[3].Optional = true;
+            pManager[4].Optional = true;
 
         }
 
@@ -114,9 +114,9 @@ namespace CSCECDEC.Plugin.CutDown
             try
             {
 
-                string OutPutPath = CreateSavePath(FilePath) + FileName + ".xlsx"; 
-                System.IO.FileInfo FileInfo = new System.IO.FileInfo(OutPutPath);
-                if (System.IO.File.Exists(OutPutPath)) System.IO.File.Delete(OutPutPath);
+                string OutPutFilePath = CreateSavePath(FilePath) +"\\"+FileName + ".xlsx"; 
+                System.IO.FileInfo FileInfo = new System.IO.FileInfo(OutPutFilePath);
+                if (System.IO.File.Exists(OutPutFilePath)) System.IO.File.Delete(OutPutFilePath);
                 ExcelFile.SaveAs(FileInfo);
                 ExcelFile.Dispose();
 
@@ -153,7 +153,7 @@ namespace CSCECDEC.Plugin.CutDown
             bool IsPathExist = System.IO.Directory.Exists(FilePath);
             if (!IsPathExist)
             {
-                string Folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + "GrasshopperOutPut" + "\\";
+                string Folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + "GrasshopperOutPut";
                 if (System.IO.Directory.Exists(Folder))
                     return Folder;
                 else

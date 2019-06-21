@@ -58,6 +58,9 @@ namespace CSCECDEC.Plugin.CutMaterial
         {
             pManager.AddNumberParameter("Scale", "S", "放大倍数",GH_ParamAccess.item,1);
             pManager.AddBooleanParameter("Orientation", "O", "纸张的放置方向，false代表竖直放置，true代表水平放置",GH_ParamAccess.item,false);
+
+            pManager[0].Optional = true;
+            pManager[1].Optional = true;
         }
         /// <summary>
         /// Registers all the output parameters for this component.
@@ -72,6 +75,11 @@ namespace CSCECDEC.Plugin.CutMaterial
         {
           //  base.BeforeSolveInstance();
         }
+        protected override void AfterSolveInstance()
+        {
+            this.ExpirePreview(true);
+            base.AfterSolveInstance();
+        }
         /// <summary>
         /// This is the method that actually does the work.
         /// </summary>
@@ -80,21 +88,19 @@ namespace CSCECDEC.Plugin.CutMaterial
         {
             bool Oratation = false;
             double Scale = 1;
-            int Width = 0, Height = 0;
             Transform Trans = new Transform();
 
             if (!DA.GetData(0, ref Scale)) return;
             if (!DA.GetData(1, ref Oratation)) return;
 
-            Scale = Math.Abs(Scale);
+            if (Scale == 0) this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Scale 为0");
 
+            Scale = Math.Abs(Scale);
             PaperSize Paper = this.GetPaperSize(this.DrawingFrameType);
 
             Rectangle3d Rect = new Rectangle3d(Plane.WorldXY, Paper.Width, Paper.Height);
-            Trans = Trans * Transform.Scale(Rect.Center,Scale);
+            Trans = Transform.Scale(Rect.Center,Scale);
             if (Oratation)Trans = Transform.Rotation(Math.PI / 2, Rect.Center);
-            // List<GeometryBase> Output_Geoms = new List<GeometryBase>();
-            // Output_Geoms = this.ExactDrawingFrame(this.DrawingFrameType);
             Rect.Transform(Trans);
             DA.SetData(0, Rect);
         }

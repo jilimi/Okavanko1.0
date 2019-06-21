@@ -32,7 +32,7 @@ namespace CSCECDEC.Plugin.Util
         }*/
         public static void WriteBodyValue(List<string> DataInRows, ref ExcelWorksheet Sheet)
         {
-           
+            //string a = 0;
             string Pattern = @",|，|；|;";
             for (int Index = 0; Index < DataInRows.Count; Index++)
             {

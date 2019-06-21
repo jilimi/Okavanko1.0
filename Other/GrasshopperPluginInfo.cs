@@ -29,7 +29,7 @@ namespace CSCECDEC.Plugin
             {
                 Dialogs.ShowMessage("OKavanko 插件需运行于Rhino6及以上版本中", "提示");
                 return;
-            } 
+            }
         }
 
        private void Server_GHAFileLoaded(object sender, GH_GHALoadingEventArgs e)

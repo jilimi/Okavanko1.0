@@ -27,8 +27,8 @@ namespace CSCECDEC.Plugin.Preview
         protected override void BeforeSolveInstance()
         {
             this.ExpirePreview(true);
-            this.ExpireSolution(true);
-            base.BeforeSolveInstance();
+           // this.ExpireSolution(true);
+           // base.BeforeSolveInstance();
         }
         /// <summary>
         /// Registers all the input parameters for this component.
@@ -69,6 +69,7 @@ namespace CSCECDEC.Plugin.Preview
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            if (CrvList.Count != 0) CrvList.Clear();
             if (!DA.GetDataList<GH_Curve>(0, CrvList)) return;
             if (!DA.GetData(1, ref CrvColor)) return;
             if (!DA.GetData(2, ref CrvThickness)) return;

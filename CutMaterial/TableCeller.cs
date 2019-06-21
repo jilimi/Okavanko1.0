@@ -5,6 +5,7 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
+using System.Windows.Forms;
 
 namespace CSCECDEC.Plugin.CutMaterial
 {
@@ -13,11 +14,19 @@ namespace CSCECDEC.Plugin.CutMaterial
         /// <summary>
         /// Initializes a new instance of the TableCeller class.
         /// </summary>
+        private int Direction = 1;
+
+        private ToolStripMenuItem R2LMenuItem;
+        private ToolStripMenuItem L2RMenuItem;
+        bool R2LMenuItemCheeck = true;
+        bool L2RMenuItemCheck = false;
+
         public TableCeller()
           : base("TableCeller", "TableCeller",
               "生成电子表格",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
         {
+            this.Message = "Right to Left";
         }
         public override GH_Exposure Exposure
         {
@@ -31,11 +40,11 @@ namespace CSCECDEC.Plugin.CutMaterial
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddPointParameter("Position", "Pos", "生成表格的位置", GH_ParamAccess.item,Point3d.Origin);
-            pManager.AddNumberParameter("Width", "W", "单元格宽度", GH_ParamAccess.item, 200);
-            pManager.AddNumberParameter("Height", "H", "单元格高度", GH_ParamAccess.item, 300);
-            pManager.AddNumberParameter("Column", "C", "列数", GH_ParamAccess.item, 10);
-            pManager.AddNumberParameter("Row", "R", "行数", GH_ParamAccess.item, 5);
+            pManager.AddPointParameter("Position", "Pos", "生成表格的位置,以表格左上角点的坐标表示位置", GH_ParamAccess.item,Point3d.Origin);
+            pManager.AddNumberParameter("Width", "W", "单元格宽度", GH_ParamAccess.item, 300);
+            pManager.AddNumberParameter("Height", "H", "单元格高度", GH_ParamAccess.item, 200);
+            pManager.AddIntegerParameter("Column", "C", "列数", GH_ParamAccess.item, 10);
+            pManager.AddIntegerParameter("Row", "R", "行数", GH_ParamAccess.item, 5);
         }
 
         /// <summary>
@@ -43,18 +52,55 @@ namespace CSCECDEC.Plugin.CutMaterial
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddRectangleParameter("Table", "T", "生成的表格", GH_ParamAccess.list);
+            pManager.AddRectangleParameter("Table", "T", "生成的表格", GH_ParamAccess.tree);
         }
+        //每次单击右键的时候就会调用这个函数
+        public override void AppendAdditionalMenuItems(ToolStripDropDown menu)
+        {
+           R2LMenuItem =  Menu_AppendItem(menu, "Right to Left", Right_to_Left, true, R2LMenuItemCheeck);
+           L2RMenuItem = Menu_AppendItem(menu, "Left to Right", Left_to_Right, true, L2RMenuItemCheck);
+         }
+        private void Right_to_Left(object sender, EventArgs e)
+        {
 
+            if (R2LMenuItem.Checked) return;
+
+            R2LMenuItemCheeck = true;
+            L2RMenuItemCheck = false;
+
+            R2LMenuItem.Checked = R2LMenuItemCheeck;
+            L2RMenuItem.Checked = L2RMenuItemCheck;
+
+            this.Message = "Right to Left";
+            this.Direction = 1;
+            this.ExpirePreview(true);
+            this.ExpireSolution(true);
+        }
+        private void Left_to_Right(object sender, EventArgs e)
+        {
+
+            if (L2RMenuItem.Checked) return;
+
+            R2LMenuItemCheeck = false;
+            L2RMenuItemCheck = true;
+
+            L2RMenuItem.Checked = R2LMenuItemCheeck;
+            R2LMenuItem.Checked = L2RMenuItemCheck;
+
+            this.Message = "Left to Right";
+            this.Direction = -1;
+            this.ExpirePreview(true);
+            this.ExpireSolution(true);
+        }
         /// <summary>
         /// This is the method that actually does the work.
         /// </summary>
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            int Width = 0, Height = 0, Column = 0, Row = 0;
+            double Width = 0, Height = 0;
+            int Column = 0, Row = 0;
             Point3d Position = default(Point3d);
-            int Z = 0;
             GH_Structure<GH_Rectangle> OutputRect = new GH_Structure<GH_Rectangle>();
 
             if (!DA.GetData(0, ref Position)) return;
@@ -68,23 +114,27 @@ namespace CSCECDEC.Plugin.CutMaterial
             for(int i = 0; i < Row; i++)
             {
                 List<GH_Rectangle> TempList = new List<GH_Rectangle>();
-                var X = _X + Height * i;
-                GH_Path Path = new GH_Path();
+                var Y = _Y - Height * i;
+                GH_Path Path = new GH_Path(i);
                 for (int j = 0; j < Column; j++)
                 {
-                    
-                    var Y = _Y - Width * j;
-
-                    Point3d Origin = new Point3d(X+Width,Y-Height, Z);
+                    Point3d Origin;
+                    if (Direction == 1)
+                    {
+                        var X = _X + Width * j*this.Direction;
+                        Origin = new Point3d(X, Y-Height, 0);
+                    }else
+                    {
+                        var X = _X + Width * j * this.Direction-Width;
+                        Origin = new Point3d(X, Y - Height, 0);
+                    }
                     Plane _Plane = new Plane(Origin, Vector3d.ZAxis);
                     Rectangle3d Rect = new Rectangle3d(_Plane, Math.Abs(Width), Math.Abs(Height));
                     TempList.Add(new GH_Rectangle(Rect));
-                    Path.AppendElement(i);
-                    OutputRect.AppendRange(TempList, Path);
-
                 }
+                OutputRect.AppendRange(TempList, Path);
             }
-            DA.SetDataList(0, OutputRect);
+            DA.SetDataTree(0, OutputRect);
         }
 
         /// <summary>

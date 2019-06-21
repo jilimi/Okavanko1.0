@@ -89,16 +89,19 @@
   <ItemGroup>
     <Compile Include="Basic\ClassifyDataByTree.cs" />
     <Compile Include="Basic\ClusterPts.cs" />
+    <Compile Include="Basic\ExtrudeBothSide.cs" />
     <Compile Include="Basic\PointClosetCurves.cs" />
     <Compile Include="Basic\CurveCounterWise.cs" />
     <Compile Include="Basic\ExtendSurface.cs" />
     <Compile Include="Basic\GroupByType.cs" />
     <Compile Include="Basic\CreateSolidByOffsetSrf.cs" />
+    <Compile Include="CutMaterial\Optimization.cs" />
     <Compile Include="CutMaterial\PaperFrame.cs" />
     <Compile Include="CutMaterial\TableCeller.cs" />
     <Compile Include="Hu\Hu_GetEndFirstList.cs" />
     <Compile Include="Hu\Hu_GroupSrfByCPt.cs" />
     <Compile Include="Hu\Hu_GroupCurveByCPt.cs" />
+    <Compile Include="Hu\Hu_ReverseVector.cs" />
     <Compile Include="Hu\Hu_Series.cs" />
     <Compile Include="Basic\FindPointClosetCurve.cs" />
     <Compile Include="Basic\TransformFromCplane.cs" />
@@ -124,12 +127,14 @@
     <Compile Include="Basic\XZPlane.cs" />
     <Compile Include="Hu\Hu_SortSrfByAxis.cs" />
     <Compile Include="Hu\Hu_RemoveAt.cs" />
+    <Compile Include="Hu\Hu_WriteTextOnScreen.cs" />
     <Compile Include="Other\ExcelWriter.cs" />
     <Compile Include="Hu\Hu_SortByArea.cs" />
     <Compile Include="Hu\Hu_SortCrv.cs" />
     <Compile Include="Hu\Hu_SortPts.cs" />
     <Compile Include="Preview\CurveDirPreview.cs" />
     <Compile Include="Other\GrasshopperPluginInfo.cs" />
+    <Compile Include="Preview\PlaneViewer.cs" />
     <Compile Include="Preview\PointPreview.cs" />
     <Compile Include="Preview\CurvePreview.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

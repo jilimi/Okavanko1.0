@@ -74,7 +74,6 @@ namespace CSCECDEC.Plugin.Preview
             if (!DA.GetDataList<GH_Curve>(0, CrvList)) return;
             if (!DA.GetData(1, ref ArrowColor)) return;
 
-            this.OnPreviewExpired(true);
         }
 
         /// <summary>

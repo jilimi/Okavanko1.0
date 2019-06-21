@@ -130,6 +130,7 @@ namespace CSCECDEC.Plugin.Preview
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            if (PointList.Count == 0) PointList.Clear();
             if (!DA.GetDataList<GH_Point>(0, PointList)) return;
             if (!DA.GetData(1, ref PointColor)) return;
             if (!DA.GetData(2, ref PointSize)) return;
