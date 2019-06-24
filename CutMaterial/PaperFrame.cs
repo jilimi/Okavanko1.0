@@ -8,7 +8,7 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using Rhino.FileIO;
 using Rhino.DocObjects;
-
+using System.Drawing;
 
 namespace CSCECDEC.Plugin.CutMaterial
 {
@@ -57,7 +57,7 @@ namespace CSCECDEC.Plugin.CutMaterial
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddNumberParameter("Scale", "S", "放大倍数",GH_ParamAccess.item,1);
-            pManager.AddBooleanParameter("Orientation", "O", "纸张的放置方向，false代表竖直放置，true代表水平放置",GH_ParamAccess.item,false);
+            pManager.AddBooleanParameter("Orient", "O", "纸张的放置方向，false代表竖直放置，true代表水平放置",GH_ParamAccess.item,false);
 
             pManager[0].Optional = true;
             pManager[1].Optional = true;
@@ -229,7 +229,13 @@ namespace CSCECDEC.Plugin.CutMaterial
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return null;
+                Bitmap newImage = new Bitmap(24, 24);
+                Bitmap originalImg = Properties.Resources.PaperFrame;
+                //Graphic 沒有public的構造函數，不能使用new運算符，衹能通過其他方式創建graphic
+                Graphics graphic = Graphics.FromImage((Image)newImage);
+                graphic.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+                graphic.DrawImage(originalImg, 0, 0, newImage.Width, newImage.Height);
+                return newImage;
             }
         }
 

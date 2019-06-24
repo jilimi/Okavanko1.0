@@ -222,6 +222,7 @@
     <Content Include="Resources\ExplodeTxtTag.png" />
     <Content Include="Resources\ExportExcel.png" />
     <None Include="Resources\ExtendSurface.png" />
+    <None Include="Resources\ExtrudeBothSide.png" />
     <Content Include="Resources\FetchDictDataFromGeom.png" />
     <None Include="Resources\FindClosetCrvs.png" />
     <Content Include="Resources\FindClosterBrep.png" />
@@ -233,11 +234,14 @@
     <Content Include="Resources\IsHydroSrf.png" />
     <Content Include="Resources\Key.png" />
     <Content Include="Resources\List2Tree.png" />
+    <None Include="Resources\PaperFrame.png" />
+    <None Include="Resources\PlanePreview.png" />
     <Content Include="Resources\PlaneTransform.png" />
     <None Include="Resources\PointPreview.png" />
     <Content Include="Resources\ProfileSelect.png" />
     <None Include="Resources\RemoveAtN.png" />
     <Content Include="Resources\RemoveDupPoint.png" />
+    <None Include="Resources\ReverseVector.png" />
     <Content Include="Resources\SearchGeometry.png" />
     <None Include="Resources\SeriesString.png" />
     <None Include="Resources\SortCrvByAxis.png" />
@@ -248,6 +252,8 @@
     <Content Include="Resources\Squish.png" />
     <Content Include="Resources\SrfInfoBinding.png" />
     <Content Include="Resources\SrfInfoExact.png" />
+    <None Include="Resources\TableCeller.png" />
+    <None Include="Resources\TextOnScreen.png" />
     <Content Include="Resources\TextTag.png" />
     <None Include="Resources\TValueInLength.png" />
     <Content Include="Resources\UniformCrv.png" />

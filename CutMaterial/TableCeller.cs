@@ -6,6 +6,7 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace CSCECDEC.Plugin.CutMaterial
 {
@@ -146,7 +147,14 @@ namespace CSCECDEC.Plugin.CutMaterial
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return null;
+                // return Resources.IconForThisComponent;
+                Bitmap newImage = new Bitmap(24, 24);
+                Bitmap originalImg = Properties.Resources.TableCeller;
+                //Graphic 沒有public的構造函數，不能使用new運算符，衹能通過其他方式創建graphic
+                Graphics graphic = Graphics.FromImage((Image)newImage);
+                graphic.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+                graphic.DrawImage(originalImg, 0, 0, newImage.Width, newImage.Height);
+                return newImage;
             }
         }
 

@@ -263,6 +263,16 @@ namespace CSCECDEC.Plugin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ExtrudeBothSide {
+            get {
+                object obj = ResourceManager.GetObject("ExtrudeBothSide", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FetchDictDataFromGeom {
             get {
                 object obj = ResourceManager.GetObject("FetchDictDataFromGeom", resourceCulture);
@@ -363,6 +373,26 @@ namespace CSCECDEC.Plugin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PaperFrame {
+            get {
+                object obj = ResourceManager.GetObject("PaperFrame", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PlanePreview {
+            get {
+                object obj = ResourceManager.GetObject("PlanePreview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PlaneTransform {
             get {
                 object obj = ResourceManager.GetObject("PlaneTransform", resourceCulture);
@@ -406,6 +436,16 @@ namespace CSCECDEC.Plugin.Properties {
         internal static System.Drawing.Bitmap RemoveCustomData {
             get {
                 object obj = ResourceManager.GetObject("RemoveCustomData", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReverseVector {
+            get {
+                object obj = ResourceManager.GetObject("ReverseVector", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -466,6 +506,26 @@ namespace CSCECDEC.Plugin.Properties {
         internal static System.Drawing.Bitmap SortSrfByAxis {
             get {
                 object obj = ResourceManager.GetObject("SortSrfByAxis", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TableCeller {
+            get {
+                object obj = ResourceManager.GetObject("TableCeller", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TextOnScreen {
+            get {
+                object obj = ResourceManager.GetObject("TextOnScreen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
