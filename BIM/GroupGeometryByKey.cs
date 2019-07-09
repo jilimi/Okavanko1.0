@@ -41,7 +41,7 @@ namespace CSCECDEC.Plugin.CutDown
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGeometryParameter("Geom", "G", "需要分组的几何体数据(Brep)", GH_ParamAccess.list);
+            pManager.AddGeometryParameter("Geom", "G", "需要分组的几何体数据", GH_ParamAccess.list);
             pManager.AddTextParameter("Key", "K", "数据分组依据,为附加数据的key值", GH_ParamAccess.item);
 
         }
@@ -59,21 +59,38 @@ namespace CSCECDEC.Plugin.CutDown
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            List<GH_Brep> GeomList = new List<GH_Brep>();
-            GH_Structure<GH_Brep> OutPutTree = new GH_Structure<GH_Brep>();
+            //
+            //
+            // Grasshopper.Kernel.GH_Convert.ToGeometricGoo
+            //
+            //
+            //
+            List<IGH_GeometricGoo> GeomList = new List<IGH_GeometricGoo>();
+            GH_Structure<IGH_GeometricGoo> OutPutTree = new GH_Structure<IGH_GeometricGoo>();
             string ClassfilyText = null;
 
-            if(!DA.GetDataList<GH_Brep>(0, GeomList))return;
+            if(!DA.GetDataList<IGH_GeometricGoo>(0, GeomList))return;
             if(!DA.GetData(1, ref ClassfilyText))return;
 
             try
             {
-                var Temp = GeomList.GroupBy(item => item.Value.UserDictionary[ClassfilyText]).ToList();
+                var Geom_Temp = GeomList.Select(item =>
+                {
+                    GeometryBase Geom = Grasshopper.Kernel.GH_Convert.ToGeometryBase(item);
+                    return Geom;
+                });
+                var Temp = Geom_Temp.GroupBy(item =>item.UserDictionary[ClassfilyText]).ToList();
+
                 for (int Index = 0; Index < Temp.Count; Index++)
                 {
                     int[] PathArr = new int[] {Index };
                     GH_Path Path = new GH_Path(PathArr);
-                    OutPutTree.AppendRange(Temp[Index].ToList(),Path);
+
+                    List<GeometryBase> Temp_Geom = Temp[Index].ToList();
+
+                    List<IGH_GeometricGoo> Temp_IGeom = Temp_Geom.Select(item => { var Geom = Grasshopper.Kernel.GH_Convert.ToGeometricGoo(item);return Geom; }).ToList();
+
+                    OutPutTree.AppendRange(Temp_IGeom,Path);
                 }
                 DA.SetDataTree(0, OutPutTree);
             }
@@ -81,7 +98,6 @@ namespace CSCECDEC.Plugin.CutDown
             {
                 this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Ex.Message);
             }
-           
         }
         private List<GeometryBase> ConvertToGeometryBaseList(List<IGH_GeometricGoo> GeomList)
         {
