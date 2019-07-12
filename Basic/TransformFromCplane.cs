@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if Hudson
+using System;
 using System.Collections.Generic;
 
 using Grasshopper;
@@ -89,3 +90,4 @@ namespace CSCECDEC.Plugin.Basic
         }
     }
 }
+#endif

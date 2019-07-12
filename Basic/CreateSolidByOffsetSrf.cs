@@ -15,7 +15,7 @@ namespace CSCECDEC.Plugin.Basic
         /// </summary>
         public CreateSolidByOffsetSrf()
           : base("OffsetSolid", "OffsetSolid",
-              "通过偏移面创建几何实体",
+              "通过偏移面创建几何实体（用于生成有厚度的面板）",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
         {
         }

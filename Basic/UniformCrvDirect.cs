@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using Grasshopper;
@@ -16,7 +17,7 @@ namespace CSCECDEC.Plugin.Basic
         /// Initializes a new instance of the UniformLineDirect class.
         /// </summary>
         public UniformCrvDirect()
-          : base("UniformDirect", "UniformDirect",
+          : base("UniformDirection", "UniformDirection",
               "对多根靠的比较近统一方向",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
         {
@@ -54,18 +55,21 @@ namespace CSCECDEC.Plugin.Basic
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            List<GH_Curve> _CurveList = new List<GH_Curve>();
+            List<Curve> _CurveList = new List<Curve>();
+            List<Curve> ProcessCurve = new List<Curve>();
             List<Curve> _OutputCurveList = new List<Curve>();
             GH_Point ReferencePoint = default(GH_Point);
             GH_Boolean IsReverse = default(GH_Boolean);
 
-            if (!DA.GetDataList<GH_Curve>(0, _CurveList)) return;
+            if (!DA.GetDataList<Curve>(0, _CurveList)) return;
             if (!DA.GetData(1, ref ReferencePoint)) return;
             if (!DA.GetData(2, ref IsReverse)) return;
 
-            for(int Index = 0; Index < _CurveList.Count; Index++)
+            ProcessCurve =  _CurveList.Select(item => item.DuplicateCurve()).ToList();
+
+            for(int Index = 0; Index < ProcessCurve.Count; Index++)
             {
-                Curve CrvItem = _CurveList[Index].Value;
+                Curve CrvItem = _CurveList[Index];
                 if(CrvItem.PointAtStart.DistanceTo(ReferencePoint.Value) > CrvItem.PointAtEnd.DistanceTo(ReferencePoint.Value))
                     CrvItem.Reverse();
                 if (IsReverse.Value) CrvItem.Reverse();

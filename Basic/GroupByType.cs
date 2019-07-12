@@ -74,7 +74,7 @@ namespace CSCECDEC.Plugin.Basic
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
                 Bitmap newImage = new Bitmap(24, 24);
-                Bitmap originalImg = Properties.Resources.ClusterPoints;
+                Bitmap originalImg = Properties.Resources.GroupByType;
                 //Graphic 沒有public的構造函數，不能使用new運算符，衹能通過其他方式創建graphic
                 Graphics graphic = Graphics.FromImage((Image)newImage);
                 graphic.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;

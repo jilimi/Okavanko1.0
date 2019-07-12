@@ -25,11 +25,9 @@ namespace CSCECDEC.Plugin.BIM
        // GH_Archive archive = new GH_Archive();
         public SetValue()
           : base("SetValue", "给几何体附加信息",
-              "为几何体添加额外的信息,'编号'为预设键值，请不要作为键值输入",
+              "为几何体（点除外）添加额外的信息,'编号'为预设键值，请不要作为键值输入",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
         {
-            this.Message = "为物体添加信息";
-           // archive.CreateNewRoot(true);
         }
         public override GH_Exposure Exposure
         {
@@ -86,11 +84,19 @@ namespace CSCECDEC.Plugin.BIM
             {
                 this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "目前尚不支持Point的户自定义数据的写入");
             }
+            /*
             if(TempGeom is Surface)
             {
                 TempGeom = (TempGeom as Surface).ToBrep();
+            }*/
+            //如果不存在
+            if (TempGeom.UserDictionary.Keys.Contains<string>(InfoKey))
+            {
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "几何体中包含同名‘键’值");
+            }else
+            {
+                TempGeom.UserDictionary.Set(InfoKey, InfoValue);
             }
-            TempGeom.UserDictionary.Set(InfoKey, InfoValue);
             DA.SetData(0, TempGeom);
         }
         protected override System.Drawing.Bitmap Icon

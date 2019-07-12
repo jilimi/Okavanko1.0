@@ -63,6 +63,8 @@ namespace CSCECDEC.Plugin.Basic
             if (!DA.GetData(1,ref Pt)) return;
             if (!DA.GetData(2,ref Num)) return;
 
+            if (Num == 0) this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Num为0");
+
             double Param = 0;
 
             foreach(var Crv in Crvs)
@@ -75,8 +77,7 @@ namespace CSCECDEC.Plugin.Basic
                 }
             }
             var ResultDict = _TempDict.OrderByDescending(item => -item.Value).ToDictionary(item => item.Key, item => item.Value);
-            List<Curve> ResultCrvs = ResultDict.Keys.ToList().GetRange(0, Num);
-
+            List<Curve> ResultCrvs = ResultDict.Keys.ToList().GetRange(0, Math.Abs(Num));
             DA.SetDataList(0, ResultCrvs);
         }
         /// <summary>

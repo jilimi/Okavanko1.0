@@ -43,13 +43,6 @@ namespace CSCECDEC.Plugin.Preview
         {
 
         }
-        protected override void BeforeSolveInstance()
-        {
-            //这样写会出现严重的性能问题
-            //this.ExpirePreview(true);
-            //this.ExpireSolution(true);
-            base.BeforeSolveInstance();
-        }
         public override void DrawViewportWires(IGH_PreviewArgs args)
         {
             GH_Colour CurrentArrowColor;
@@ -71,8 +64,11 @@ namespace CSCECDEC.Plugin.Preview
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            if (CrvList.Count != 0) CrvList.Clear();
+
             if (!DA.GetDataList<GH_Curve>(0, CrvList)) return;
             if (!DA.GetData(1, ref ArrowColor)) return;
+            this.ExpirePreview(true);
 
         }
 

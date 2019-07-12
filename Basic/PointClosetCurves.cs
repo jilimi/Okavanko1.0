@@ -13,7 +13,7 @@ namespace CSCECDEC.Plugin.Basic
         /// Initializes a new instance of the CrvsClosetPointBetween2Crv class.
         /// </summary>
         /// 
-        private Rhino.Geometry.Point Pt1,Pt2;
+        private Rhino.Geometry.Point Pt1 = null,Pt2 = null;
         public PointClosetCurves()
           : base("CrvsClosetPoint", "CrvsClosetPoint",
               "求解两根线之间最短距离的最大值",
@@ -55,38 +55,25 @@ namespace CSCECDEC.Plugin.Basic
 
             //Crv1 is Base Curve;
             //Crv2 is Dest Curve;
-
+            this.ExpirePreview(true);
+            if(Pt1 != null || Pt2 != null)
+            {
+                Pt1 = null;
+                Pt2 = null;
+            }
             Curve Crv1 = default(Curve), Crv2 = default(Curve);
             int Precise = 10000;
             double Param1 = 0, Param2 = 0, TempParam2 = 0,Distance = 0 ;
 
-            if (!DA.GetData(0, ref Crv1))
-            {
-                //以下内容都是必要的，否则运行会失效
-                Pt1 = null;
-                Pt2 = null;
-                this.ExpirePreview(true);
-                return;
-            }
-            if (!DA.GetData(1, ref Crv2))
-            {
-
-                Pt1 = null;
-                Pt2 = null;
-                
-                this.ExpirePreview(true);
-                return;
-            }
+            if (!DA.GetData(0, ref Crv1)) return;
+            if (!DA.GetData(1, ref Crv2)) return;
             if (!DA.GetData(2, ref Precise)) return;
 
             const int MIN = 10;
             const int MAX = 1000000;
 
-            if(Crv1.Domain.Max > 1 || Crv2.Domain.Max > 1)
-            {
-                this.AddRuntimeMessage(Grasshopper.Kernel.GH_RuntimeMessageLevel.Error, "Curve Domain is Large than 1,You must reparameterize the cure first");
-                return;
-            }
+            Crv1 = this.RebuildCurve(Crv1);
+            Crv2 = this.RebuildCurve(Crv2);
 
             if (Precise < MIN || Precise > MAX) Precise = 10000;
 
@@ -112,13 +99,21 @@ namespace CSCECDEC.Plugin.Basic
             DA.SetData(2, Distance);
 
         }
+        private Curve RebuildCurve(Curve Crv)
+        {
+            Crv.Domain = new Interval(0, 1);
+            return Crv;
+        }
         public override void DrawViewportWires(IGH_PreviewArgs args)
         {
-            System.Drawing.Color PtColor = System.Drawing.Color.Red;
+            if (Pt1 == null || Pt2 == null) return;
+            System.Drawing.Color Color = System.Drawing.Color.Red;
+            if (this.Attributes.Selected) Color = System.Drawing.Color.Green;
 
-            if (this.Attributes.Selected) PtColor = System.Drawing.Color.Green;
-            args.Display.DrawPoint(Pt1.Location,PtColor);
-            args.Display.DrawPoint(Pt2.Location,PtColor);
+            args.Display.DrawPoint(Pt1.Location, Color);
+            args.Display.DrawPoint(Pt2.Location, Color);
+            args.Display.DrawLine(Pt1.Location, Pt2.Location, Color);
+
             base.DrawViewportWires(args);
         }
         /// <summary>

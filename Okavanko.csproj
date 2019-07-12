@@ -128,12 +128,14 @@
     <Compile Include="Hu\Hu_SortSrfByAxis.cs" />
     <Compile Include="Hu\Hu_RemoveAt.cs" />
     <Compile Include="Hu\Hu_WriteTextOnScreen.cs" />
+    <Compile Include="Hu\Hu_ViewPortSize.cs" />
     <Compile Include="Other\ExcelWriter.cs" />
     <Compile Include="Hu\Hu_SortByArea.cs" />
     <Compile Include="Hu\Hu_SortCrv.cs" />
     <Compile Include="Hu\Hu_SortPts.cs" />
     <Compile Include="Preview\CurveDirPreview.cs" />
     <Compile Include="Other\GrasshopperPluginInfo.cs" />
+    <Compile Include="Preview\FaceDir.cs" />
     <Compile Include="Preview\PlaneViewer.cs" />
     <Compile Include="Preview\PointPreview.cs" />
     <Compile Include="Preview\CurvePreview.cs" />

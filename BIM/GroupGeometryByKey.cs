@@ -61,8 +61,8 @@ namespace CSCECDEC.Plugin.CutDown
         {
             //
             //
-            // Grasshopper.Kernel.GH_Convert.ToGeometricGoo
-            //
+            // Grasshopper.Kernel.GH_Convert.ToGeometricGoo，这个方法非常的重要
+            // 可以实现IGH_GeometricGoo 到GeometryBase之间的转换
             //
             //
             List<IGH_GeometricGoo> GeomList = new List<IGH_GeometricGoo>();

@@ -34,7 +34,7 @@ namespace CSCECDEC.Plugin.Basic
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddNumberParameter("Data", "D", "需要进行分类的数据", GH_ParamAccess.list);
-            pManager.AddTextParameter("Interval", "I", "分类区间，每个分类区间为一个树枝，数值内的大值与小值用逗号隔开，如9,20表示一个大于9小于20的分类区间", GH_ParamAccess.tree);
+            pManager.AddTextParameter("Intervals", "Is", "分类区间，每个分类区间为一个树枝，数值内的大值与小值用逗号隔开，如9,20表示一个大于9小于20的分类区间", GH_ParamAccess.tree);
         }
 
         /// <summary>
@@ -59,39 +59,52 @@ namespace CSCECDEC.Plugin.Basic
 
             if(!DA.GetDataList<double>(0, InputList))return;
             if(!DA.GetDataTree<GH_String>(1, out ClassifyTree))return;
-
-            int TreeCount = ClassifyTree.Branches.Count;
-
-            for (int Index = 0; Index < TreeCount; Index++)
+            List<List<double>> IntervalDataList = new List<List<double>>();
+            try
             {
-                var TempBranchData = ClassifyTree.get_Branch(Index);
-                List<double> BranchData = new List<double>();
-                foreach(GH_String item in TempBranchData)
-                {
-                    try
-                    {
-                        string itemData = item.Value;
-                        double TempNum = Convert.ToDouble(itemData);
-                        BranchData.Add(TempNum);
-                    }
-                    catch(FormatException e)
-                    {
-                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, e.Message);
-                        return;
-                    }
-                }
-                double min = BranchData.Min();
-                double max = BranchData.Max();
-                List<GH_Number> TempList = (from item in InputList
+                IntervalDataList = Convert2ListInterval(ClassifyTree);
+            }catch(Exception e){
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, e.Message);
+            }
+            int IntervalCount = IntervalDataList.Count;
+            for (int Index = 0; Index < IntervalCount; Index++)
+            {
+
+                List<double> IntervalBranch = IntervalDataList[Index];
+                 
+                double min = IntervalBranch.Min();
+                double max = IntervalBranch.Max();
+
+                List<double> TempList = (from item in InputList
                                          where item >= min && item < max
-                                         select new GH_Number(item)).ToList();
-                TempList.OrderByDescending(item => item.Value).ToList();
+                                         select item).ToList();
+                TempList.OrderByDescending(item => item).ToList();
                 TempList.Reverse();
 
-                OutputTree.AppendRange(TempList, new GH_Path(Index));
+                OutputTree.AppendRange(TempList.Select(item=>new GH_Number(item)).ToList(), new GH_Path(Index));
             }
             DA.SetDataTree(0, OutputTree);
 
+        }
+        private List<List<double>> Convert2ListInterval(GH_Structure<GH_String> TreeInterval)
+        {
+
+            List<List<double>> IntervalList = new List<List<double>>();
+            int TreeCount = TreeInterval.Branches.Count;
+            for (int Index = 0; Index < TreeCount; Index++)
+            {
+                var BranchData = TreeInterval.Branches[Index];
+                List<double> Interval = new List<double>();
+                foreach (GH_String item in BranchData)
+                {
+                    string itemData = item.Value;
+                    string[] string_items = itemData.Split(',');
+                    string_items.Select(data => Convert.ToDouble(data)).ToList();
+                    Interval.AddRange(string_items.Select(data => Convert.ToDouble(data)).ToList());
+                }
+                IntervalList.Add(Interval);
+            }
+            return IntervalList;
         }
         /// <summary>
         /// Provides an Icon for the component.

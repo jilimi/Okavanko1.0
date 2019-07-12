@@ -27,7 +27,7 @@ namespace CSCECDEC.Plugin.CutMaterial
               "生成电子表格",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
         {
-            this.Message = "Right to Left";
+            this.Message = "Align:Left to Right";
         }
         public override GH_Exposure Exposure
         {
@@ -41,11 +41,13 @@ namespace CSCECDEC.Plugin.CutMaterial
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
+
             pManager.AddPointParameter("Position", "Pos", "生成表格的位置,以表格左上角点的坐标表示位置", GH_ParamAccess.item,Point3d.Origin);
             pManager.AddNumberParameter("Width", "W", "单元格宽度", GH_ParamAccess.item, 300);
             pManager.AddNumberParameter("Height", "H", "单元格高度", GH_ParamAccess.item, 200);
             pManager.AddIntegerParameter("Column", "C", "列数", GH_ParamAccess.item, 10);
             pManager.AddIntegerParameter("Row", "R", "行数", GH_ParamAccess.item, 5);
+
         }
 
         /// <summary>
@@ -58,8 +60,8 @@ namespace CSCECDEC.Plugin.CutMaterial
         //每次单击右键的时候就会调用这个函数
         public override void AppendAdditionalMenuItems(ToolStripDropDown menu)
         {
-           R2LMenuItem =  Menu_AppendItem(menu, "Right to Left", Right_to_Left, true, R2LMenuItemCheeck);
-           L2RMenuItem = Menu_AppendItem(menu, "Left to Right", Left_to_Right, true, L2RMenuItemCheck);
+           R2LMenuItem =  Menu_AppendItem(menu, "Align：Right to Left", Right_to_Left, true, R2LMenuItemCheeck);
+           L2RMenuItem = Menu_AppendItem(menu, "Align：Left to Right", Left_to_Right, true, L2RMenuItemCheck);
          }
         private void Right_to_Left(object sender, EventArgs e)
         {
@@ -72,7 +74,7 @@ namespace CSCECDEC.Plugin.CutMaterial
             R2LMenuItem.Checked = R2LMenuItemCheeck;
             L2RMenuItem.Checked = L2RMenuItemCheck;
 
-            this.Message = "Right to Left";
+            this.Message = "Align:Right to Left";
             this.Direction = 1;
             this.ExpirePreview(true);
             this.ExpireSolution(true);
@@ -88,7 +90,7 @@ namespace CSCECDEC.Plugin.CutMaterial
             L2RMenuItem.Checked = R2LMenuItemCheeck;
             R2LMenuItem.Checked = L2RMenuItemCheck;
 
-            this.Message = "Left to Right";
+            this.Message = "Align:Left to Right";
             this.Direction = -1;
             this.ExpirePreview(true);
             this.ExpireSolution(true);

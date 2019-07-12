@@ -58,8 +58,8 @@ namespace CSCECDEC.Plugin.Hu
 
             DA.SetData(0, First);
             DA.SetData(1, End);
-        }
 
+        }
         /// <summary>
         /// Provides an Icon for the component.
         /// </summary>

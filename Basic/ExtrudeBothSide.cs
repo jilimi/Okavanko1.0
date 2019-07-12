@@ -71,14 +71,29 @@ namespace CSCECDEC.Plugin.Basic
             else if(Geom is Surface)
             {
                 Surface Srf = Geom as Surface;
-                Curve Crv = this.GetSurfaceBoundary(Srf);
+                //
+                //实现在函数里面书写函数
+                //
+                //
+                Func<Surface, Curve> CreateBoundary = _Srf =>
+                 {
+                     Brep b = _Srf.ToBrep();
+                     CurveList Crvs = new CurveList();
 
+                     BrepEdgeList es = b.Edges;
+
+                     foreach (BrepEdge e in es)
+                     {
+                         Crvs.Add(e.EdgeCurve);
+                     }
+                     return Curve.JoinCurves(Crvs)[0];
+                 };
+                Curve Crv = CreateBoundary(Srf);
                 Output = this.ExtrudeCurveBothSide(Crv, Direction, IsDubleSide, IsCape);
-
             }
             if (Output == null)
             {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "输入的几何体不符合条件");
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "输入的几何体不是平面几何体");
             }
             DA.SetData(0, Output);
         }

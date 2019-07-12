@@ -33,11 +33,11 @@ namespace CSCECDEC.Plugin.CutDown
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddPointParameter("Point", "Point", "起点，用作待生成点集的起点", GH_ParamAccess.item);
+            pManager.AddPointParameter("Point", "Point", "起点，用作待生成点集的起点", GH_ParamAccess.item,Point3d.Origin);
             pManager.AddNumberParameter("ExtendX", "ExtendX", "点与点之间沿世界坐标系X轴方向上的距离", GH_ParamAccess.item,100);
             pManager.AddNumberParameter("ExtendY", "ExtendY", "点与点之间沿世界坐标系Y轴方向上的距离", GH_ParamAccess.item,100);
             pManager.AddIntegerParameter("TotalNum", "TotalNum", "生成点的总的个数", GH_ParamAccess.item,10);
-            pManager.AddIntegerParameter("ColumnNum", "ColumnNum", "每一列点的数目", GH_ParamAccess.item,1);
+            pManager.AddIntegerParameter("ColumnNum", "ColumnNum", "每一列点的数目", GH_ParamAccess.item,10);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace CSCECDEC.Plugin.CutDown
         {
             GH_Structure<GH_Point> TempPtsTree = new GH_Structure<GH_Point>();
 
-            Point3d StartPt = default(Point3d);
+            Point3d StartPt = Point3d.Origin;
             double ExtendX = default(double), ExtendY = default(double);
             int TotalNum = default(int), ColumnNum = default(int);
 

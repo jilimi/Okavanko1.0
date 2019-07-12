@@ -58,7 +58,6 @@ namespace CSCECDEC.Plugin.CutMaterial
         {
             pManager.AddNumberParameter("Scale", "S", "放大倍数",GH_ParamAccess.item,1);
             pManager.AddBooleanParameter("Orient", "O", "纸张的放置方向，false代表竖直放置，true代表水平放置",GH_ParamAccess.item,false);
-
             pManager[0].Optional = true;
             pManager[1].Optional = true;
         }
@@ -100,7 +99,12 @@ namespace CSCECDEC.Plugin.CutMaterial
 
             Rectangle3d Rect = new Rectangle3d(Plane.WorldXY, Paper.Width, Paper.Height);
             Trans = Transform.Scale(Rect.Center,Scale);
-            if (Oratation)Trans = Transform.Rotation(Math.PI / 2, Rect.Center);
+            Matrix Matrix = new Matrix(Trans);
+            if (Oratation)
+            {
+                //矩阵的变换顺序
+               Trans  = Transform.Multiply(Trans,Transform.Rotation(Math.PI / 2, Rect.Center));
+            }
             Rect.Transform(Trans);
             DA.SetData(0, Rect);
         }
@@ -128,6 +132,7 @@ namespace CSCECDEC.Plugin.CutMaterial
             base.Menu_AppendObjectHelp(menu);
             GH_DocumentObject.Menu_AppendSeparator(menu);
             this.AppendAddidentMenuItem(menu);
+            GH_DocumentObject.Menu_AppendSeparator(menu);
             return true;
         }
         private void AppendAddidentMenuItem(ToolStripDropDown menu)

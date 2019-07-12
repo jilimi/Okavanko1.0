@@ -30,7 +30,6 @@ namespace CSCECDEC.Plugin.Preview
         {
             pManager.AddPlaneParameter("Plane", "P", "工作平面", GH_ParamAccess.list);
             pManager.AddNumberParameter("Scale", "S", "放大倍数", GH_ParamAccess.item,1);
-
             pManager[0].Optional = true;
             pManager[1].Optional = true;
           //  this.OnPreviewExpired(true);
