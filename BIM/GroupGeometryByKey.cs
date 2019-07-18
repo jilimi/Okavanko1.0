@@ -87,7 +87,6 @@ namespace CSCECDEC.Plugin.CutDown
                     GH_Path Path = new GH_Path(PathArr);
 
                     List<GeometryBase> Temp_Geom = Temp[Index].ToList();
-
                     List<IGH_GeometricGoo> Temp_IGeom = Temp_Geom.Select(item => { var Geom = Grasshopper.Kernel.GH_Convert.ToGeometricGoo(item);return Geom; }).ToList();
 
                     OutPutTree.AppendRange(Temp_IGeom,Path);
