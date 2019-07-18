@@ -80,6 +80,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
@@ -87,9 +88,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Basic\AddLayer.cs" />
+    <Compile Include="Basic\BakeGeometry.cs" />
     <Compile Include="Basic\ClassifyDataByTree.cs" />
     <Compile Include="Basic\ClusterPts.cs" />
     <Compile Include="Basic\ExtrudeBothSide.cs" />
+    <Compile Include="Basic\GetLayer.cs" />
     <Compile Include="Basic\PointClosetCurves.cs" />
     <Compile Include="Basic\CurveCounterWise.cs" />
     <Compile Include="Basic\ExtendSurface.cs" />
@@ -98,6 +102,12 @@
     <Compile Include="CutMaterial\Optimization.cs" />
     <Compile Include="CutMaterial\PaperFrame.cs" />
     <Compile Include="CutMaterial\TableCeller.cs" />
+    <Compile Include="Forms\LayerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LayerDialog.Designer.cs">
+      <DependentUpon>LayerDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Hu\Hu_GetEndFirstList.cs" />
     <Compile Include="Hu\Hu_GroupSrfByCPt.cs" />
     <Compile Include="Hu\Hu_GroupCurveByCPt.cs" />
@@ -152,6 +162,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\LayerDialog.resx">
+      <DependentUpon>LayerDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -189,6 +202,7 @@
   <ItemGroup>
     <Content Include="EPPlus.dll" />
     <Content Include="Resources\2SurveyPointsString.png" />
+    <None Include="Resources\AddLayer.png" />
     <Content Include="Resources\AuxInfoBinding.png" />
     <Content Include="Resources\AuxInfoExact.png" />
     <None Include="Resources\Frame.3dm" />
@@ -196,6 +210,7 @@
     <None Include="Resources\PreviewPoint.png" />
     <None Include="Resources\RemoveCustomData.png" />
     <None Include="Resources\BindDictDataToGeom.png" />
+    <None Include="Resources\bake.png" />
     <Content Include="Resources\ClassifyByTree.png" />
     <Content Include="Resources\ClusterPoints.png" />
     <Content Include="Resources\ConbimeManualInfo.png" />
@@ -228,11 +243,13 @@
     <Content Include="Resources\FetchDictDataFromGeom.png" />
     <None Include="Resources\FindClosetCrvs.png" />
     <Content Include="Resources\FindClosterBrep.png" />
+    <None Include="Resources\GetLayer.png" />
     <Content Include="Resources\GetSideTag.png" />
     <None Include="Resources\GroupByType.png" />
     <None Include="Resources\GroupCrvByCenterPoint.png" />
     <Content Include="Resources\GroupGeometry.png" />
     <None Include="Resources\GroupSrfByCenterPoint.png" />
+    <None Include="Resources\Hu_Rhino.ico" />
     <Content Include="Resources\IsHydroSrf.png" />
     <Content Include="Resources\Key.png" />
     <Content Include="Resources\List2Tree.png" />
@@ -244,6 +261,7 @@
     <None Include="Resources\RemoveAtN.png" />
     <Content Include="Resources\RemoveDupPoint.png" />
     <None Include="Resources\ReverseVector.png" />
+    <None Include="Resources\ScreenSize.png" />
     <Content Include="Resources\SearchGeometry.png" />
     <None Include="Resources\SeriesString.png" />
     <None Include="Resources\SortCrvByAxis.png" />
