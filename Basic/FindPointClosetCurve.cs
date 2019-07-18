@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 using System.Drawing;
+using GH_IO.Serialization;
 
 namespace CSCECDEC.Plugin.Basic
 {
@@ -14,6 +16,9 @@ namespace CSCECDEC.Plugin.Basic
         /// <summary>
         /// Initializes a new instance of the PointClosetCurve class.
         /// </summary>
+        ///0 is default : Nearst
+        ///1 is custom: fareast;
+        int FindType = 0;
         public FindPointClosetCurve()
           : base("PointClosetCurve", "PointClosetCurve",
               "找出距离点最近的N根曲线",
@@ -37,6 +42,44 @@ namespace CSCECDEC.Plugin.Basic
                 return GH_Exposure.tertiary;
             }
         }
+        protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
+        {
+
+        }
+        public void AppendCustomMenuItem(ToolStripDropDown menu)
+        {
+            Menu_AppendItem(menu, "Nearest", ChangeFindType, true, this.FindType == 0 ? true : false);
+            Menu_AppendItem(menu, "Farest", ChangeFindType, true, this.FindType == 1 ? true : false);
+        }
+
+        private void ChangeFindType(object sender, EventArgs e)
+        {
+            ToolStripMenuItem MenuItem = sender as ToolStripMenuItem;
+            string Text = MenuItem.Text;
+            MenuItem.Checked = true;
+            switch (Text)
+            {
+                case "Nearest":
+                    this.FindType = 0;
+                    break;
+                case "Farest":
+                    this.FindType = 1;
+                    break;
+                default:
+                    this.FindType = 0;
+                    break;
+            }
+        }
+        public override bool Write(GH_IWriter writer)
+        {
+            writer.SetInt32("FindType", this.FindType);
+            return base.Write(writer);
+        }
+        public override bool Read(GH_IReader reader)
+        {
+            this.FindType = reader.GetInt32("FindType");
+            return base.Read(reader);
+        }
         /// <summary>
         /// Registers all the output parameters for this component.
         /// </summary>
@@ -44,7 +87,7 @@ namespace CSCECDEC.Plugin.Basic
         {
             pManager.AddCurveParameter("Result", "R", "计算结果", GH_ParamAccess.list);
         }
-
+        
         /// <summary>
         /// This is the method that actually does the work.
         /// </summary>
@@ -77,7 +120,19 @@ namespace CSCECDEC.Plugin.Basic
                 }
             }
             var ResultDict = _TempDict.OrderByDescending(item => -item.Value).ToDictionary(item => item.Key, item => item.Value);
-            List<Curve> ResultCrvs = ResultDict.Keys.ToList().GetRange(0, Math.Abs(Num));
+            List<Curve> TempCrvs = ResultDict.Keys.ToList();
+            List<Curve> ResultCrvs = new List<Curve>();
+            if(TempCrvs.Count < Math.Abs(Num))
+            {
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Num 数值过大");
+                return;
+            }
+            if (this.FindType == 0) {
+                ResultCrvs = TempCrvs.GetRange(0, Math.Abs(Num));
+            }else
+            {
+                ResultCrvs = TempCrvs.GetRange(TempCrvs.Count - Num - 1, TempCrvs.Count);
+            }
             DA.SetDataList(0, ResultCrvs);
         }
         /// <summary>

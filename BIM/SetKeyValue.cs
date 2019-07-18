@@ -84,11 +84,6 @@ namespace CSCECDEC.Plugin.BIM
             {
                 this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "目前尚不支持Point的户自定义数据的写入");
             }
-            /*
-            if(TempGeom is Surface)
-            {
-                TempGeom = (TempGeom as Surface).ToBrep();
-            }*/
             //如果不存在
             if (TempGeom.UserDictionary.Keys.Contains<string>(InfoKey))
             {

@@ -9,6 +9,7 @@ using Rhino.Geometry;
 using Rhino.FileIO;
 using Rhino.DocObjects;
 using System.Drawing;
+using GH_IO.Serialization;
 
 namespace CSCECDEC.Plugin.CutMaterial
 {
@@ -92,7 +93,7 @@ namespace CSCECDEC.Plugin.CutMaterial
             if (!DA.GetData(0, ref Scale)) return;
             if (!DA.GetData(1, ref Oratation)) return;
 
-            if (Scale == 0) this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Scale 为0");
+            if (Scale == 0) this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Scale 不能为0");
 
             Scale = Math.Abs(Scale);
             PaperSize Paper = this.GetPaperSize(this.DrawingFrameType);
@@ -116,76 +117,85 @@ namespace CSCECDEC.Plugin.CutMaterial
             PaperSize A2_Paper = new PaperSize(420, 594);
             PaperSize A3_Paper = new PaperSize(297, 420);
             PaperSize A4_Paper = new PaperSize(210, 297);
+            PaperSize AS_Paper = new PaperSize(200, 200);
 
             return Paper == 0 ? A0_Paper
                           : Paper == 1 ? A1_Paper
                           : Paper == 2 ? A2_Paper
                           : Paper == 3 ? A3_Paper
-                          : A4_Paper;
+                          : Paper == 4 ? A4_Paper
+                          : AS_Paper;
         }
-        public override bool AppendMenuItems(ToolStripDropDown menu)
+        protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
-
-            base.Menu_AppendObjectName(menu);
-            base.Menu_AppendEnableItem(menu);
-            base.Menu_AppendPreviewItem(menu);
-            base.Menu_AppendObjectHelp(menu);
-            GH_DocumentObject.Menu_AppendSeparator(menu);
             this.AppendAddidentMenuItem(menu);
-            GH_DocumentObject.Menu_AppendSeparator(menu);
-            return true;
         }
         private void AppendAddidentMenuItem(ToolStripDropDown menu)
         {
-            Menu_AppendItem(menu, "A0图框", Add_A0_PaperFrame);
-            Menu_AppendItem(menu, "A1图框", Add_A1_PaperFrame);
-            Menu_AppendItem(menu, "A2图框", Add_A2_PaperFrame);
-            Menu_AppendItem(menu, "A3图框", Add_A3_PaperFrame);
-            Menu_AppendItem(menu, "A4图框", Add_A4_PaperFrame);
+            Menu_AppendItem(menu, "A0图框", Do_Add_PaperFrame,true,this.DrawingFrameType==0?true:false);
+            Menu_AppendItem(menu, "A1图框", Do_Add_PaperFrame,true,this.DrawingFrameType == 1 ? true : false);
+            Menu_AppendItem(menu, "A2图框", Do_Add_PaperFrame,true,this.DrawingFrameType == 2 ? true : false);
+            Menu_AppendItem(menu, "A3图框", Do_Add_PaperFrame,true,this.DrawingFrameType == 3 ? true : false);
+            Menu_AppendItem(menu, "A4图框", Do_Add_PaperFrame,true,this.DrawingFrameType == 4 ? true : false);
+            Menu_AppendItem(menu, "矩形图框", Do_Add_PaperFrame,true,this.DrawingFrameType == 5 ? true : false);
         }
 
-        private void Add_A0_PaperFrame(object sender, EventArgs e)
+        private void Do_Add_PaperFrame(object sender, EventArgs e)
         {
-            this.DrawingFrameType = 0;
-            this.Message = "A0图框";
-             
+            ToolStripMenuItem Menu = sender as ToolStripMenuItem;
+            string Text = Menu.Text;
+
+            switch (Text)
+            {
+                case "A0图框":
+                    this.DrawingFrameType = 0;
+                    Menu.Checked = true;
+                    this.Message = "A0图框";
+                    break;
+                case "A1图框":
+                    this.DrawingFrameType = 1;
+                    Menu.Checked = true;
+                    this.Message = "A1图框";
+                    break;
+                case "A2图框":
+                    this.DrawingFrameType = 2;
+                    Menu.Checked = true;
+                    this.Message = "A2图框";
+                    break;
+                case "A3图框":
+                    this.DrawingFrameType = 3;
+                    Menu.Checked = true;
+                    this.Message = "A3图框";
+                    break;
+                case "A4图框":
+                    this.DrawingFrameType = 4;
+                    Menu.Checked = true;
+                    this.Message = "A4图框";
+                    break;
+                case "矩形图框":
+                    this.DrawingFrameType = 5;
+                    Menu.Checked = true;
+                    this.Message = "矩形图框";
+                    break;
+                default:
+                    this.DrawingFrameType = 0;
+                    Menu.Checked = true;
+                    this.Message = "A0图框";
+                    break;
+
+            }
             this.ExpirePreview(true);
             this.ExpireSolution(true);
         }
-
-        private void Add_A3_PaperFrame(object sender, EventArgs e)
+        public override bool Write(GH_IWriter writer)
         {
-            this.DrawingFrameType = 3;
-            this.Message = "A3图框";
-
-            this.ExpirePreview(true);
-            this.ExpireSolution(true);
+            writer.SetInt32("PaperType", this.DrawingFrameType);
+            return base.Write(writer);
         }
-
-        private void Add_A1_PaperFrame(object sender, EventArgs e)
+        public override bool Read(GH_IReader reader)
         {
-            this.DrawingFrameType = 1;
-            this.Message = "A1图框";
-
-            this.ExpirePreview(true);
-            this.ExpireSolution(true);
-        }
-
-        private void Add_A2_PaperFrame(object sender, EventArgs e)
-        {
-            this.DrawingFrameType = 2;
-            this.Message = "A2图框";
-
-            this.ExpirePreview(true);
-            this.ExpireSolution(true);
-        }
-        private void Add_A4_PaperFrame(object sender, EventArgs e)
-        {
-            this.DrawingFrameType = 4;
-            this.Message = "A4图框";
-
-            this.ExpirePreview(true);
-            this.ExpireSolution(true);
+            this.DrawingFrameType = reader.GetInt32("PaperType");
+            return base.Read(reader);
         }
         private List<GeometryBase> ExactDrawingFrame(int DrawingType)
         {
@@ -195,7 +205,8 @@ namespace CSCECDEC.Plugin.CutMaterial
                           : DrawingType == 1 ? "A1"
                           : DrawingType == 2 ? "A2"
                           : DrawingType == 3 ? "A3"
-                          : DrawingType == 3 ? "A4"
+                          : DrawingType == 4 ? "A4"
+                          : DrawingType == 5 ? "矩形图框"
                           : "A0";
             //如何将二进制的文件写入到3dm文件中
             string FilePath = APPDataFolder + "/" + "Temp_" + FrameFileName;
