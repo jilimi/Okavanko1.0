@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if Hudson
+using System;
 using System.Drawing;
 using System.Linq;
 using System.Collections.Generic;
@@ -117,3 +118,4 @@ namespace CSCECDEC.Plugin.Preview
         }
     }
 }
+#endif

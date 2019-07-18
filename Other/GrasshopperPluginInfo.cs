@@ -21,7 +21,7 @@ namespace CSCECDEC.Plugin
         public static readonly string BIMCATATORY = "BIM"; 
         public static readonly string PREVIEWCATATORY = "预览";
         public static readonly string CUTDOWNCATATORY = "下料";
-        public static readonly string PERSONAL = "Hudson";
+        public static readonly string PERSONAL = "For Hudson Personal";
 
         public GrasshopperPluginInfo():base()
         {

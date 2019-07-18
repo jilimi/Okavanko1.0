@@ -18,7 +18,7 @@ namespace CSCECDEC.Plugin.Preview
         private List<Plane> ViewPlanes = new List<Plane>();
         public PlaneViewer()
           : base("PlaneViewer", "PlaneViewer",
-              "查看工作平面的X,Y,Z坐标轴",
+              "查看工作平面的X,Y,Z坐标轴，X，Y，Z轴的颜色分别为RGB,如果输入的是树状数据结果，请先对其执行Flatten操作",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PREVIEWCATATORY)
         {
         }
@@ -59,15 +59,11 @@ namespace CSCECDEC.Plugin.Preview
             if (ViewPlanes.Count != 0) ViewPlanes.Clear();
             if (!DA.GetDataList<Plane>(0, ViewPlanes)) return;
             if (!DA.GetData(1, ref Scale)) return;
-
-            this.ExpirePreview(true);
         }
         public override void DrawViewportWires(IGH_PreviewArgs args)
         {
-
             //Scale只能在0~10之间
             this.Scale = this.Scale <= 0 ? 1 : this.Scale>10?10:this.Scale;
-
 
             Color Red = Color.Red, Green = Color.Green, Blue = Color.Blue;
             if (this.Hidden || this.Locked) return;
@@ -77,15 +73,7 @@ namespace CSCECDEC.Plugin.Preview
                 for(int i = 0; i < ViewPlanes.Count; i++)
                 {
                     Plane _Plane = ViewPlanes[i];
-                    Point3d Origin = _Plane.Origin;
-
-                    Line XLine = new Line(Origin, _Plane.XAxis, Scale * 100);
-                    Line YLine = new Line(Origin, _Plane.YAxis, Scale * 100);
-                    Line ZLine = new Line(Origin, _Plane.ZAxis, Scale * 100);
-
-                    args.Display.DrawArrow(XLine, Color.Green);
-                    args.Display.DrawArrow(YLine, Color.Green);
-                    args.Display.DrawArrow(ZLine, Color.Green);
+                    this.DrawPlaneArrow(args, _Plane, Scale,true);
                 }
              }
             else
@@ -93,16 +81,27 @@ namespace CSCECDEC.Plugin.Preview
                 for (int i = 0; i < ViewPlanes.Count; i++)
                 {
                     Plane _Plane = ViewPlanes[i];
-                    Point3d Origin = _Plane.Origin;
-
-                    Line XLine = new Line(Origin, _Plane.XAxis, Scale * 100);
-                    Line YLine = new Line(Origin, _Plane.YAxis, Scale * 100);
-                    Line ZLine = new Line(Origin, _Plane.ZAxis, Scale * 100);
-
-                    args.Display.DrawArrow(XLine, Color.Red);
-                    args.Display.DrawArrow(YLine, Color.Green);
-                    args.Display.DrawArrow(ZLine, Color.Blue);
+                    this.DrawPlaneArrow(args, _Plane, Scale,false);
                 }
+            }
+        }
+        private void DrawPlaneArrow(IGH_PreviewArgs args, Plane Pl,double Scale,bool IsSelected)
+        {
+            Point3d Origin = Pl.Origin;
+            Line XLine = new Line(Origin, Pl.XAxis, Scale * 1000);
+            Line YLine = new Line(Origin, Pl.YAxis, Scale * 1000);
+            Line ZLine = new Line(Origin, Pl.ZAxis, Scale * 1000);
+            if (IsSelected)
+            {
+                args.Display.DrawArrow(XLine, Color.Green);
+                args.Display.DrawArrow(YLine, Color.Green);
+                args.Display.DrawArrow(ZLine, Color.Green);
+            }
+            else
+            {
+                args.Display.DrawArrow(XLine, Color.Red);
+                args.Display.DrawArrow(YLine, Color.Green);
+                args.Display.DrawArrow(ZLine, Color.Blue);
             }
         }
        /// <summary>
