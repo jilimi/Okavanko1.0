@@ -7,6 +7,7 @@ using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 using System.Windows.Forms;
 using System.Drawing;
+using GH_IO.Serialization;
 
 namespace CSCECDEC.Plugin.CutMaterial
 {
@@ -16,12 +17,6 @@ namespace CSCECDEC.Plugin.CutMaterial
         /// Initializes a new instance of the TableCeller class.
         /// </summary>
         private int Direction = 1;
-
-        private ToolStripMenuItem R2LMenuItem;
-        private ToolStripMenuItem L2RMenuItem;
-        bool R2LMenuItemCheeck = true;
-        bool L2RMenuItemCheck = false;
-
         public TableCeller()
           : base("TableCeller", "TableCeller",
               "生成电子表格",
@@ -58,21 +53,17 @@ namespace CSCECDEC.Plugin.CutMaterial
             pManager.AddRectangleParameter("Table", "T", "生成的表格", GH_ParamAccess.tree);
         }
         //每次单击右键的时候就会调用这个函数
-        public override void AppendAdditionalMenuItems(ToolStripDropDown menu)
+        protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
-           R2LMenuItem =  Menu_AppendItem(menu, "Align：Right to Left", Right_to_Left, true, R2LMenuItemCheeck);
-           L2RMenuItem = Menu_AppendItem(menu, "Align：Left to Right", Left_to_Right, true, L2RMenuItemCheck);
+            this.AppendAddidentMenuItem(menu);
+        }
+        public void AppendAddidentMenuItem(ToolStripDropDown menu)
+        {
+           Menu_AppendItem(menu, "Align：Right to Left", Right_to_Left, true, Direction==1?true:false);
+           Menu_AppendItem(menu, "Align：Left to Right", Left_to_Right, true, Direction == 1 ? true : false);
          }
         private void Right_to_Left(object sender, EventArgs e)
         {
-
-            if (R2LMenuItem.Checked) return;
-
-            R2LMenuItemCheeck = true;
-            L2RMenuItemCheck = false;
-
-            R2LMenuItem.Checked = R2LMenuItemCheeck;
-            L2RMenuItem.Checked = L2RMenuItemCheck;
 
             this.Message = "Align:Right to Left";
             this.Direction = 1;
@@ -82,18 +73,20 @@ namespace CSCECDEC.Plugin.CutMaterial
         private void Left_to_Right(object sender, EventArgs e)
         {
 
-            if (L2RMenuItem.Checked) return;
-
-            R2LMenuItemCheeck = false;
-            L2RMenuItemCheck = true;
-
-            L2RMenuItem.Checked = R2LMenuItemCheeck;
-            R2LMenuItem.Checked = L2RMenuItemCheck;
-
             this.Message = "Align:Left to Right";
             this.Direction = -1;
             this.ExpirePreview(true);
             this.ExpireSolution(true);
+        }
+        public override bool Write(GH_IWriter writer)
+        {
+            writer.SetInt32("Direction", this.Direction);
+            return base.Write(writer);
+        }
+        public override bool Read(GH_IReader reader)
+        {
+            this.Direction = reader.GetInt32("Direction");
+            return base.Read(reader);
         }
         /// <summary>
         /// This is the method that actually does the work.

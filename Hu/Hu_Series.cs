@@ -20,6 +20,7 @@ namespace CSCECDEC.Plugin.Basic
               "使用字符串生成系列，如0：100：0.1表示生成一个起始为0，终止数为100，步距为0.1的系列",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PERSONAL)
         {
+            
         }
         public override GH_Exposure Exposure
         {
