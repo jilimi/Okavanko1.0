@@ -73,6 +73,26 @@ namespace CSCECDEC.Plugin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AddLayer {
+            get {
+                object obj = ResourceManager.GetObject("AddLayer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bake {
+            get {
+                object obj = ResourceManager.GetObject("bake", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BindDictDataToGeom {
             get {
                 object obj = ResourceManager.GetObject("BindDictDataToGeom", resourceCulture);
@@ -313,6 +333,16 @@ namespace CSCECDEC.Plugin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GetLayer {
+            get {
+                object obj = ResourceManager.GetObject("GetLayer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GroupByType {
             get {
                 object obj = ResourceManager.GetObject("GroupByType", resourceCulture);
@@ -347,6 +377,16 @@ namespace CSCECDEC.Plugin.Properties {
             get {
                 object obj = ResourceManager.GetObject("GroupSrfByCenterPoint", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Hu_Rhino {
+            get {
+                object obj = ResourceManager.GetObject("Hu_Rhino", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -446,6 +486,16 @@ namespace CSCECDEC.Plugin.Properties {
         internal static System.Drawing.Bitmap ReverseVector {
             get {
                 object obj = ResourceManager.GetObject("ReverseVector", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ScreenSize {
+            get {
+                object obj = ResourceManager.GetObject("ScreenSize", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

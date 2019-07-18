@@ -9,6 +9,7 @@ using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 using Rhino.Display;
 using System.Windows.Forms;
+using GH_IO.Serialization;
 
 namespace CSCECDEC.Plugin.Preview
 {
@@ -20,73 +21,58 @@ namespace CSCECDEC.Plugin.Preview
         private List<GH_Point> PointList = new List<GH_Point>();
         private GH_Colour PointColor;
         public GH_Integer PointSize;
-        private PointStyle PtStyle = PointStyle.Asterisk;
-       
+        private PointStyle PtStyle = PointStyle.Simple;
         public PointPreview()
           : base("PointPreview", "PtPreview",
               "对点进行预览",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PREVIEWCATATORY)
         {
-            this.Message = "Asterisk Style";
+          //  this.AppendAddidentMenuItem(this.con);
         }
-        public override bool AppendMenuItems(ToolStripDropDown menu)
+        protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
-
-            base.Menu_AppendObjectName(menu);
-            base.Menu_AppendEnableItem(menu);
-            base.Menu_AppendPreviewItem(menu);
-            base.Menu_AppendObjectHelp(menu);
-            GH_DocumentObject.Menu_AppendSeparator(menu);
-            this.AppendAddidentMenuItem(menu);
-            return true;
+           this.AppendAddidentMenuItem(menu);
+           // return true;
         }
         private void AppendAddidentMenuItem(ToolStripDropDown menu)
         {
-            Menu_AppendItem(menu, "Active Point", ActivePointClick);
-            Menu_AppendItem(menu, "Circle Point", CirclePointClick);
-            Menu_AppendItem(menu, "X Point", XPointClick);
-            Menu_AppendItem(menu,"Chevron Point", ChevronPointClick);
-            Menu_AppendItem(menu, "Asterisk Point", AsteriskPointClick);
+            Menu_AppendItem(menu, "Simple Point", ChangePointType,true,(int)this.PtStyle==0?true:false);
+            Menu_AppendItem(menu, "Control Point", ChangePointType, true,(int)this.PtStyle == 1 ? true : false);
+            Menu_AppendItem(menu, "Active Point", ChangePointType,true, (int)this.PtStyle == 2 ? true : false);
+            Menu_AppendItem(menu,"X Point", ChangePointType,true, (int)this.PtStyle == 3 ? true : false);
         }
-        private void ChevronPointClick(object sender, EventArgs e)
+        private void ChangePointType(object sender, EventArgs e)
         {
-            this.PtStyle = PointStyle.Chevron;
-            this.Message = "Chevron Style";
+            ToolStripMenuItem Menu = sender as ToolStripMenuItem;
+            string Text = Menu.Text;
+            
+            switch (Text)
+            {
+                case "Simple Point":
+                    this.PtStyle = PointStyle.Simple;
+                    Menu.Checked = true;
+                    break;
+                case "Control Point":
+                    this.PtStyle = PointStyle.ControlPoint;
+                    Menu.Checked = true;
+                    break;
+                case "Active Point":
+                    this.PtStyle = PointStyle.ActivePoint;
+                    Menu.Checked = true;
+                    break;
+                case "X Point":
+                    this.PtStyle = PointStyle.X;
+                    Menu.Checked = true;
+                    break;
+                default:
+                    this.PtStyle = PointStyle.Simple;
+                    Menu.Checked = true;
+                    break;
+            }
             this.ExpirePreview(true);
             this.ExpireSolution(true);
         }
-        private void AsteriskPointClick(object sender, EventArgs e)
-        {
-            this.PtStyle = PointStyle.Asterisk;
-            this.Message = "Asterisk Style";
-            this.ExpirePreview(true);
-            this.ExpireSolution(true);
-        }
-
-        private void XPointClick(object sender, EventArgs e)
-        {
-            this.PtStyle = PointStyle.X;
-            this.Message = "X Style";
-            this.ExpirePreview(true);
-            this.ExpireSolution(true);
-        }
-
-        private void CirclePointClick(object sender, EventArgs e)
-        {
-            this.PtStyle = PointStyle.Circle;
-            this.Message = "Circle Style";
-            this.ExpirePreview(true);
-            this.ExpireSolution(true);
-        }
-
-        private void ActivePointClick(object sender, EventArgs e)
-        {
-            this.PtStyle = PointStyle.ActivePoint;
-            this.Message = "ActivePoint Style";
-            this.ExpirePreview(true);
-            this.ExpireSolution(true);
-        }
-
+        
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
@@ -97,6 +83,16 @@ namespace CSCECDEC.Plugin.Preview
             pManager.AddIntegerParameter("Size", "S", "点大小", GH_ParamAccess.item,3);
 
             this.OnPreviewExpired(true);
+        }
+        public override bool Write(GH_IWriter writer)
+        {
+            writer.SetInt32("PointStyle", (int)this.PtStyle);
+            return base.Write(writer);
+        }
+        public override bool Read(GH_IReader reader)
+        {
+            this.PtStyle = (PointStyle)reader.GetInt32("PointStyle");
+            return base.Read(reader);
         }
 
         /// <summary>

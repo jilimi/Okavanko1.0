@@ -271,4 +271,19 @@
   <data name="_2SurveyPointsString" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\2surveypointsstring.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Hu_Rhino" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Hu_Rhino.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AddLayer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AddLayer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bake" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bake.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GetLayer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GetLayer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ScreenSize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ScreenSize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
