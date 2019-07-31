@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
 
 using Grasshopper.Kernel;
 using Rhino.Geometry;
+using CSCECDEC.Plugin.Attribute;
 
 namespace CSCECDEC.Plugin.BIM
 {
@@ -25,14 +27,28 @@ namespace CSCECDEC.Plugin.BIM
                 return GH_Exposure.secondary;
             }
         }
+       
+        //委托只要传入参数一样即可
+        public void HandleMouseDubleClick(GH_Component Component)
+        {
+            RadioButtonAttribute Attr = this.Attributes as RadioButtonAttribute;
+           // System.Windows.Forms.MessageBox.Show(Attr.IsPress.ToString());
+        }
+        public override void CreateAttributes()
+        {
+         //   base.CustomAttributes(this,3);
+            //m_attributes = new ButtonAttribute(this,this.HandleMouseDubleClick,"Click Me");
+            m_attributes = new RadioButtonAttribute(this,this.HandleMouseDubleClick,"Click Me");
+        }
+       
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGeometryParameter("Geom", "G", "待查找的几何体范围", GH_ParamAccess.list);
+            pManager.AddGeometryParameter("Geom", "G", "待查找的几何体范围,目前点还不支持自定义集合数据", GH_ParamAccess.list);
             pManager.AddTextParameter("Key", "K", "Key值，必须单个，如果是多个将查找失败", GH_ParamAccess.item);
-            pManager.AddTextParameter("Value", "V", "带查找的Value值", GH_ParamAccess.item);
+            pManager.AddTextParameter("Value", "V", "带查找的Value值或需要过滤的正则表达式", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -40,7 +56,7 @@ namespace CSCECDEC.Plugin.BIM
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGeometryParameter("Geom", "G", "包含有Value数值的几何体", GH_ParamAccess.list);
+            pManager.AddGeometryParameter("Geom", "G", "包含有Value或符合正则表达式过滤要求的几何体", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -61,16 +77,17 @@ namespace CSCECDEC.Plugin.BIM
             if (!DA.GetData(2, ref InfoValue)) return;
 
             List<GeometryBase> TempGeoms = new List<GeometryBase> (Geoms);
-
-            for(int Index = 0; Index < TempGeoms.Count; Index++)
+            List<GeometryBase> Result = TempGeoms.Where(item =>
             {
-                GeometryBase _Geom = Geoms[Index];
-                TempStrList = _Geom.UserDictionary.Values.Select(item=>item.ToString()).ToList();
-                if (TempStrList.Contains(InfoValue)) OutputGeoms.Add(_Geom);
-            }
+                string Info = null;
+                bool ContainKey = item.UserDictionary.ContainsKey(InfoKey);
+                item.UserDictionary.TryGetString(InfoKey, out Info);
+                bool ContainValue = Regex.IsMatch(Info, InfoValue);
+                return ContainValue && ContainKey;
 
-            if (OutputGeoms.Count == 0) this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "未检索到任何符合要求的物体");
-            DA.SetDataList(0, OutputGeoms);
+            }).ToList();
+            if (Result.Count == 0) this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "未检索到任何符合要求的物体");
+            DA.SetDataList(0, Result);
         }
 
         /// <summary>

@@ -32,7 +32,7 @@ namespace CSCECDEC.Plugin.CutMaterial
         /// 2 => A2图框
         /// 3 => A3图框
         private int DrawingFrameType = 0;
-        readonly string FrameFileName = "FrameFile_12345678.3dm";
+       // readonly string FrameFileName = "FrameFile_12345678.3dm";
         //注意，是这样初始化字典的
         public PaperFrame()
           : base("DrawFrame", "DrawFrame",
@@ -197,6 +197,7 @@ namespace CSCECDEC.Plugin.CutMaterial
             this.DrawingFrameType = reader.GetInt32("PaperType");
             return base.Read(reader);
         }
+        /*
         private List<GeometryBase> ExactDrawingFrame(int DrawingType)
         {
             byte[] Rhino_Frame = Properties.Resources.Frame;
@@ -228,7 +229,7 @@ namespace CSCECDEC.Plugin.CutMaterial
 
             List<File3dmObject> m_File3dmObject = _3dmFile.Objects.FindByLayer(Dest_Layer).ToList();
             return m_File3dmObject.Select(item => item.Geometry).ToList();
-        }
+        }*/
         private Layer FindLayerByName(List<Layer> l_Layer,string Name)
         {
             List<Layer> LayerList = l_Layer.Where(item => { return item.Name == Name; }).ToList();

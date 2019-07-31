@@ -8,7 +8,9 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using Grasshopper.GUI;
 using CSCECDEC.Plugin.Forms;
+using CSCECDEC.Plugin.Params;
 using System.Drawing;
+using GH_IO.Serialization;
 
 namespace CSCECDEC.Plugin.Basic
 {
@@ -38,7 +40,6 @@ namespace CSCECDEC.Plugin.Basic
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Name", "N", "输入图层名称或索引，如果对应名称有多个，则以第一个图层作为目标图层", GH_ParamAccess.item);
-
             pManager[0].Optional = true;
         }
         /// <summary>
@@ -46,7 +47,8 @@ namespace CSCECDEC.Plugin.Basic
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGenericParameter("Layer", "L", "图层", GH_ParamAccess.item);
+           // pManager.AddGenericParameter("Layer", "L", "图层", GH_ParamAccess.item);
+            pManager.AddParameter(new GH_Layer(), "Layer", "L", "An Layer in Rhino", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace CSCECDEC.Plugin.Basic
         }
         private void AppendAddidentMenuItem(ToolStripDropDown menu)
         {
-            Menu_AppendItem(menu, "Select a Layer", Do_SelectALayer,true);
+            Menu_AppendItem(menu, "Select Layer", Do_SelectALayer,true);
             Menu_AppendItem(menu, "Current Layer", Do_SetCurrentLayer,true);
             Menu_AppendItem(menu, "Clear Data", Do_ClearData,true);
         }
@@ -83,7 +85,7 @@ namespace CSCECDEC.Plugin.Basic
             Dialog.StartPosition = FormStartPosition.CenterParent;
             if (Dialog.ShowDialog() == DialogResult.OK)
             {
-                this.LayerIndex = Dialog.SelectLayerIndex;
+                this.LayerIndex = Dialog.LayerIndex;
             }
             this.ExpireSolution(true);
         }
@@ -93,6 +95,7 @@ namespace CSCECDEC.Plugin.Basic
             
             string LayerName = null;
             DA.GetData(0, ref LayerName);
+            //不通过对话框设置
             if(this.LayerIndex == -1)
             {
                 int Temp_LayerIndex = Rhino.RhinoDoc.ActiveDoc.Layers.FindByFullPath(LayerName, -1);
@@ -104,17 +107,31 @@ namespace CSCECDEC.Plugin.Basic
                         this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "请先选取或设置图层");
                     }else
                     {
-                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, string.Format("{0}不属于有效图层名称", LayerName.ToString()));
+                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, string.Format("{0}不属于有效图层", LayerName.ToString()));
                     }
                 }
             }
             else
             {
                 OutputLayer = Rhino.RhinoDoc.ActiveDoc.Layers.FindIndex(LayerIndex);
+
+                if(OutputLayer == null)
+                {
+                    this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, string.Format("索引为：{0}的图层不是有效图层", LayerIndex));
+                }
             }
             DA.SetData(0, OutputLayer);
         }
-
+        public override bool Write(GH_IWriter writer)
+        {
+            writer.SetInt32("Layer", this.LayerIndex);
+            return base.Write(writer);
+        }
+        public override bool Read(GH_IReader reader)
+        {
+            this.LayerIndex = reader.GetInt32("Layer");
+            return base.Read(reader);
+        }
         /// <summary>
         /// Provides an Icon for the component.
         /// </summary>

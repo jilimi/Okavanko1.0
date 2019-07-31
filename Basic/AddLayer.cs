@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using Rhino.DocObjects;
@@ -6,6 +7,9 @@ using Rhino.DocObjects.Tables;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
+
+using CSCECDEC.Plugin.Types;
+using CSCECDEC.Plugin.Params;
 
 namespace CSCECDEC.Plugin.Basic
 {
@@ -32,7 +36,7 @@ namespace CSCECDEC.Plugin.Basic
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("PLayer", "PL", "父图层", GH_ParamAccess.item);
+            pManager.AddParameter(new GH_Layer(), "Layer", "L", "父图层", GH_ParamAccess.item);
             pManager.AddTextParameter("Name", "N", "需要添加图层的名称", GH_ParamAccess.list);
         }
         /// <summary>
@@ -40,12 +44,15 @@ namespace CSCECDEC.Plugin.Basic
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddGenericParameter("Layer", "L", "已经添加的图层", GH_ParamAccess.item);
+            pManager.AddParameter(new GH_Layer(), "Layer", "L", "An Layer in Rhino", GH_ParamAccess.item);
         }
         /// <summary>
         /// This is the method that actually does the work.
         /// </summary>
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        /// 
+        /// 以下代码还需要优化
+        ///
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             Layer ParentLayer = new Layer();
@@ -64,30 +71,31 @@ namespace CSCECDEC.Plugin.Basic
 
             foreach(string LayerName in LayerNames)
             {
-                try
-                {
-                    Layer L = new Layer();
-                    L.Name = LayerName;
-                    L.ParentLayerId = ParentLayer.Id;
-                    if(this.AddLayerToDocument(L) == -1)
-                    {
-                        throw new Exception("父图层下已经存在同名图层");
-                    }else
-                    {
-                        OutputLayers.Add(L);
-                    }
+                Layer L = new Layer();
+                L.Name = LayerName;
+                L.ParentLayerId = ParentLayer.Id;
 
-                }catch(Exception e)
-                {
-                    this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, e.Message);
-                }
+                int LayerIndex = this.AddLayerToDocument(L);
+                OutputLayers.Add(LTable.FindIndex(LayerIndex));
             }
-            DA.SetData(0, OutputLayers);
+            DA.SetDataList(0, OutputLayers);
         }
         private int AddLayerToDocument(Layer layer)
         {
             LayerTable Layers = Rhino.RhinoDoc.ActiveDoc.Layers;
-            return Layers.Add(layer);
+            int LayerIndex = Layers.Add(layer);
+            if (LayerIndex == -1) {
+
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "父图层下已经存在同名图层");
+                Layer ParentLayer = Layers.FindId(layer.ParentLayerId);
+                Layer[] Arr_Layer = ParentLayer.GetChildren();
+                int  TempIndex = (Arr_Layer.Where(item => item.Name == layer.Name).ToList())[0].Index;
+                return TempIndex;
+            }
+            else
+            {
+                return LayerIndex;
+            }
         }
         private bool LayerExist(Layer layer)
         {

@@ -3,8 +3,14 @@ using System.Collections.Generic;
 
 using Rhino.DocObjects;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
+using Grasshopper.Kernel.Data;
+using Grasshopper.Kernel.Attributes;
+
 using Rhino.Geometry;
 using System.Drawing;
+
+using CSCECDEC.Plugin.Params;
 
 namespace CSCECDEC.Plugin.Basic
 {
@@ -31,9 +37,13 @@ namespace CSCECDEC.Plugin.Basic
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Layer", "L", "图层", GH_ParamAccess.item);
+            pManager.AddParameter(new GH_Layer(), "Layer", "L", "需要烘培到的图层", GH_ParamAccess.item);
             pManager.AddGeometryParameter("Geometry", "G", "需要烘焙的几何体", GH_ParamAccess.list);
+            pManager.AddColourParameter("Color", "C", "需要烘焙几何体的颜色", GH_ParamAccess.item);
             pManager.AddBooleanParameter("isBake", "B", "是否进行烘焙", GH_ParamAccess.item, false);
+
+            pManager[2].Optional = true;
+            pManager[3].Optional = true;
         }
 
         /// <summary>
@@ -51,20 +61,29 @@ namespace CSCECDEC.Plugin.Basic
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             Layer La = null;
-            List<GeometryBase> Geoms = new List<GeometryBase>();
+            List<IGH_GeometricGoo> Geoms = new List<IGH_GeometricGoo>();
             bool IsBake = false;
+            GH_Colour GeomColor = null;
 
             if (!DA.GetData(0, ref La)) return;
             if (!DA.GetDataList(1, Geoms)) return;
-            if (!DA.GetData(2, ref IsBake)) return;
+            if (!DA.GetData(2, ref GeomColor)) return;
+            if (!DA.GetData(3, ref IsBake)) return;
 
             if (!IsBake) return;
 
-            foreach(GeometryBase Geom in Geoms)
+            foreach(IGH_GeometricGoo Geom in Geoms)
             {
-                ObjectAttributes Attr = new ObjectAttributes();
-                Attr.LayerIndex = La.Index;
-                Rhino.RhinoDoc.ActiveDoc.Objects.Add(Geom, Attr);
+                if(Geom != null)
+                {
+                    ObjectAttributes Attr = new ObjectAttributes();
+                    Attr.LayerIndex = La.Index;
+                    if(GeomColor == null) Attr.ColorSource = ObjectColorSource.ColorFromLayer;
+                    else Attr.ColorSource = ObjectColorSource.ColorFromObject;
+                    Attr.ObjectColor = GeomColor.Value;
+                    //GH_Convert这个很重要
+                    Rhino.RhinoDoc.ActiveDoc.Objects.Add(GH_Convert.ToGeometryBase(Geom), Attr);
+                }
             }
         }
 
