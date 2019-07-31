@@ -15,7 +15,7 @@ namespace CSCECDEC.Plugin.Forms
 {
     public partial class LayerDialog : Form
     {
-        public int SelectLayerIndex = -1;
+        public int LayerIndex = -1;
         public LayerDialog(/*int SelectLayerIndex*/)
         {
             InitializeComponent();
@@ -30,6 +30,7 @@ namespace CSCECDEC.Plugin.Forms
             for(int Index = 0; Index < Layers.Count; Index++)
             {
 
+                if (Layers[Index].IsDeleted) continue;
                 if(Layers[Index].ParentLayerId == Guid.Empty)
                 {
                     TreeNode Node = new TreeNode();
@@ -40,17 +41,11 @@ namespace CSCECDEC.Plugin.Forms
                     AddTreeNode(Node, Layers[Index]); 
                 } 
             }
-            /*
-            if(this.SelectLayerIndex != -1)
-            {
-                LayerTree.SelectedNode = LayerTree.
-            }*/
-        }
+         }
         private void AddTreeNode(TreeNode ParentNode,Layer layer)
         {
             
             Layer[] Children = layer.GetChildren();
-
             if (Children == null) return;
             for(int Index = 0; Index < Children.Count(); Index++)
             {
@@ -58,14 +53,13 @@ namespace CSCECDEC.Plugin.Forms
                 Node.Text = Children[Index].Name;
                 Node.Tag = Children[Index].Index;
                 ParentNode.Nodes.Add(Node);
-                //递归处理子图层
                 AddTreeNode(Node, Children[Index]);
             }
         }
         private void OK_Btn_Click(object sender, EventArgs e)
         {
             TreeNode Node = this.LayerTree.SelectedNode;
-            this.SelectLayerIndex = Convert.ToInt32(Node.Tag);
+            this.LayerIndex = Convert.ToInt32(Node.Tag);
             this.FindForm().DialogResult = DialogResult.OK;
 
             this.FindForm().Close();

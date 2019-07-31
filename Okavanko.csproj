@@ -13,7 +13,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CSCECDEC.Plugin</RootNamespace>
-    <AssemblyName>Okavanko</AssemblyName>
+    <AssemblyName>Okavango</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -88,17 +88,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\ButtonAttribute.cs" />
+    <Compile Include="Attribute\DropDownAttribute.cs" />
+    <Compile Include="Attribute\RadioButtonAttribute.cs" />
     <Compile Include="Basic\AddLayer.cs" />
+    <Compile Include="Basic\ArcDimention.cs" />
     <Compile Include="Basic\BakeGeometry.cs" />
     <Compile Include="Basic\ClassifyDataByTree.cs" />
     <Compile Include="Basic\ClusterPts.cs" />
+    <Compile Include="Basic\DropDown.cs" />
     <Compile Include="Basic\ExtrudeBothSide.cs" />
     <Compile Include="Basic\GetLayer.cs" />
+    <Compile Include="Basic\MakeHole.cs" />
     <Compile Include="Basic\PointClosetCurves.cs" />
     <Compile Include="Basic\CurveCounterWise.cs" />
     <Compile Include="Basic\ExtendSurface.cs" />
     <Compile Include="Basic\GroupByType.cs" />
     <Compile Include="Basic\CreateSolidByOffsetSrf.cs" />
+    <Compile Include="Basic\RadiDimention.cs" />
+    <Compile Include="BIM\AttachGeometry.cs" />
     <Compile Include="CutMaterial\Optimization.cs" />
     <Compile Include="CutMaterial\PaperFrame.cs" />
     <Compile Include="CutMaterial\TableCeller.cs" />
@@ -143,6 +151,9 @@
     <Compile Include="Hu\Hu_SortByArea.cs" />
     <Compile Include="Hu\Hu_SortCrv.cs" />
     <Compile Include="Hu\Hu_SortPts.cs" />
+    <Compile Include="Params\GH_Layer.cs" />
+    <Compile Include="Types\ArcDim.cs" />
+    <Compile Include="Types\Hu_Layer.cs" />
     <Compile Include="Preview\CurveDirPreview.cs" />
     <Compile Include="Other\GrasshopperPluginInfo.cs" />
     <Compile Include="Preview\FaceDir.cs" />

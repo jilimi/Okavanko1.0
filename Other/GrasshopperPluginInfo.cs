@@ -16,7 +16,7 @@ namespace CSCECDEC.Plugin
     {
         //有关版权保护的信息可以写再这里
         //C#最佳实践 使用readonly 替代const
-        public static readonly string PLUGINNAME = "Okavanko";
+        public static readonly string PLUGINNAME = "Okavango";
         public static readonly string BASICCATATORY = "基础"; 
         public static readonly string BIMCATATORY = "BIM"; 
         public static readonly string PREVIEWCATATORY = "预览";
@@ -27,7 +27,7 @@ namespace CSCECDEC.Plugin
         {
            if(Rhino.RhinoApp.Version.Major < 6)
             {
-                Dialogs.ShowMessage("OKavanko 插件需运行于Rhino6及以上版本中", "提示");
+                Dialogs.ShowMessage("OKavango 插件需运行于Rhino6及以上版本中", "提示");
                 return;
             }
         }
@@ -40,7 +40,7 @@ namespace CSCECDEC.Plugin
         {
             get
             {
-                return "Okavanko";
+                return "Okavango";
             }
         }
         public override Bitmap Icon

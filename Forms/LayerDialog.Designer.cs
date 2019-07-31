@@ -52,7 +52,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(276, 305);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(316, 393);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -61,7 +61,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(270, 249);
+            this.panel1.Size = new System.Drawing.Size(310, 337);
             this.panel1.TabIndex = 0;
             // 
             // LayerTree
@@ -69,7 +69,7 @@
             this.LayerTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayerTree.Location = new System.Drawing.Point(0, 0);
             this.LayerTree.Name = "LayerTree";
-            this.LayerTree.Size = new System.Drawing.Size(270, 249);
+            this.LayerTree.Size = new System.Drawing.Size(310, 337);
             this.LayerTree.TabIndex = 0;
             this.LayerTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.LayerItem_AfterSelect);
             // 
@@ -78,14 +78,14 @@
             this.panel2.Controls.Add(this.Cancel_Btn);
             this.panel2.Controls.Add(this.OK_Btn);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 258);
+            this.panel2.Location = new System.Drawing.Point(3, 346);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(270, 44);
+            this.panel2.Size = new System.Drawing.Size(310, 44);
             this.panel2.TabIndex = 1;
             // 
             // Cancel_Btn
             // 
-            this.Cancel_Btn.Location = new System.Drawing.Point(179, 9);
+            this.Cancel_Btn.Location = new System.Drawing.Point(218, 9);
             this.Cancel_Btn.Name = "Cancel_Btn";
             this.Cancel_Btn.Size = new System.Drawing.Size(80, 30);
             this.Cancel_Btn.TabIndex = 2;
@@ -95,7 +95,7 @@
             // 
             // OK_Btn
             // 
-            this.OK_Btn.Location = new System.Drawing.Point(3, 9);
+            this.OK_Btn.Location = new System.Drawing.Point(123, 9);
             this.OK_Btn.Name = "OK_Btn";
             this.OK_Btn.Size = new System.Drawing.Size(80, 30);
             this.OK_Btn.TabIndex = 1;
@@ -107,14 +107,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 313);
+            this.AutoScroll = true;
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(324, 401);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(300, 1024);
+            this.MaximumSize = new System.Drawing.Size(340, 1024);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(300, 300);
+            this.MinimumSize = new System.Drawing.Size(340, 300);
             this.Name = "LayerDialog";
             this.Padding = new System.Windows.Forms.Padding(4);
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
