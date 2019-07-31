@@ -44,9 +44,14 @@
 |5|FindClosetBrep|选择距离指定点最近的N个Brep|/|
 |6|DispatchBranch|根据需求对DataTree进行分组|/|
 |7|CrvsClosetPoint|找出两条线之间最短距离的最大值|/|
+|8|AddLayer|在指定父亲图层下添加图层|/|
+|9|GetLayer|获取图层|/|
+|10|BakeGeometry|烘焙物体到指定图层|/|
 
 ---
 ## 下料模块
+
+
 
 下料模块的作用
 
