@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Drawing;
 using System.Collections.Generic;
 
@@ -36,10 +37,10 @@ namespace CSCECDEC.Plugin.Preview
         }
         private void AppendAddidentMenuItem(ToolStripDropDown menu)
         {
-            Menu_AppendItem(menu, "Simple Point", ChangePointType,true,(int)this.PtStyle==0?true:false);
-            Menu_AppendItem(menu, "Control Point", ChangePointType, true,(int)this.PtStyle == 1 ? true : false);
-            Menu_AppendItem(menu, "Active Point", ChangePointType,true, (int)this.PtStyle == 2 ? true : false);
-            Menu_AppendItem(menu,"X Point", ChangePointType,true, (int)this.PtStyle == 3 ? true : false);
+            Menu_AppendItem(menu, "Simple Style", ChangePointType,true,(int)this.PtStyle==0?true:false);
+            Menu_AppendItem(menu, "Control Style", ChangePointType, true,(int)this.PtStyle == 1 ? true : false);
+            Menu_AppendItem(menu, "Active Style", ChangePointType,true, (int)this.PtStyle == 2 ? true : false);
+            Menu_AppendItem(menu, "X Style", ChangePointType,true, (int)this.PtStyle == 3 ? true : false);
         }
         private void ChangePointType(object sender, EventArgs e)
         {
@@ -48,19 +49,19 @@ namespace CSCECDEC.Plugin.Preview
             
             switch (Text)
             {
-                case "Simple Point":
+                case "Simple Style":
                     this.PtStyle = PointStyle.Simple;
                     Menu.Checked = true;
                     break;
-                case "Control Point":
+                case "Control Style":
                     this.PtStyle = PointStyle.ControlPoint;
                     Menu.Checked = true;
                     break;
-                case "Active Point":
+                case "Active Style":
                     this.PtStyle = PointStyle.ActivePoint;
                     Menu.Checked = true;
                     break;
-                case "X Point":
+                case "X Style":
                     this.PtStyle = PointStyle.X;
                     Menu.Checked = true;
                     break;
@@ -161,3 +162,4 @@ namespace CSCECDEC.Plugin.Preview
         }
     }
 }
+*/
