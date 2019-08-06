@@ -61,7 +61,7 @@ namespace CSCECDEC.Plugin.Params
         }*/
         protected override GH_GetterResult Prompt_Singular(ref Types.Hu_Layer value)
         {
-
+            
             Forms.LayerDialog Dialog = new Forms.LayerDialog();
             Dialog.StartPosition = FormStartPosition.CenterParent;
             LayerTable LT = Rhino.RhinoDoc.ActiveDoc.Layers;
@@ -127,4 +127,79 @@ namespace CSCECDEC.Plugin.Params
         }
 
     }
+#if Hudosn
+    public class GH_Layer : GH_PersistentParam<Hu_Layer>
+    {
+        public GH_Layer()
+          : base(new GH_InstanceDescription("Layer", "Lay", "A parameter for referencing a Rhino layer", "Params"))
+        { }
+
+        public override Guid ComponentGuid
+        {
+            get { return new Guid("878c2318-5294-41d9-98f9-2ae90c485afc"); }
+        }
+        public override GH_Exposure Exposure
+        {
+            get { return GH_Exposure.primary; }
+        }
+        protected override Hu_Layer InstantiateT()
+        {
+            return new Hu_Layer();
+        }
+
+        protected override GH_GetterResult Prompt_Singular(ref Hu_Layer value)
+        {
+            var doc = Rhino.RhinoDoc.ActiveDoc;
+            // is null 属于C# 7 中的功能，Visual Studio 2015中不包含该功能
+           // if (doc is null) return GH_GetterResult.cancel;
+            if (doc == null) return GH_GetterResult.cancel;
+            var form = new Form
+            {
+                Text = "Pick a layer",
+                // Width = Grasshopper.Global_Proc.UiAdjust(200),
+                Width = 300,
+                Height = 300,
+               // Height = Grasshopper.Global_Proc.UiAdjust(300),
+                ShowInTaskbar = false,
+                MaximizeBox = false,
+                MinimizeBox = false,
+                StartPosition = FormStartPosition.CenterParent
+            };
+
+            var list = new ListBox
+            {
+                MultiColumn = false,
+                Dock = DockStyle.Fill,
+                SelectionMode = SelectionMode.One
+            };
+            foreach (var layer in doc.Layers)
+                list.Items.Add(layer);
+
+            var button = new Button
+            {
+                Text = "OK",
+                Height = 100,
+                Dock = DockStyle.Bottom,
+                DialogResult = DialogResult.OK
+            };
+
+            form.Controls.Add(list);
+            form.Controls.Add(button);
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                var layer = list.SelectedItem as Layer;
+                value = new Hu_Layer(layer);
+                return GH_GetterResult.success;
+            }
+            else
+                return GH_GetterResult.cancel;
+        }
+        protected override GH_GetterResult Prompt_Plural(ref List<Hu_Layer> values)
+        {
+            // Same as Prompt_Singular, just allow for multiple selection.
+            return GH_GetterResult.cancel;
+        }
+    }
+#endif
 }

@@ -22,6 +22,9 @@ namespace CSCECDEC.Plugin
         public static readonly string PREVIEWCATATORY = "预览";
         public static readonly string CUTDOWNCATATORY = "下料";
         public static readonly string PERSONAL = "For Hudson Personal";
+        public const float W_EXTEND = 18;
+        public static readonly float GRIDEGAPE = 8;
+        public static readonly float H_EXTEND = 8;
 
         public GrasshopperPluginInfo():base()
         {

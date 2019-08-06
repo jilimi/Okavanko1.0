@@ -88,11 +88,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\HuAttributeUtil.cs" />
     <Compile Include="Attribute\ButtonAttribute.cs" />
     <Compile Include="Attribute\DropDownAttribute.cs" />
+    <Compile Include="Attribute\Hu_Attribute.cs" />
     <Compile Include="Attribute\RadioButtonAttribute.cs" />
     <Compile Include="Basic\AddLayer.cs" />
     <Compile Include="Basic\ArcDimention.cs" />
+    <Compile Include="Basic\Attribute.cs" />
     <Compile Include="Basic\BakeGeometry.cs" />
     <Compile Include="Basic\ClassifyDataByTree.cs" />
     <Compile Include="Basic\ClusterPts.cs" />
@@ -107,6 +110,7 @@
     <Compile Include="Basic\CreateSolidByOffsetSrf.cs" />
     <Compile Include="Basic\RadiDimention.cs" />
     <Compile Include="BIM\AttachGeometry.cs" />
+    <Compile Include="BIM\FindGeometryByValue - Copy.cs" />
     <Compile Include="CutMaterial\Optimization.cs" />
     <Compile Include="CutMaterial\PaperFrame.cs" />
     <Compile Include="CutMaterial\TableCeller.cs" />
@@ -151,8 +155,14 @@
     <Compile Include="Hu\Hu_SortByArea.cs" />
     <Compile Include="Hu\Hu_SortCrv.cs" />
     <Compile Include="Hu\Hu_SortPts.cs" />
+    <Compile Include="Params\GH_ADimention.cs" />
+    <Compile Include="Params\GH_AngularDim.cs" />
+    <Compile Include="Params\GH_Dimention.cs" />
     <Compile Include="Params\GH_Layer.cs" />
-    <Compile Include="Types\ArcDim.cs" />
+    <Compile Include="Params\GH_ObjectAttribute.cs" />
+    <Compile Include="Types\Hu_AngularDim.cs" />
+    <Compile Include="Types\Hu_Dimention.cs" />
+    <Compile Include="Types\Hu_ADimention.cs" />
     <Compile Include="Types\Hu_Layer.cs" />
     <Compile Include="Preview\CurveDirPreview.cs" />
     <Compile Include="Other\GrasshopperPluginInfo.cs" />
@@ -171,6 +181,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\Hu_ObjectAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\LayerDialog.resx">

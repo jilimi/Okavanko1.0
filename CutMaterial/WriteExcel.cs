@@ -15,6 +15,7 @@ using OfficeOpenXml.Table;
 using OfficeOpenXml.Utils;
 
 using CSCECDEC.Plugin.Util;
+using CSCECDEC.Plugin.Attribute;
 
 namespace CSCECDEC.Plugin.CutDown
 {
@@ -24,7 +25,7 @@ namespace CSCECDEC.Plugin.CutDown
         /// Initializes a new instance of the CreateExcelFile class.
         /// </summary>
         public CreateExcelFile()
-          : base("Export Excel", "导出Excel",
+          : base("ExportExcel", "ExportExcel",
               "将输入的数据导出Excel,生成的文件默认位于桌面的GrasshopperOutPut文件夹",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
         {
@@ -36,6 +37,11 @@ namespace CSCECDEC.Plugin.CutDown
             {
                 return GH_Exposure.primary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            //   base.CustomAttributes(this,3);
+            m_attributes = new Hu_Attribute(this);
         }
         protected override string HelpDescription
         {
