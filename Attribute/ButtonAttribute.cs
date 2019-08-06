@@ -17,24 +17,22 @@ using Grasshopper.GUI;
 
 namespace CSCECDEC.Plugin.Attribute
 {
-    public class ButtonAttribute : GH_ComponentAttributes
+    class ButtonAttribute : GH_ComponentAttributes
     {
-        RectangleF ButtonRect;
-        Color ButtonColor = Color.Black;
-
-        //声明一个委托，并将其作为构造函数参数传递到类中
-        public delegate void MouseDownEventCallback(GH_Component Component);
-
-        //实例化委托
-        MouseDownEventCallback Callback;
-        GH_Component Component;
         string Text;
-
-        public ButtonAttribute(GH_Component owner, MouseDownEventCallback _Callback, string ButtonName) : base(owner) {
+        RectangleF ButtonRectF;
+        public Hu_AttributeUtil AttributeUtil;
+        //声明一个委托，并将其作为构造函数参数传递到类中
+        //实例化委托
+        public Action<IGH_Component> Callback;
+        GH_Component Component;
+        Color ButtonColor = Color.Gray;
+        public ButtonAttribute(GH_Component owner, Action<IGH_Component> _Callback, string ButtonName) : base(owner) {
 
             this.Component = owner;
             this.Callback = _Callback;
             this.Text = ButtonName;
+            this.AttributeUtil = new Hu_AttributeUtil(this.Owner);
         }
         public override void ExpireLayout()
         {
@@ -43,20 +41,22 @@ namespace CSCECDEC.Plugin.Attribute
         protected override void Layout()
         {
             base.Layout();
-            Bounds = new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height+24);
+            AttributeUtil.ComputeLayout(24);
         }
-
         protected override void Render(GH_Canvas canvas, System.Drawing.Graphics graphics, GH_CanvasChannel channel)
         {
             // base.Re(canvas, graphics, true, false, false, true, true, true);
-            base.Render(canvas, graphics, channel);
-
+            if(channel == GH_CanvasChannel.Wires)
+            {
+                base.Render(canvas, graphics, channel);
+            }
             if (channel == GH_CanvasChannel.Objects)
             {
-                GH_Capsule ButtonBox = GH_Capsule.CreateCapsule(new RectangleF(Bounds.Left, Bounds.Bottom, Bounds.Width - 6, 40), GH_Palette.Blue, new int[] { 1, 1, 1, 1 }, 2);
-                this.ButtonRect = new RectangleF(Bounds.Left + 3, Bounds.Bottom - 24, Bounds.Width - 6, 18);
-                GH_Capsule TextBox = GH_Capsule.CreateTextCapsule(this.ButtonRect, this.ButtonRect, GH_Palette.Grey, this.Text);
-                TextBox.Render(graphics, this.ButtonColor);
+                AttributeUtil.CompoundRender(graphics, canvas);
+                float W_Extend = GrasshopperPluginInfo.W_EXTEND;
+                this.ButtonRectF = new RectangleF(Bounds.Left, Bounds.Bottom-24, Bounds.Width, 18);
+                GH_Capsule TextBox = GH_Capsule.CreateTextCapsule(ButtonRectF,ButtonRectF,GH_Palette.Normal,this.Text,GH_FontServer.Standard,GH_Orientation.horizontal_center,1,0);
+                TextBox.Render(graphics, Color.Red);
             }
             #region
             /*
@@ -91,8 +91,8 @@ namespace CSCECDEC.Plugin.Attribute
 
             if (!Owner.Locked && e.Clicks == 2 && e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                if (ButtonRect.Contains(e.CanvasLocation)){
-                    this.Callback(this.Component);
+                if (ButtonRectF.Contains(e.CanvasLocation)){
+                    this.Callback(this.Owner);
                 }    
             }
             return base.RespondToMouseDoubleClick(sender, e);
@@ -101,7 +101,7 @@ namespace CSCECDEC.Plugin.Attribute
         {
             if (!Owner.Locked && e.Button != System.Windows.Forms.MouseButtons.Right)
             {
-                if (ButtonRect.Contains(e.CanvasLocation))
+                if (ButtonRectF.Contains(e.CanvasLocation))
                 {
                     this.ButtonColor = Color.LightGray;
                     sender.Refresh();
