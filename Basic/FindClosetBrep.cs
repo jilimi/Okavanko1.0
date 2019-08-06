@@ -17,7 +17,7 @@ namespace CSCECDEC.Plugin.Basic
         /// Initializes a new instance of the FindClosetBrep class.
         /// </summary>
         public FindClosetBrep()
-          : base("FindClosetBrep", "找到离点最近的Brep",
+          : base("FindClosetBrep", "FindClosetBrep",
               "找到距离指定点最近的N个曲面",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
         {

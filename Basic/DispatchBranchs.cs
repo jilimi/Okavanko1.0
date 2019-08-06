@@ -16,7 +16,7 @@ namespace CSCECDEC.Plugin.Basic
         /// Initializes a new instance of the DispatchBranchs class.
         /// </summary>
         public DispatchBranchs()
-          : base("DispatchBranchs", "对树状结构执行Dispatch操作",
+          : base("DispatchBranchs", "DispatchBranchs",
               "对树状数据结构执行类似于List的Dispatch的操作",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
         {

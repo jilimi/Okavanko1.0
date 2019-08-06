@@ -16,7 +16,7 @@ namespace CSCECDEC.Plugin.CutDown
         /// Initializes a new instance of the Point2SurveryData class.
         /// </summary>
         public Point2SurveryData()
-          : base("Point2SurveryData", "输出可测量的点",
+          : base("Point2SurveryData", "Point2SurveryData",
               "生成可供现场测量队伍使用的标准点位坐标字符串（单位：米）",
              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
         {

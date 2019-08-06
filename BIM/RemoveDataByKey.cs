@@ -5,6 +5,8 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
 
+using CSCECDEC.Plugin.Attribute;
+
 namespace CSCECDEC.Plugin.BIM
 {
     public class RemoveDataByKey : GH_Component
@@ -24,6 +26,12 @@ namespace CSCECDEC.Plugin.BIM
             {
                 return GH_Exposure.primary;
             }
+        }
+
+        public override void CreateAttributes()
+        {
+            //   base.CustomAttributes(this,3);
+            m_attributes = new Hu_Attribute(this);
         }
         /// <summary>
         /// Registers all the input parameters for this component.

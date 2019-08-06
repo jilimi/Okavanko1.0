@@ -17,7 +17,7 @@ using Grasshopper.GUI;
 
 namespace CSCECDEC.Plugin.Attribute
 {
-    public class RadioButtonAttribute : GH_ComponentAttributes
+    class RadioButtonAttribute : GH_ComponentAttributes
     {
         RectangleF RadioRect;
         Color RadioColor = Color.Black;
@@ -63,6 +63,7 @@ namespace CSCECDEC.Plugin.Attribute
             Point TextLocation = GH_Convert.ToRectangle(Rect).Location;
             TextLocation.Offset(10, -4);
             g.DrawString(Text, GH_FontServer.Standard, Brushes.Black,TextLocation);
+
             if (IsPress)
             {
                 g.DrawEllipse(new Pen(Color, 1), Rect);

@@ -5,6 +5,8 @@ using System.Linq;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
+using CSCECDEC.Plugin.Attribute;
+
 namespace CSCECDEC.Plugin.BIM
 {
     public class GetKeys : GH_Component
@@ -13,7 +15,7 @@ namespace CSCECDEC.Plugin.BIM
         /// Initializes a new instance of the GetUserDictKeys class.
         /// </summary>
         public GetKeys()
-          : base("GetKeys", "获取键值",
+          : base("GetKeys", "GetKeys",
               "获取自定义用户数据的键值",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
         {
@@ -31,6 +33,11 @@ namespace CSCECDEC.Plugin.BIM
             {
                 return "获取用户自定义数据中所有的‘键’。如有一条边AB的长度为24m，那么用'键-值'对的方式我们可以将其表示为:‘AB:24m’,那么AB为'键',24为值";
             }
+        }
+        public override void CreateAttributes()
+        {
+            //   base.CustomAttributes(this,3);
+            m_attributes = new Hu_Attribute(this);
         }
         /// <summary>
         /// Registers all the input parameters for this component.

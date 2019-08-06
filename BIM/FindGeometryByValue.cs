@@ -27,18 +27,12 @@ namespace CSCECDEC.Plugin.BIM
                 return GH_Exposure.secondary;
             }
         }
-       
         //委托只要传入参数一样即可
-        public void HandleMouseDubleClick(GH_Component Component)
-        {
-            RadioButtonAttribute Attr = this.Attributes as RadioButtonAttribute;
-           // System.Windows.Forms.MessageBox.Show(Attr.IsPress.ToString());
-        }
         public override void CreateAttributes()
         {
          //   base.CustomAttributes(this,3);
             //m_attributes = new ButtonAttribute(this,this.HandleMouseDubleClick,"Click Me");
-            m_attributes = new RadioButtonAttribute(this,this.HandleMouseDubleClick,"Click Me");
+            m_attributes = new Hu_Attribute(this);
         }
        
         /// <summary>

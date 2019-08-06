@@ -16,7 +16,7 @@ namespace CSCECDEC.Plugin.Basic
         /// Initializes a new instance of the ClusterPts class.
         /// </summary>
         public ClusterPts()
-          : base("ClusterPoints", "对点执行聚类操作",
+          : base("ClusterPoints", "ClusterPoints",
               "对点按坐标分量或者距离进行归类",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
         {

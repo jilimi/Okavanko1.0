@@ -9,6 +9,8 @@ using Grasshopper.Kernel.Data;
 using Microsoft.CSharp;
 using Rhino.Runtime;
 
+using CSCECDEC.Plugin.Attribute;
+
 namespace CSCECDEC.Plugin.CutDown
 {
     public class GroupDataByKeys : GH_Component
@@ -35,6 +37,11 @@ namespace CSCECDEC.Plugin.CutDown
             {
                 return "根据目标物体的'键-值'对对目标物体进行分组";
             }
+        }
+        public override void CreateAttributes()
+        {
+            //   base.CustomAttributes(this,3);
+            m_attributes = new Hu_Attribute(this);
         }
         /// <summary>
         /// Registers all the input parameters for this component.
@@ -97,41 +104,6 @@ namespace CSCECDEC.Plugin.CutDown
             {
                 this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, Ex.Message);
             }
-        }
-        private List<GeometryBase> ConvertToGeometryBaseList(List<IGH_GeometricGoo> GeomList)
-        {
-            List<GeometryBase> OutPutList = new List<GeometryBase>();
-
-            foreach(var item in GeomList)
-            {
-                GH_Curve Crv = item as GH_Curve;
-                GH_Brep Brep = item as GH_Brep;
-                GH_Mesh Mesh = item as GH_Mesh;
-                GH_Line Line = item as GH_Line;
-                GH_Surface Srf = item as GH_Surface;
-                GH_Arc Arc = item as GH_Arc;
-                GH_Circle Circle = item as GH_Circle;
-                GH_Rectangle Rect = item as GH_Rectangle;
-
-                if (Crv != null)
-                    OutPutList.Add(Crv.Value);
-                else if (Brep != null)
-                    OutPutList.Add(Brep.Value);
-                else if (Mesh != null)
-                    OutPutList.Add(Mesh.Value);
-                else if (Line != null)
-                    OutPutList.Add(new LineCurve(Line.Value));
-                else if (Srf != null)
-                    OutPutList.Add(Srf.Value);
-                else if (Arc != null)
-                    OutPutList.Add(new ArcCurve(Arc.Value));
-                else if (Circle != null)
-                    OutPutList.Add(new ArcCurve(Circle.Value));
-                else if (Rect != null)
-                    //这个地方比较奇特，Polyline可以看作是点的组合
-                    OutPutList.Add(new PolylineCurve(Rect.Value.ToPolyline()));
-            }
-            return OutPutList;
         }
         /// <summary>
         /// Provides an Icon for the component.

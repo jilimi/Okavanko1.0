@@ -16,7 +16,7 @@ namespace CSCECDEC.Plugin.CutDown
         /// Initializes a new instance of the CreateGridPoint class.
         /// </summary>
         public CreateGridPoint()
-          : base("CreateGridPoint", "创建点列",
+          : base("CreateGridPoint", "CreateGridPoint",
               "创建点集，一般需要结合Cplane来使用，主要用于Grasshopper中下料展平",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
         {

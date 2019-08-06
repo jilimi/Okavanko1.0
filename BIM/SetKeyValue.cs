@@ -10,6 +10,8 @@ using GH_IO.Serialization;
 using System.Text.RegularExpressions;
 using System.Linq;
 using Grasshopper.Kernel.Types;
+
+using CSCECDEC.Plugin.Attribute;
 //using GH_IO;
 
 namespace CSCECDEC.Plugin.BIM
@@ -17,14 +19,14 @@ namespace CSCECDEC.Plugin.BIM
     /// <summary>
     /// 
     /// </summary>
-    public class SetValue : GH_Component
+    public class SetKeyValue : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the AddDataToObject class.
         /// </summary>
        // GH_Archive archive = new GH_Archive();
-        public SetValue()
-          : base("SetValue", "给几何体附加信息",
+        public SetKeyValue()
+          : base("SetKeyValue", "SetKeyValue",
               "为几何体（点除外）添加额外的信息,'编号'为预设键值，请不要作为键值输入",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
         {
@@ -35,6 +37,16 @@ namespace CSCECDEC.Plugin.BIM
             {
                 return GH_Exposure.primary;
             }
+        }
+
+        public override void CreateAttributes()
+        {
+            //   base.CustomAttributes(this,3);
+            m_attributes = new Hu_Attribute(this);
+        }
+        private void HandleMouseDubleClick()
+        {
+            System.Windows.Forms.MessageBox.Show("Hello World");
         }
         /// <summary>
         /// Registers all the input parameters for this component.

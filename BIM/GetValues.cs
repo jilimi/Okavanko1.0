@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
+using CSCECDEC.Plugin.Attribute;
 
 namespace CSCECDEC.Plugin.BIM
 {
@@ -13,7 +14,7 @@ namespace CSCECDEC.Plugin.BIM
         /// Initializes a new instance of the GetDictValues class.
         /// </summary>
         public GetValues()
-          : base("GetValues", "获取自定义数据",
+          : base("GetValues", "GetValues",
               "获取几何体的值",
              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
         {
@@ -32,7 +33,11 @@ namespace CSCECDEC.Plugin.BIM
         {
             pManager.AddGeometryParameter("Geom", "G", "含有用户自定义数据的几何体", GH_ParamAccess.item);
         }
-
+        public override void CreateAttributes()
+        {
+            //   base.CustomAttributes(this,3);
+            m_attributes = new Hu_Attribute(this);
+        }
         /// <summary>
         /// Registers all the output parameters for this component.
         /// </summary>

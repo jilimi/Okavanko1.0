@@ -4,6 +4,7 @@ using System.Drawing;
 
 using Grasshopper.Kernel;
 using Rhino.Geometry;
+using CSCECDEC.Plugin.Attribute;
 
 namespace CSCECDEC.Plugin.BIM
 {
@@ -13,7 +14,7 @@ namespace CSCECDEC.Plugin.BIM
         /// Initializes a new instance of the GetUserString class.
         /// </summary>
         public GetUserString()
-          : base("GetValueByKey", "根据键值获取附加信息",
+          : base("GetValueByKey", "GetValueByKey",
               "用于获取几何体的附加信息",
              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
         {
@@ -24,6 +25,11 @@ namespace CSCECDEC.Plugin.BIM
             {
                 return GH_Exposure.primary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            //   base.CustomAttributes(this,3);
+            m_attributes = new Hu_Attribute(this);
         }
         /// <summary>
         /// Registers all the input parameters for this component.

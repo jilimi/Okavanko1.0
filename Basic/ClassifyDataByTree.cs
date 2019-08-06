@@ -16,7 +16,7 @@ namespace CSCECDEC.Plugin.Basic
         /// Initializes a new instance of the ClassifyByTree class.
         /// </summary>
         public ClassifyDataByTree()
-          : base("ClassifyDataByTree", "对数据进行分组",
+          : base("ClassifyDataByTree", "ClassifyDataByTree",
               "对数据列按一定的区间进行分组",
               GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
         {
