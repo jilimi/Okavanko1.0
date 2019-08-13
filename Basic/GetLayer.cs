@@ -39,8 +39,6 @@ namespace CSCECDEC.Plugin.Basic
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("Name", "N", "输入图层名称或索引，如果对应名称有多个，则以第一个图层作为目标图层", GH_ParamAccess.item);
-            pManager[0].Optional = true;
         }
         /// <summary>
         /// Registers all the output parameters for this component.
@@ -92,30 +90,16 @@ namespace CSCECDEC.Plugin.Basic
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            
-            string LayerName = null;
-            DA.GetData(0, ref LayerName);
+
             //不通过对话框设置
-            if(this.LayerIndex == -1)
+            if (this.LayerIndex == -1)
             {
-                int Temp_LayerIndex = Rhino.RhinoDoc.ActiveDoc.Layers.FindByFullPath(LayerName, -1);
-                OutputLayer = Rhino.RhinoDoc.ActiveDoc.Layers.FindIndex(Temp_LayerIndex);
-                if (OutputLayer == null)
-                {
-                    if(LayerName == null)
-                    {
-                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "请先选取或设置图层");
-                    }else
-                    {
-                        this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, string.Format("{0}不属于有效图层", LayerName.ToString()));
-                    }
-                }
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "请先选取或设置图层");
             }
             else
             {
                 OutputLayer = Rhino.RhinoDoc.ActiveDoc.Layers.FindIndex(LayerIndex);
-
-                if(OutputLayer == null)
+                if (OutputLayer == null)
                 {
                     this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, string.Format("索引为：{0}的图层不是有效图层", LayerIndex));
                 }

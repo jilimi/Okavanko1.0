@@ -13,19 +13,62 @@ using Rhino.Geometry;
 
 namespace CSCECDEC.Plugin.Types
 {
-    class Hu_Dimention:AnnotationBase
+    class Hu_Dimention:GH_Goo<LinearDimension>
     {
-        public Curve DimCrv;
-        public Plane DimPl;
-        public string DimText;
-        public double DimSize;
+        public Curve Curve;
+        public Plane Plane;
+        public string Text;
+        public double StyleIndex;
+        public double Dis = 0;
+        public bool Align = false;
 
-        public Hu_Dimention(Curve Crv,Plane Plane,string Text, double Size):base()
+        public Hu_Dimention(Curve Crv,Plane Plane,string Text, int StyleIndex,double Dist,bool Align):base()
         {
-            this.DimCrv = Crv;
-            this.DimPl = Plane;
-            this.DimText = Text;
-            this.DimSize = Size;
+            this.Curve = Crv;
+            this.Plane = Plane;
+            this.Text = Text;
+            this.StyleIndex = StyleIndex;
+            this.Align = Align;
+        }
+        public Hu_Dimention(Hu_Dimention Dim) : base()
+        {
+            this.Curve = Dim.Curve;
+            this.Plane = Dim.Plane;
+            this.Text = Dim.Text;
+            this.StyleIndex = Dim.StyleIndex;
+            this.Align = Dim.Align;
+        }
+        public override bool IsValid
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "线性标注";
+            }
+        }
+
+        public override string TypeDescription
+        {
+            get
+            {
+                return "线性标注，用于几何体的尺寸标注";
+            }
+        }
+        public override IGH_Goo Duplicate()
+        {
+            return new Hu_Dimention(this);
+        }
+
+        public override string ToString()
+        {
+            return "LinearDimention";
         }
     }
 }

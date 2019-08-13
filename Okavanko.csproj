@@ -88,17 +88,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\ButtonControl.cs" />
+    <Compile Include="Attribute\ObjectDraw.cs" />
     <Compile Include="Attribute\HuAttributeUtil.cs" />
     <Compile Include="Attribute\ButtonAttribute.cs" />
     <Compile Include="Attribute\DropDownAttribute.cs" />
     <Compile Include="Attribute\Hu_Attribute.cs" />
     <Compile Include="Attribute\RadioButtonAttribute.cs" />
+    <Compile Include="Attribute\RadioButtonControl.cs" />
     <Compile Include="Basic\AddLayer.cs" />
     <Compile Include="Basic\ArcDimention.cs" />
-    <Compile Include="Basic\Attribute.cs" />
     <Compile Include="Basic\BakeGeometry.cs" />
     <Compile Include="Basic\ClassifyDataByTree.cs" />
     <Compile Include="Basic\ClusterPts.cs" />
+    <Compile Include="Basic\ObjectAttribute.cs" />
     <Compile Include="Basic\DropDown.cs" />
     <Compile Include="Basic\ExtrudeBothSide.cs" />
     <Compile Include="Basic\GetLayer.cs" />
@@ -109,11 +112,13 @@
     <Compile Include="Basic\GroupByType.cs" />
     <Compile Include="Basic\CreateSolidByOffsetSrf.cs" />
     <Compile Include="Basic\RadiDimention.cs" />
+    <Compile Include="Basic\SplitCurve.cs" />
     <Compile Include="BIM\AttachGeometry.cs" />
-    <Compile Include="BIM\FindGeometryByValue - Copy.cs" />
     <Compile Include="CutMaterial\Optimization.cs" />
     <Compile Include="CutMaterial\PaperFrame.cs" />
     <Compile Include="CutMaterial\TableCeller.cs" />
+    <Compile Include="Dimension\LinearDimension.cs" />
+    <Compile Include="Dimension\DimStyle.cs" />
     <Compile Include="Forms\LayerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,7 +160,7 @@
     <Compile Include="Hu\Hu_SortByArea.cs" />
     <Compile Include="Hu\Hu_SortCrv.cs" />
     <Compile Include="Hu\Hu_SortPts.cs" />
-    <Compile Include="Params\GH_ADimention.cs" />
+    <Compile Include="Params\GH_Adimention.cs" />
     <Compile Include="Params\GH_AngularDim.cs" />
     <Compile Include="Params\GH_Dimention.cs" />
     <Compile Include="Params\GH_Layer.cs" />

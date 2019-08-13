@@ -24,6 +24,9 @@ namespace CSCECDEC.Plugin.CutDown
         /// <summary>
         /// Initializes a new instance of the CreateExcelFile class.
         /// </summary>
+        /// 
+        bool IsOutput = false;
+        string DefaultFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + "GrasshopperOutPut";
         public CreateExcelFile()
           : base("ExportExcel", "ExportExcel",
               "将输入的数据导出Excel,生成的文件默认位于桌面的GrasshopperOutPut文件夹",
@@ -41,7 +44,17 @@ namespace CSCECDEC.Plugin.CutDown
         public override void CreateAttributes()
         {
             //   base.CustomAttributes(this,3);
-            m_attributes = new Hu_Attribute(this);
+            //m_attributes = new ButtonAttribute(this,Do_ButtonMouseDown,Do_ButtonMouseUp,"HelloWorld");
+        }
+        public void Do_ButtonMouseDown(IGH_Component Component)
+        {
+            this.IsOutput = true;
+            this.ExpireSolution(true);
+        }
+        public void Do_ButtonMouseUp(IGH_Component Component)
+        {
+            this.IsOutput = false;
+            this.ExpireSolution(true);
         }
         protected override string HelpDescription
         {
@@ -58,11 +71,10 @@ namespace CSCECDEC.Plugin.CutDown
             pManager.AddTextParameter("FileName", "F", "导出的Excel文件的名称", GH_ParamAccess.item);
             pManager.AddTextParameter("SheetName", "S", "Excel表格名称", GH_ParamAccess.list);
             pManager.AddTextParameter("Data", "D", "需要导出的数据，每个树枝会生成一个表格，有多少个树枝就会生成多少个表格,每个数据之间用逗号隔开", GH_ParamAccess.tree);
-            pManager.AddTextParameter("FilePath", "P", "保存输出文件的路径,如果不输入", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("Output", "O", "是否导出Excel数据", GH_ParamAccess.item, false);
+            pManager.AddTextParameter("FilePath", "P", "保存输出文件的路径,如果不输入", GH_ParamAccess.item, DefaultFolder);
 
             pManager[1].Optional = true;
-            pManager[4].Optional = true;
+            pManager[3].Optional = true;
 
         }
 
@@ -84,7 +96,6 @@ namespace CSCECDEC.Plugin.CutDown
             GH_Structure<GH_String> BodyData = new GH_Structure<GH_String>();
             List<GH_String> ReConstructSheetNames = new List<GH_String>();
 
-            bool IsOutPut = false;
             string FileName = null;
             string FilePath = null;
 
@@ -92,12 +103,11 @@ namespace CSCECDEC.Plugin.CutDown
             if(!DA.GetDataList<GH_String>(1, SheetNames))return;
             if(!DA.GetDataTree<GH_String>(2, out BodyData))return;
             if(!DA.GetData(3, ref FilePath))return;
-            if(!DA.GetData(4, ref IsOutPut))return;
 
             ExcelPackage ExcelFile = new ExcelPackage();
             ExcelWorkbook Wb = ExcelFile.Workbook;
 
-            if (!IsOutPut) return;
+            if (!this.IsOutput) return;
 
             //Write Excel
             int BodyBranchsCount = BodyData.Branches.Count;
@@ -156,20 +166,11 @@ namespace CSCECDEC.Plugin.CutDown
         }
         private string CreateSavePath(string FilePath)
         {
-            bool IsPathExist = System.IO.Directory.Exists(FilePath);
-            if (IsPathExist)
-            {
-                string Folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + "GrasshopperOutPut";
-                if (System.IO.Directory.Exists(Folder))
-                    return Folder;
-                else
-                    System.IO.Directory.CreateDirectory(Folder);
-                return Folder;
 
-            }else
-            {
-                return FilePath;
-            }
+            bool IsPathExist = System.IO.Directory.Exists(FilePath);
+            if (IsPathExist) return FilePath;
+            if (!System.IO.Directory.Exists(DefaultFolder)) System.IO.Directory.CreateDirectory(DefaultFolder);
+            return DefaultFolder;
         }
         /// <summary>
         /// Provides an Icon for the component.

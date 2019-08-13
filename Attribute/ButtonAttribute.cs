@@ -14,9 +14,10 @@ using System.Drawing;
 using CSCECDEC.Plugin.Basic;
 using CSCECDEC.Plugin.BIM;
 using Grasshopper.GUI;
+using System.Windows.Forms;
 
 namespace CSCECDEC.Plugin.Attribute
-{
+{   
     class ButtonAttribute : GH_ComponentAttributes
     {
         string Text;
@@ -24,14 +25,27 @@ namespace CSCECDEC.Plugin.Attribute
         public Hu_AttributeUtil AttributeUtil;
         //声明一个委托，并将其作为构造函数参数传递到类中
         //实例化委托
-        public Action<IGH_Component> Callback;
         GH_Component Component;
-        Color ButtonColor = Color.Gray;
-        public ButtonAttribute(GH_Component owner, Action<IGH_Component> _Callback, string ButtonName) : base(owner) {
+        //
+        Color ButtonColor = Color.FromArgb(255, 149, 151, 153);
+        List<ButtonControl> ButtonList = new List<ButtonControl>();
+        ButtonControl Button = null;
+        ButtonControl PressButton = null;
+
+        public ButtonAttribute(GH_Component owner, List<ButtonControl> ButtonList , string Text) : base(owner) {
 
             this.Component = owner;
-            this.Callback = _Callback;
-            this.Text = ButtonName;
+            this.ButtonList = ButtonList;
+            this.Text = Text;
+            this.AttributeUtil = new Hu_AttributeUtil(this.Owner);
+        }
+        [Obsolete]
+        public ButtonAttribute(GH_Component owner, ButtonControl Button, string Text) : base(owner)
+        {
+
+            this.Component = owner;
+            this.Button = Button;
+            this.Text = Text;
             this.AttributeUtil = new Hu_AttributeUtil(this.Owner);
         }
         public override void ExpireLayout()
@@ -41,22 +55,25 @@ namespace CSCECDEC.Plugin.Attribute
         protected override void Layout()
         {
             base.Layout();
-            AttributeUtil.ComputeLayout(24);
+            AttributeUtil.ComputeLayout(24*this.ButtonList.Count);
         }
         protected override void Render(GH_Canvas canvas, System.Drawing.Graphics graphics, GH_CanvasChannel channel)
         {
             // base.Re(canvas, graphics, true, false, false, true, true, true);
             if(channel == GH_CanvasChannel.Wires)
             {
+                AttributeUtil.RenderBounds(graphics);
                 base.Render(canvas, graphics, channel);
             }
             if (channel == GH_CanvasChannel.Objects)
             {
+                this.ButtonRectF = new RectangleF(Bounds.Left, Bounds.Bottom - 24, Bounds.Width, 18);
                 AttributeUtil.CompoundRender(graphics, canvas);
-                float W_Extend = GrasshopperPluginInfo.W_EXTEND;
-                this.ButtonRectF = new RectangleF(Bounds.Left, Bounds.Bottom-24, Bounds.Width, 18);
-                GH_Capsule TextBox = GH_Capsule.CreateTextCapsule(ButtonRectF,ButtonRectF,GH_Palette.Normal,this.Text,GH_FontServer.Standard,GH_Orientation.horizontal_center,1,0);
-                TextBox.Render(graphics, Color.Red);
+                ObjectDraw.DrawButton(graphics, this.ButtonRectF, this.Text, this.ButtonColor, false);
+                this.ButtonList.ForEach(item =>
+                {
+                    item.OnDraw(graphics);
+                });
             }
             #region
             /*
@@ -86,35 +103,32 @@ namespace CSCECDEC.Plugin.Attribute
               */
             #endregion
         }
-        public override GH_ObjectResponse RespondToMouseDoubleClick(GH_Canvas sender, GH_CanvasMouseEvent e)
-        {
-
-            if (!Owner.Locked && e.Clicks == 2 && e.Button == System.Windows.Forms.MouseButtons.Left)
-            {
-                if (ButtonRectF.Contains(e.CanvasLocation)){
-                    this.Callback(this.Owner);
-                }    
-            }
-            return base.RespondToMouseDoubleClick(sender, e);
-        }
-        public override GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e)
+       public override GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e)
         {
             if (!Owner.Locked && e.Button != System.Windows.Forms.MouseButtons.Right)
             {
-                if (ButtonRectF.Contains(e.CanvasLocation))
+                List<ButtonControl> PressButtons = this.ButtonList.Where(item => item.Bounds.Contains(e.CanvasLocation)).ToList();
+                if (PressButtons.Count != 0)
                 {
-                    this.ButtonColor = Color.LightGray;
-                    sender.Refresh();
+                    this.PressButton = PressButtons[0];
+                    this.PressButton.IsPress = true;
+                    this.PressButton.PressInCallback(this.Owner);
                 }
             }
             return base.RespondToMouseDown(sender, e);
         }
+        //sender其实就是canvas
         public override GH_ObjectResponse RespondToMouseUp(GH_Canvas sender, GH_CanvasMouseEvent e)
         {
             if (!Owner.Locked && e.Button != System.Windows.Forms.MouseButtons.Right)
             {
-                this.ButtonColor = Color.Gray;
-                sender.Refresh();
+                if (this.PressButton.IsPress)
+                {
+                    this.PressButton.PressOutCallback(this.Owner);
+                    this.ButtonColor = Color.FromArgb(255, 149, 151, 153);
+                    this.PressButton.IsPress = false;
+                    sender.Refresh();
+                }
             }
             return base.RespondToMouseUp(sender, e);
         }

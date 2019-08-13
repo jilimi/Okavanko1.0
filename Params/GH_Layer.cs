@@ -18,9 +18,9 @@ namespace CSCECDEC.Plugin.Params
 {
     public class GH_Layer : GH_PersistentParam<Types.Hu_Layer>
     {
-        public GH_Layer():base(new GH_InstanceDescription("Layer","L","An Component to Hold Rhino Layer","Params"))
+        public GH_Layer():base(new GH_InstanceDescription("Layer","L","An Component to Hold Rhino Layer", "Params", "Okavango"))
         {
-
+            
         }
 
         public override GH_Exposure Exposure
@@ -29,10 +29,6 @@ namespace CSCECDEC.Plugin.Params
             {
                 return GH_Exposure.primary;
             }
-        }
-        protected override Hu_Layer InstantiateT()
-        {
-            return new Hu_Layer();
         }
         public override void AppendAdditionalMenuItems(ToolStripDropDown menu)
         {

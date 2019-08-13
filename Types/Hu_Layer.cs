@@ -16,12 +16,13 @@ namespace CSCECDEC.Plugin.Types
     {
         public Hu_Layer()
         {
-            this.Value = null;
+            this.Value = new Layer();
         }
-        public Hu_Layer(string LayerString)
+        public Hu_Layer(string LayerName)
         {
-            LayerTable LT = Rhino.RhinoDoc.ActiveDoc.Layers;
-            this.Value = LT.FindIndex(LT.FindByFullPath(LayerString, -1));
+            Layer _Layer = new Layer();
+            _Layer.Name = LayerName;
+            this.Value = _Layer;
         }
         public Hu_Layer(int LayerIndex)
         {
@@ -63,12 +64,27 @@ namespace CSCECDEC.Plugin.Types
                 return "An Wrapper of Rhino Layer";
             }
         }
-
+        public override object ScriptVariable()
+        {
+            return this.Value;
+        }
         public override string TypeName
         {
             get
             {
-                return "Goo_Layer";
+                return "Layer";
+            }
+        }
+        public override Layer Value
+        {
+            get
+            {
+                return base.Value;
+            }
+
+            set
+            {
+                base.Value = value;
             }
         }
         public override IGH_Goo Duplicate()
@@ -87,7 +103,7 @@ namespace CSCECDEC.Plugin.Types
         }
         public override string ToString()
         {
-            return string.Format("{0}-{1}",this.Value.Index,this.Value.FullPath);
+            return this.Value.FullPath;
         }
         public override bool CastFrom(object source)
         {
@@ -128,22 +144,26 @@ namespace CSCECDEC.Plugin.Types
                 int Index = LT.FindByFullPath(Name,-1);
                 if (Index == -1)
                 {
-                    Rhino.DocObjects.Layer La = LT.FindName(Name);
-                    if(La == null)
-                    {
-                        Value = null;
-                        return false;
-                    }else
-                    {
-                        Value = La;
-                        return true;
-                    }
+                    Rhino.DocObjects.Layer La = new Layer();
+                    La.Name = Name;
+                    Value = La;
+                    return true;
                 }
                 else
                 {
                     Value = LT.FindIndex(Index);
                     return true;
                 }
+            }
+            if(source.GetType() == typeof(Layer))
+            {
+                Value = (Layer)source;
+                return true;
+            }
+            if(source.GetType() == typeof(Hu_Layer))
+            {
+                Value = ((Hu_Layer)source).Value;
+                return true;
             }
             return false;
         }

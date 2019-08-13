@@ -22,7 +22,7 @@ namespace CSCECDEC.Plugin.Basic
         }
         public override void CreateAttributes()
         {
-            this.m_attributes = new DropDownAttribute(this);
+           // this.m_attributes = new DropDownAttribute(this);
         }
         /// <summary>
         /// Registers all the input parameters for this component.

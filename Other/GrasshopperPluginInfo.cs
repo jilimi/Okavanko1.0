@@ -21,7 +21,9 @@ namespace CSCECDEC.Plugin
         public static readonly string BIMCATATORY = "BIM"; 
         public static readonly string PREVIEWCATATORY = "预览";
         public static readonly string CUTDOWNCATATORY = "下料";
+        public static readonly string DIMENSIONCATATORY = "标注";
         public static readonly string PERSONAL = "For Hudson Personal";
+        //控制电池的样式
         public const float W_EXTEND = 18;
         public static readonly float GRIDEGAPE = 8;
         public static readonly float H_EXTEND = 8;

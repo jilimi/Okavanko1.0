@@ -15,9 +15,18 @@ namespace CSCECDEC.Plugin.Attribute
 {
     class DropDownAttribute:GH_ComponentAttributes
     {
-        public DropDownAttribute(GH_Component owner) : base(owner)
+        Hu_AttributeUtil AttributeUtil;
+        Action<IGH_Component> Callback;
+        IGH_Component Component;
+        string Text;
+
+        public DropDownAttribute(GH_Component owner,Action<IGH_Component> Callback,string Text) : base(owner)
         {
 
+            this.Component = owner;
+            this.Callback = Callback;
+            this.Text = Text;
+            this.AttributeUtil = new Hu_AttributeUtil(this.Owner);
         }
         public override void ExpireLayout()
         {
@@ -27,10 +36,9 @@ namespace CSCECDEC.Plugin.Attribute
         {
             base.Layout();
             Bounds = new RectangleF(Bounds.X, Bounds.Y, Bounds.Width + 10, Bounds.Height);
-
-            //这是必须的；
             RectangleF rect = Owner.Params.Output[0].Attributes.Bounds;
             Owner.Params.Output[0].Attributes.Bounds = new RectangleF(rect.X, rect.Y, rect.Width + 10, rect.Height);
+           // this.AttributeUtil.ComputeLayout(0)
         }
         private void DrawTrignale(Graphics g,RectangleF RectF)
         {

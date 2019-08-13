@@ -17,7 +17,6 @@ namespace CSCECDEC.Plugin.Attribute
 {
     sealed class Hu_AttributeUtil
     {
-        private float DefaultHeight = 0;
         private IGH_Component Component;
         private float ExtendWidth = 0;
         private float ExtendHeight = 0;
@@ -37,8 +36,6 @@ namespace CSCECDEC.Plugin.Attribute
             this.ExtendWidth = ExtendWidth;
             this.ExtendHeight = ExtendHeight;
 
-            this.DefaultHeight = this.Component.Attributes.Bounds.Height;
-
             this.Component.Attributes.Bounds = new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bound_Height);
         }
         private void ComputePramGridBounds()
@@ -53,7 +50,7 @@ namespace CSCECDEC.Plugin.Attribute
 
             for (int Index = 0; Index < InputCount; Index++)
             {
-                float Grid_Height = this.DefaultHeight / InputCount;
+                float Grid_Height = (this.Component.Attributes.Bounds.Height - this.ExtendHeight) / InputCount;
                 float Param_Width = this.Component.Params.InputWidth;
 
                 float Pos_X = Bounds.Left;
@@ -64,7 +61,7 @@ namespace CSCECDEC.Plugin.Attribute
             //Output Params
             for (int Index = 0; Index < OutputCount; Index++)
             {
-                float Grid_Height = this.DefaultHeight/ OutputCount;
+                float Grid_Height = (this.Component.Attributes.Bounds.Height - this.ExtendHeight) / OutputCount;
                 float Param_Width = this.Component.Params.OutputWidth;
 
                 float Pos_X = Bounds.Right - Param_Width;
@@ -73,7 +70,7 @@ namespace CSCECDEC.Plugin.Attribute
                 Outputs[Index].Attributes.Bounds = new RectangleF(Pos_X, Pos_Y, this.Component.Params.OutputWidth, Grid_Height);
             }
         }
-        private void _DrawPramGrid(Graphics g)
+        public void _DrawPramGrid(Graphics g)
         {
             List<IGH_Param> Inputs = this.Component.Params.Input;
             List<IGH_Param> Outputs = this.Component.Params.Output;
@@ -104,14 +101,14 @@ namespace CSCECDEC.Plugin.Attribute
 
             for (int Index = 0; Index < InputCount; Index++)
             {
-                float Grid_Height = this.DefaultHeight / InputCount;
+                float Grid_Height = (this.Component.Attributes.Bounds.Height-this.ExtendHeight) / InputCount;
                 RectangleF ParamBounds = InputParam[Index].Attributes.Bounds;
                 PointF GridLocation = new PointF(ParamBounds.X,ParamBounds.Y+ParamBounds.Height/2);
                 GH_CapsuleRenderEngine.RenderInputGrip(g, canvas.Viewport.Zoom, GridLocation, true);
             }
             for (int Index = 0; Index < OutputCount; Index++)
             {
-                float Grid_Height = this.DefaultHeight / OutputCount;
+                float Grid_Height = (this.Component.Attributes.Bounds.Height - this.ExtendHeight) / OutputCount;
                 RectangleF ParamBounds = OutputParam[Index].Attributes.Bounds;
                 PointF GridLocation = new PointF(ParamBounds.X+ParamBounds.Width, ParamBounds.Y + ParamBounds.Height / 2);
                 GH_CapsuleRenderEngine.RenderInputGrip(g, canvas.Viewport.Zoom, GridLocation, true);
@@ -130,42 +127,29 @@ namespace CSCECDEC.Plugin.Attribute
         }
         public void ComputeLayout(float Height, float Width = GrasshopperPluginInfo.W_EXTEND)
         {
-            this.ComputePramGridBounds();
+            //还需要注意这里的先后顺序
+            //先计算边界，然后在计算Param的Bounds
+            //否则将会渲染的不正确
             this.ComputeBounds(Width, Height);
+            this.ComputePramGridBounds();
         }
         public void CompoundRender(Graphics g,GH_Canvas canvas)
         {
-            this.RenderBounds(g);
             this.RenderParamsGripPoints(g,canvas);
             if (Grasshopper.CentralSettings.CanvasObjectIcons)
             {
                 this.DrawIcon(g);
-
             }
             else
             {
-                //render component name
-                if (Grasshopper.CentralSettings.CanvasFullNames)
-                {
-                    this.DrawComponentName(g, true);
-                }
-                else
-                {
-                    this.DrawComponentName(g, true);
-                }
+                if (Grasshopper.CentralSettings.CanvasFullNames) this.DrawComponentName(g, true);
+                else this.DrawComponentName(g, false);
             }
-            //render parameter name
-            if (Grasshopper.CentralSettings.CanvasFullNames)
-            {
-                this.RenderParamName(g,true);
-            }
-            else
-            {
-                this.RenderParamName(g, false);
-            }
+            if (Grasshopper.CentralSettings.CanvasFullNames) this.RenderParamName(g, true);
+            else this.RenderParamName(g, false);
         }
         //点击等效果到这里修改
-        private void RenderBounds(Graphics g)
+        public void RenderBounds(Graphics g)
         {
             //Error Red
             //Warning Yellow
@@ -173,11 +157,12 @@ namespace CSCECDEC.Plugin.Attribute
             //Locked Dark
             //Normal Grey
             bool LeftJagged = false, RightJagged = false;
-            Color Palette = Color.FromArgb(20, 0, 0, 0);
-            if (this.Component.RuntimeMessageLevel == GH_RuntimeMessageLevel.Error) Palette = Color.FromArgb(80, 255, 0, 0);
-            if (this.Component.RuntimeMessageLevel == GH_RuntimeMessageLevel.Warning) Palette = Color.FromArgb(80, 255, 255, 0);
-            if (this.Component.Attributes.Selected) Palette = Color.FromArgb(80, 0, 255, 0);
-            if (this.Component.Locked) Palette = Color.FromArgb(80, 0, 0, 0);
+            Color Palette = Color.FromArgb(255, 209, 212, 214);
+
+            if (this.Component.RuntimeMessageLevel == GH_RuntimeMessageLevel.Error) Palette = Color.FromArgb(255, 239, 62, 71);
+            if (this.Component.RuntimeMessageLevel == GH_RuntimeMessageLevel.Warning) Palette = Color.FromArgb(255, 252, 228, 76);
+            if (this.Component.Attributes.Selected) Palette = Color.FromArgb(255, 46, 186, 62);
+            if (this.Component.Locked) Palette = Color.FromArgb(255, 157, 159, 161);
 
             RectangleF Bounds = this.Component.Attributes.Bounds;
             if (this.Component.Params.Input.Count == 0) LeftJagged = true;
@@ -199,6 +184,8 @@ namespace CSCECDEC.Plugin.Attribute
         }
         private void RenderParamName(Graphics g,bool IsFullName)
         {
+
+           
             Pen _Pen = new Pen(Color.Black, 1);
             Brush _Brush = _Pen.Brush;
 
@@ -217,7 +204,7 @@ namespace CSCECDEC.Plugin.Attribute
 
             for (int Index = 0; Index < InputCount; Index++)
             {
-                float Grid_Height = this.DefaultHeight/ InputCount;
+                float Grid_Height = (this.Component.Attributes.Bounds.Height - this.ExtendHeight) / InputCount;
                 RectangleF ParamBounds = InputParam[Index].Attributes.Bounds;
                 string Text = IsFullName ? InputParam[Index].Name : InputParam[Index].NickName;
 
@@ -231,8 +218,8 @@ namespace CSCECDEC.Plugin.Attribute
             for (int Index = 0; Index < OutputCount; Index++)
             {
                 RectangleF ParamBounds = OutputParam[Index].Attributes.Bounds;
-                float Grid_Height = this.DefaultHeight / OutputCount;
-                string Text = IsFullName ? InputParam[Index].Name : InputParam[Index].NickName;
+                float Grid_Height = (this.Component.Attributes.Bounds.Height - this.ExtendHeight) / OutputCount;
+                string Text = IsFullName ? OutputParam[Index].Name : OutputParam[Index].NickName;
 
                 float Point_X = ParamBounds.Right - this.Component.Params.OutputWidth-2;
                 float Point_Y = ParamBounds.Top;
@@ -247,14 +234,25 @@ namespace CSCECDEC.Plugin.Attribute
             Pen _Pen = new Pen(Color.Black, 1);
             Brush _Brush = _Pen.Brush;
             string Text = IsFullName? this.Component.Name: this.Component.NickName;
-            GH_ComponentAttributes Com_Attributes = this.Component.Attributes as GH_ComponentAttributes;
+            RectangleF ContentBox = (this.Component.Attributes as GH_ComponentAttributes).ContentBox;
 
             SizeF NameSize = GH_FontServer.MeasureString(Text, GH_FontServer.Large);
             float TextWidth = NameSize.Width;
             float TextHeight = NameSize.Height;
             //ContentBox is the property and m_innerBounds is the field
             StringFormat Format = new StringFormat(StringFormatFlags.DirectionVertical);
-            g.DrawString(Text, GH_FontServer.Large, _Brush, Com_Attributes.ContentBox, Format);
+            Format.Alignment = StringAlignment.Center;
+            //先存储Graphics的状态
+            //对Graphics执行操作
+            GraphicsState State = g.Save();
+            //修改旋转中心点
+            g.TranslateTransform(ContentBox.X + ContentBox.Width / 2, ContentBox.Y + ContentBox.Height / 2);
+            g.RotateTransform(-180);
+            g.TranslateTransform(-(ContentBox.X + ContentBox.Width / 2), -(ContentBox.Y + ContentBox.Height / 2));
+            //回复旋转中心点
+            g.DrawString(Text, GH_FontServer.Large, _Brush, ContentBox, Format);
+           // 恢复Graphics的状态，否则Parameter Name的绘制将会出错
+            g.Restore(State);
         }
     }
 }

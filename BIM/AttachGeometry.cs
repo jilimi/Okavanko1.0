@@ -12,9 +12,9 @@ namespace CSCECDEC.Plugin.BIM
         /// Initializes a new instance of the AttachGeometry class.
         /// </summary>
         public AttachGeometry()
-          : base("AttachGeometry", "Nickname",
-              "Description",
-              "Category", "Subcategory")
+          : base("AttachGeometry", "AttachGeometry",
+              "给物体附加几何体数据信息",
+              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
         {
         }
 

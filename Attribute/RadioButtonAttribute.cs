@@ -22,20 +22,17 @@ namespace CSCECDEC.Plugin.Attribute
         RectangleF RadioRect;
         Color RadioColor = Color.Black;
         public bool IsPress = false;
-        //声明一个委托，并将其作为构造函数参数传递到类中
-        public delegate void MouseDownEventCallback(GH_Component Component);
 
-        //实例化委托
-        MouseDownEventCallback Callback;
+        public Action<IGH_Component> CheckInCallback;
         GH_Component Component;
         string Text;
 
-        public RadioButtonAttribute(GH_Component owner, MouseDownEventCallback _Callback, string ButtonName) : base(owner)
+        public RadioButtonAttribute(GH_Component owner, Action<IGH_Component> _CheckInCallback, string Text) : base(owner)
         {
 
             this.Component = owner;
-            this.Callback = _Callback;
-            this.Text = ButtonName;
+            this.CheckInCallback = _CheckInCallback;
+            this.Text = Text;
         }
         public override void ExpireLayout()
         {
@@ -46,34 +43,16 @@ namespace CSCECDEC.Plugin.Attribute
             base.Layout();
             int width = GH_FontServer.StringWidth(Owner.NickName, GH_FontServer.Standard);
             Bounds = new RectangleF(Bounds.X, Bounds.Y, Bounds.Width, Bounds.Height + 30);
+            
         }
         protected override void Render(GH_Canvas canvas, System.Drawing.Graphics graphics, GH_CanvasChannel channel)
         {
-            // base.Re(canvas, graphics, true, false, false, true, true, true);
+
             base.Render(canvas, graphics, channel);
             if (channel == GH_CanvasChannel.Objects)
             {
                 this.RadioRect = new RectangleF(Bounds.Left + 8, Bounds.Bottom -20, 6, 6);
-                this.DrawRadio(graphics,this.RadioRect, Color.Black,this.Text, this.IsPress);
-            }
-        }
-        public void DrawRadio(Graphics g,RectangleF Rect,Color Color,string Text, bool IsPress)
-        {
-
-            Point TextLocation = GH_Convert.ToRectangle(Rect).Location;
-            TextLocation.Offset(10, -4);
-            g.DrawString(Text, GH_FontServer.Standard, Brushes.Black,TextLocation);
-
-            if (IsPress)
-            {
-                g.DrawEllipse(new Pen(Color, 1), Rect);
-                Rect.Inflate(-4, -4);
-                g.DrawEllipse(new Pen(Color, 2), Rect);
-            }else
-            {
-                g.DrawEllipse(new Pen(Color, 1), Rect);
-                Rect.Inflate(-4, -4);
-                g.DrawEllipse(new Pen(Color.Gray, 2), Rect);
+                ObjectDraw.DrawRadioButton(graphics,RadioRect,this.Text,this.RadioColor,this.IsPress,false);
             }
         }
         public override GH_ObjectResponse RespondToMouseMove(GH_Canvas sender, GH_CanvasMouseEvent e)
@@ -82,7 +61,6 @@ namespace CSCECDEC.Plugin.Attribute
             {
                 if (RadioRect.Contains(e.CanvasLocation))
                 {
-                  //  sender.Cursor = System.Windows.Forms.Cursors.Hand;
                     sender.Refresh();
                 }
             }
@@ -94,7 +72,7 @@ namespace CSCECDEC.Plugin.Attribute
             {
                 if (RadioRect.Contains(e.CanvasLocation))
                 {
-                    this.Callback(this.Component);
+                    this.CheckInCallback(this.Component);
                     if (!this.IsPress)
                     {
                         this.IsPress = true;

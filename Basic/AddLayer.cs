@@ -36,8 +36,8 @@ namespace CSCECDEC.Plugin.Basic
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new GH_Layer(), "Layer", "L", "父图层", GH_ParamAccess.item);
-            pManager.AddTextParameter("Name", "N", "需要添加图层的名称", GH_ParamAccess.list);
+            pManager.AddParameter(new GH_Layer(), "ParentLayer", "PL", "父图层", GH_ParamAccess.item);
+            pManager.AddParameter(new GH_Layer(), "Layer","L","需要添加到父图层的子图层", GH_ParamAccess.item);
         }
         /// <summary>
         /// Registers all the output parameters for this component.
@@ -55,30 +55,29 @@ namespace CSCECDEC.Plugin.Basic
         ///
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Layer ParentLayer = new Layer();
-            List<string> LayerNames = new List<string>();
-            List<Layer> OutputLayers = new List<Layer>();
+
+            Hu_Layer ParentLayer = new Hu_Layer();
+            Hu_Layer ChildLayer = new Hu_Layer();
+            Hu_Layer OutputLayer = new Hu_Layer();
+
             LayerTable LTable = Rhino.RhinoDoc.ActiveDoc.Layers;
 
             if (!DA.GetData(0, ref ParentLayer)) return;
-            if (!DA.GetDataList(1, LayerNames)) return;
+            if (!DA.GetData(1, ref ChildLayer)) return;
 
-            if (!this.LayerExist(ParentLayer))
+            Layer _ParentLayer = ParentLayer.Value;
+            Layer _ChildLayer = ChildLayer.Value;
+
+            if (!this.LayerExist(_ParentLayer))
             {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, string.Format("{0}不存在", ParentLayer.Name));
-                return;
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, string.Format("父图层： {0}不存在", _ParentLayer.Name));
+                _ParentLayer = LTable.CurrentLayer;
             }
+            _ChildLayer.ParentLayerId = _ParentLayer.Id;
+            int LayerIndex = this.AddLayerToDocument(_ChildLayer);
 
-            foreach(string LayerName in LayerNames)
-            {
-                Layer L = new Layer();
-                L.Name = LayerName;
-                L.ParentLayerId = ParentLayer.Id;
-
-                int LayerIndex = this.AddLayerToDocument(L);
-                OutputLayers.Add(LTable.FindIndex(LayerIndex));
-            }
-            DA.SetDataList(0, OutputLayers);
+            OutputLayer = new Hu_Layer(LTable.FindIndex(LayerIndex));
+            DA.SetData(0, OutputLayer);
         }
         private int AddLayerToDocument(Layer layer)
         {
@@ -86,7 +85,7 @@ namespace CSCECDEC.Plugin.Basic
             int LayerIndex = Layers.Add(layer);
             if (LayerIndex == -1) {
 
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "父图层下已经存在同名图层");
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "父图层下已存在同名图层");
                 Layer ParentLayer = Layers.FindId(layer.ParentLayerId);
                 Layer[] Arr_Layer = ParentLayer.GetChildren();
                 int  TempIndex = (Arr_Layer.Where(item => item.Name == layer.Name).ToList())[0].Index;
@@ -100,14 +99,8 @@ namespace CSCECDEC.Plugin.Basic
         private bool LayerExist(Layer layer)
         {
             LayerTable Layers = Rhino.RhinoDoc.ActiveDoc.Layers;
-            if (Layers.FindIndex(layer.Index) == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            };
+            if (Layers.FindIndex(layer.Index) == null) return false;
+            else return true;
         }
         /// <summary>
         /// Provides an Icon for the component.

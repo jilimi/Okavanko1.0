@@ -59,6 +59,7 @@ namespace CSCECDEC.Plugin.CutMaterial
         {
             pManager.AddNumberParameter("Scale", "S", "放大倍数",GH_ParamAccess.item,1);
             pManager.AddBooleanParameter("Orient", "O", "纸张的放置方向，false代表竖直放置，true代表水平放置",GH_ParamAccess.item,false);
+
             pManager[0].Optional = true;
             pManager[1].Optional = true;
         }

@@ -45,6 +45,7 @@ namespace CSCECDEC.Plugin.Attribute
         {
             if(channel == GH_CanvasChannel.Wires)
             {
+                AttributeUtil.RenderBounds(graphics);
                 base.Render(canvas, graphics, channel);
             }
             if(channel == GH_CanvasChannel.Objects)
