@@ -13,13 +13,14 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Attributes;
 using System.Drawing.Drawing2D;
 
-namespace CSCECDEC.Plugin.Attribute
+namespace CSCECDEC.Okavango.Attribute
 {
     sealed class Hu_AttributeUtil
     {
         private IGH_Component Component;
         private float ExtendWidth = 0;
         private float ExtendHeight = 0;
+
         public Hu_AttributeUtil(IGH_Component Component)
         {
             this.Component = Component;
@@ -42,7 +43,6 @@ namespace CSCECDEC.Plugin.Attribute
         {
             List<IGH_Param> Inputs = Component.Params.Input;
             List<IGH_Param> Outputs = Component.Params.Output;
-            //这样会出现问题
             RectangleF Bounds = this.Component.Attributes.Bounds;
 
             int InputCount = Inputs.Count;
@@ -74,6 +74,7 @@ namespace CSCECDEC.Plugin.Attribute
         {
             List<IGH_Param> Inputs = this.Component.Params.Input;
             List<IGH_Param> Outputs = this.Component.Params.Output;
+
             Pen _Pen = new Pen(Color.Black, 1);
 
             GH_ComponentAttributes Com_Attributes = this.Component.Attributes as GH_ComponentAttributes;
@@ -96,8 +97,6 @@ namespace CSCECDEC.Plugin.Attribute
 
             List<IGH_Param> InputParam = this.Component.Params.Input;
             List<IGH_Param> OutputParam = this.Component.Params.Output;
-
-            RectangleF Bounds = this.Component.Attributes.Bounds;
 
             for (int Index = 0; Index < InputCount; Index++)
             {
@@ -237,11 +236,11 @@ namespace CSCECDEC.Plugin.Attribute
             RectangleF ContentBox = (this.Component.Attributes as GH_ComponentAttributes).ContentBox;
 
             SizeF NameSize = GH_FontServer.MeasureString(Text, GH_FontServer.Large);
-            float TextWidth = NameSize.Width;
-            float TextHeight = NameSize.Height;
             //ContentBox is the property and m_innerBounds is the field
             StringFormat Format = new StringFormat(StringFormatFlags.DirectionVertical);
+
             Format.Alignment = StringAlignment.Center;
+            Format.LineAlignment = StringAlignment.Center;
             //先存储Graphics的状态
             //对Graphics执行操作
             GraphicsState State = g.Save();

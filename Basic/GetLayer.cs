@@ -7,12 +7,12 @@ using Rhino.DocObjects;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 using Grasshopper.GUI;
-using CSCECDEC.Plugin.Forms;
-using CSCECDEC.Plugin.Params;
+using CSCECDEC.Okavango.Forms;
+using CSCECDEC.Okavango.Params;
 using System.Drawing;
 using GH_IO.Serialization;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class GetLayer : GH_Component
     {

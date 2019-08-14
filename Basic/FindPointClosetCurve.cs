@@ -9,7 +9,7 @@ using Rhino.Geometry;
 using System.Drawing;
 using GH_IO.Serialization;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class FindPointClosetCurve : GH_Component
     {

@@ -8,7 +8,7 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class Hu_Series : GH_Component
     {

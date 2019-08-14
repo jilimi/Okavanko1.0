@@ -8,7 +8,7 @@ using Rhino.Geometry;
 using System.Linq;
 using System.Drawing;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class ClassifyDataByTree : GH_Component
     {

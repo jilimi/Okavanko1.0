@@ -6,12 +6,12 @@ using Rhino.Geometry;
 using Rhino.DocObjects.Tables;
 using Rhino.DocObjects;
 
-using CSCECDEC.Plugin.Types;
+using CSCECDEC.Okavango.Types;
 using System.Windows.Forms;
 using System.Drawing;
 using GH_IO.Serialization;
 
-namespace CSCECDEC.Plugin.Types
+namespace CSCECDEC.Okavango.Types
 {
     class Hu_AngularDim : AnnotationBase
     {

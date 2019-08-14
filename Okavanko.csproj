@@ -12,7 +12,7 @@
     <ProjectGuid>{BDE4A203-64BB-4ED4-8D07-B41C566206B6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CSCECDEC.Plugin</RootNamespace>
+    <RootNamespace>CSCECDEC.Okavango</RootNamespace>
     <AssemblyName>Okavango</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -162,6 +162,7 @@
     <Compile Include="Hu\Hu_SortPts.cs" />
     <Compile Include="Params\GH_Adimention.cs" />
     <Compile Include="Params\GH_AngularDim.cs" />
+    <Compile Include="Params\GH_DataList.cs" />
     <Compile Include="Params\GH_Dimention.cs" />
     <Compile Include="Params\GH_Layer.cs" />
     <Compile Include="Params\GH_ObjectAttribute.cs" />

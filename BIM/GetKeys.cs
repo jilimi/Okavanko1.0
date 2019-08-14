@@ -5,9 +5,9 @@ using System.Linq;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-using CSCECDEC.Plugin.Attribute;
+using CSCECDEC.Okavango.Attribute;
 
-namespace CSCECDEC.Plugin.BIM
+namespace CSCECDEC.Okavango.BIM
 {
     public class GetKeys : GH_Component
     {

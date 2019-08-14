@@ -9,7 +9,7 @@ using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 using System.Drawing;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class UniformCrvDirect : GH_Component
     {

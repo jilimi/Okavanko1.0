@@ -9,7 +9,7 @@ using Rhino.Geometry;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace CSCECDEC.Plugin.Hu
+namespace CSCECDEC.Okavango.Hu
 {
     public class Hu_GroupSrfByCPt : GH_Component
     {

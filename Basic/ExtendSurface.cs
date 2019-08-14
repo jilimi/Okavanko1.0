@@ -7,7 +7,7 @@ using Rhino.Geometry;
 using Rhino.Geometry.Collections;
 using System.Drawing;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class ExtendSurface : GH_Component
     {

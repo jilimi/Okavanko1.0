@@ -9,7 +9,7 @@ using Rhino;
 using Rhino.UI;
 using Rhino.Geometry;
 
-namespace CSCECDEC.Plugin
+namespace CSCECDEC.Okavango
 {
    
     public class GrasshopperPluginInfo : GH_AssemblyInfo
@@ -23,6 +23,13 @@ namespace CSCECDEC.Plugin
         public static readonly string CUTDOWNCATATORY = "下料";
         public static readonly string DIMENSIONCATATORY = "标注";
         public static readonly string PERSONAL = "For Hudson Personal";
+        public static readonly string PARAMS = "params";
+        //Color Control
+        public static readonly Color BUTTONPRESSCOLOR = Color.FromArgb(255, 209, 212, 214);
+        public static readonly Color BUTTONUNPRESSCOLOR = Color.FromArgb(255, 157, 159, 161);
+        public static readonly Color BORDERCOLOR = Color.FromArgb(255, 30, 44, 51);
+        public static readonly Color HOWERCOLOR = Color.FromArgb(255, 80, 94, 101);
+        public static readonly Color TEXTCOLOR = Color.FromArgb(255, 30, 44, 51);
         //控制电池的样式
         public const float W_EXTEND = 18;
         public static readonly float GRIDEGAPE = 8;

@@ -14,10 +14,10 @@ using OfficeOpenXml.Style;
 using OfficeOpenXml.Table;
 using OfficeOpenXml.Utils;
 
-using CSCECDEC.Plugin.Util;
-using CSCECDEC.Plugin.Attribute;
+using CSCECDEC.Okavango.Util;
+using CSCECDEC.Okavango.Attribute;
 
-namespace CSCECDEC.Plugin.CutDown
+namespace CSCECDEC.Okavango.CutDown
 {
     public class CreateExcelFile : GH_Component
     {
@@ -43,8 +43,16 @@ namespace CSCECDEC.Plugin.CutDown
         }
         public override void CreateAttributes()
         {
-            //   base.CustomAttributes(this,3);
-            //m_attributes = new ButtonAttribute(this,Do_ButtonMouseDown,Do_ButtonMouseUp,"HelloWorld");
+            //此时不能对其进行调用因为这个时候Attributes是空值
+            /*
+            RectangleF Bounds = base.Attributes.Bounds;
+
+            */
+            ButtonControl Btn1 = new ButtonControl("Bounds1", Do_ButtonMouseDown, Do_ButtonMouseUp,this);
+            ButtonControl Btn2 = new ButtonControl("Bounds2", Do_ButtonMouseDown, Do_ButtonMouseUp,this);
+            ButtonControl Btn3 = new ButtonControl("Bounds3", Do_ButtonMouseDown, Do_ButtonMouseUp,this);
+
+            m_attributes = new ButtonAttribute(this,new List<ButtonControl> { Btn1,Btn2,Btn3});
         }
         public void Do_ButtonMouseDown(IGH_Component Component)
         {

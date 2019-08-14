@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace CSCECDEC.Plugin.CutMaterial
+namespace CSCECDEC.Okavango.CutMaterial
 {
     public class Optimization : GH_Component
     {

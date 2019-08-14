@@ -9,7 +9,7 @@ using Grasshopper.Kernel.Data;
 
 using Rhino.Geometry;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class FindClosetBrep : GH_Component
     {

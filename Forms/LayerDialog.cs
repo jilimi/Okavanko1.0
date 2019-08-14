@@ -11,7 +11,7 @@ using Rhino;
 using Rhino.DocObjects;
 using Rhino.DocObjects.Tables;
 
-namespace CSCECDEC.Plugin.Forms
+namespace CSCECDEC.Okavango.Forms
 {
     public partial class LayerDialog : Form
     {

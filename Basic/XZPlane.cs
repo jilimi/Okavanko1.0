@@ -6,7 +6,7 @@ using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class XZPlane : GH_Component
     {

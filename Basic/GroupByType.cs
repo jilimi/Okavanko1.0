@@ -8,7 +8,7 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using System.Drawing;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class GroupByType : GH_Component
     {

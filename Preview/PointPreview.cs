@@ -12,7 +12,7 @@ using Rhino.Display;
 using System.Windows.Forms;
 using GH_IO.Serialization;
 
-namespace CSCECDEC.Plugin.Preview
+namespace CSCECDEC.Okavango.Preview
 {
     public class PointPreview : GH_Component
     {

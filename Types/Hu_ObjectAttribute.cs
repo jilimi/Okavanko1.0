@@ -15,7 +15,7 @@ using Rhino.DocObjects;
 using Rhino.DocObjects.Tables;
 
 
-namespace CSCECDEC.Plugin.Types
+namespace CSCECDEC.Okavango.Types
 {
     class Hu_ObjectAttribute : GH_Goo<ObjectAttributes>
     {

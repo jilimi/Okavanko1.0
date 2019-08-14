@@ -5,7 +5,7 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
 
-namespace CSCECDEC.Plugin.Hu
+namespace CSCECDEC.Okavango.Hu
 {
     public class Hu_RemoveAt : GH_Component
     {

@@ -9,7 +9,7 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using GH_IO.Serialization;
 
-namespace CSCECDEC.Plugin.Types
+namespace CSCECDEC.Okavango.Types
 {
     //不要直接继承IGH_Goo,很多时候我们只需要GH_Goo的默认功能，
     public class Hu_Layer : GH_Goo<Rhino.DocObjects.Layer>

@@ -9,16 +9,16 @@ using Rhino.Geometry;
 using Rhino.DocObjects.Tables;
 using Rhino.DocObjects;
 
-using CSCECDEC.Plugin.Types;
+using CSCECDEC.Okavango.Types;
 using System.Windows.Forms;
 using System.Drawing;
 using GH_IO.Serialization;
 
-namespace CSCECDEC.Plugin.Params
+namespace CSCECDEC.Okavango.Params
 {
     public class GH_Layer : GH_PersistentParam<Types.Hu_Layer>
     {
-        public GH_Layer():base(new GH_InstanceDescription("Layer","L","An Component to Hold Rhino Layer", "Params", "Okavango"))
+        public GH_Layer():base(new GH_InstanceDescription("Layer","L","An Component to Hold Rhino Layer", GrasshopperPluginInfo.PARAMS, GrasshopperPluginInfo.PLUGINNAME))
         {
             
         }

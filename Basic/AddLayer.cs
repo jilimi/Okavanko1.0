@@ -8,10 +8,10 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
 
-using CSCECDEC.Plugin.Types;
-using CSCECDEC.Plugin.Params;
+using CSCECDEC.Okavango.Types;
+using CSCECDEC.Okavango.Params;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class AddLayer : GH_Component
     {

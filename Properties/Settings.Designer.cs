@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CSCECDEC.Plugin.Properties {
+namespace CSCECDEC.Okavango.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

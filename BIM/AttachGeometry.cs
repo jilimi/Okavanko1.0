@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace CSCECDEC.Plugin.BIM
+namespace CSCECDEC.Okavango.BIM
 {
     public class AttachGeometry : GH_Component
     {

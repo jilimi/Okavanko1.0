@@ -11,7 +11,7 @@ using Grasshopper.Kernel.Data;
 using Rhino;
 using Rhino.Geometry;
 
-namespace CSCECDEC.Plugin.Types
+namespace CSCECDEC.Okavango.Types
 {
     class Hu_Dimention:GH_Goo<LinearDimension>
     {

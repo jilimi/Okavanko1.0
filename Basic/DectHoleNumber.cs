@@ -5,7 +5,7 @@ using System.Drawing;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace CSCECDEC.Plugin.CutDown
+namespace CSCECDEC.Okavango.CutDown
 {
     public class HasHole : GH_Component
     {

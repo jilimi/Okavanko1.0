@@ -10,9 +10,9 @@ using Grasshopper.Kernel.Attributes;
 using Rhino.Geometry;
 using System.Drawing;
 
-using CSCECDEC.Plugin.Params;
+using CSCECDEC.Okavango.Params;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class BakeGeometry : GH_Component
     {

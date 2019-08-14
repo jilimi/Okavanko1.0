@@ -11,10 +11,10 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using Grasshopper.Kernel.Types;
 
-using CSCECDEC.Plugin.Attribute;
+using CSCECDEC.Okavango.Attribute;
 //using GH_IO;
 
-namespace CSCECDEC.Plugin.BIM
+namespace CSCECDEC.Okavango.BIM
 {
     /// <summary>
     /// 

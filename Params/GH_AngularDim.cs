@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSCECDEC.Plugin.Params
+namespace CSCECDEC.Okavango.Params
 {
     class GH_AngularDim
     {

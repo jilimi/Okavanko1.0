@@ -12,7 +12,7 @@ using OfficeOpenXml.Utils;
 /// <summary>
 /// 该类用于型材，辅材，线材下料数据的写入以及csv数据生成Excel文件
 /// </summary>
-namespace CSCECDEC.Plugin.Util
+namespace CSCECDEC.Okavango.Util
 {
 
     public static class ExcelWriter

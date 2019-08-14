@@ -8,7 +8,7 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using Grasshopper.Kernel.Types;
 
-namespace CSCECDEC.Plugin.Preview
+namespace CSCECDEC.Okavango.Preview
 {
     public class FaceDir : GH_Component
     {

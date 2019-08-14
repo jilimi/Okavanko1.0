@@ -4,9 +4,9 @@ using System.Drawing;
 
 using Grasshopper.Kernel;
 using Rhino.Geometry;
-using CSCECDEC.Plugin.Attribute;
+using CSCECDEC.Okavango.Attribute;
 
-namespace CSCECDEC.Plugin.BIM
+namespace CSCECDEC.Okavango.BIM
 {
     public class GetUserString : GH_Component
     {

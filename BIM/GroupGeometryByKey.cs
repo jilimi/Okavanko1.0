@@ -9,9 +9,9 @@ using Grasshopper.Kernel.Data;
 using Microsoft.CSharp;
 using Rhino.Runtime;
 
-using CSCECDEC.Plugin.Attribute;
+using CSCECDEC.Okavango.Attribute;
 
-namespace CSCECDEC.Plugin.CutDown
+namespace CSCECDEC.Okavango.CutDown
 {
     public class GroupDataByKeys : GH_Component
     {

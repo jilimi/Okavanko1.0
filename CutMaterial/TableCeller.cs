@@ -9,7 +9,9 @@ using System.Windows.Forms;
 using System.Drawing;
 using GH_IO.Serialization;
 
-namespace CSCECDEC.Plugin.CutMaterial
+using CSCECDEC.Okavango.Attribute;
+
+namespace CSCECDEC.Okavango.CutMaterial
 {
     public class TableCeller : GH_Component
     {
@@ -30,6 +32,11 @@ namespace CSCECDEC.Plugin.CutMaterial
             {
                 return GH_Exposure.secondary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            //   base.CustomAttributes(this,3);
+            m_attributes = new Hu_Attribute(this);
         }
         /// <summary>
         /// Registers all the input parameters for this component.

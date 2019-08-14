@@ -8,7 +8,7 @@ using Rhino.Geometry;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace CSCECDEC.Plugin.CutDown
+namespace CSCECDEC.Okavango.CutDown
 {
     public class ExcelTitleGenerate : GH_Component
     {

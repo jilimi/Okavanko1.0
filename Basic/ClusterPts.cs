@@ -8,7 +8,7 @@ using Grasshopper.Kernel.Types;
 using System.Linq;
 using Rhino.Geometry;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class ClusterPts : GH_Component
     {

@@ -10,7 +10,7 @@ using Rhino;
 using Rhino.Geometry;
 using System.Drawing;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class TransformFromCplane : GH_Component
     {

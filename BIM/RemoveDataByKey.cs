@@ -5,9 +5,9 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
 
-using CSCECDEC.Plugin.Attribute;
+using CSCECDEC.Okavango.Attribute;
 
-namespace CSCECDEC.Plugin.BIM
+namespace CSCECDEC.Okavango.BIM
 {
     public class RemoveDataByKey : GH_Component
     {

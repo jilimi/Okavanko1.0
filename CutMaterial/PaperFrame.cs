@@ -11,7 +11,7 @@ using Rhino.DocObjects;
 using System.Drawing;
 using GH_IO.Serialization;
 
-namespace CSCECDEC.Plugin.CutMaterial
+namespace CSCECDEC.Okavango.CutMaterial
 {
     public struct PaperSize
     {

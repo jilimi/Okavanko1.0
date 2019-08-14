@@ -9,7 +9,7 @@ using Grasshopper.Kernel.Types;
 
 using Rhino.Geometry;
 
-namespace CSCECDEC.Plugin.Preview
+namespace CSCECDEC.Okavango.Preview
 {
     public class CurveDirPreview : GH_Component
     {

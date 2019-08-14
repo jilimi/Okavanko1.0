@@ -5,9 +5,9 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 
 using Grasshopper.Kernel.Attributes;
-using CSCECDEC.Plugin.Attribute;
+using CSCECDEC.Okavango.Attribute;
 
-namespace CSCECDEC.Plugin.Basic
+namespace CSCECDEC.Okavango.Basic
 {
     public class DropDown : GH_Component
     {

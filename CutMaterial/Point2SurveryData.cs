@@ -8,7 +8,7 @@ using Rhino;
 using Rhino.Geometry;
 using System.Drawing;
 
-namespace CSCECDEC.Plugin.CutDown
+namespace CSCECDEC.Okavango.CutDown
 {
     public class Point2SurveryData : GH_Component
     {

@@ -1,4 +1,4 @@
-﻿namespace CSCECDEC.Plugin.Forms
+﻿namespace CSCECDEC.Okavango.Forms
 {
     partial class LayerDialog
     {

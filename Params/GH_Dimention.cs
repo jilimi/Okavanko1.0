@@ -12,12 +12,12 @@ using Rhino.Geometry;
 using Rhino.DocObjects.Tables;
 using Rhino.DocObjects;
 
-using CSCECDEC.Plugin.Types;
+using CSCECDEC.Okavango.Types;
 using System.Windows.Forms;
 using System.Drawing;
 using GH_IO.Serialization;
 
-namespace CSCECDEC.Plugin.Params
+namespace CSCECDEC.Okavango.Params
 {
     class GH_Dimention : GH_Param<Types.Hu_Dimention>
     {

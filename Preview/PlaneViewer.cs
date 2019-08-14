@@ -6,7 +6,7 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using Rhino;
 
-namespace CSCECDEC.Plugin.Preview
+namespace CSCECDEC.Okavango.Preview
 {
     public class PlaneViewer : GH_Component
     {
