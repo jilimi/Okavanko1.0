@@ -16,6 +16,7 @@ using OfficeOpenXml.Utils;
 
 using CSCECDEC.Okavango.Util;
 using CSCECDEC.Okavango.Attribute;
+using CSCECDEC.Okavango.Control;
 
 namespace CSCECDEC.Okavango.CutDown
 {
@@ -30,7 +31,7 @@ namespace CSCECDEC.Okavango.CutDown
         public CreateExcelFile()
           : base("ExportExcel", "ExportExcel",
               "将输入的数据导出Excel,生成的文件默认位于桌面的GrasshopperOutPut文件夹",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
+              Setting.PLUGINNAME, Setting.CUTDOWNCATATORY)
         {
             
         }

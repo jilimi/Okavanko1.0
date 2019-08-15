@@ -21,7 +21,7 @@ namespace CSCECDEC.Okavango.CutDown
         public GroupDataByKeys()
           : base("GroupGeometry", "GroupGeometry",
               "根据附加给物体的数据对几何体进行分组",
-             GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
+             Setting.PLUGINNAME, Setting.BIMCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -41,7 +41,8 @@ namespace CSCECDEC.Okavango.CutDown
         public override void CreateAttributes()
         {
             //   base.CustomAttributes(this,3);
-            m_attributes = new Hu_Attribute(this);
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new Grasshopper.Kernel.Attributes.GH_ComponentAttributes(this);
         }
         /// <summary>
         /// Registers all the input parameters for this component.

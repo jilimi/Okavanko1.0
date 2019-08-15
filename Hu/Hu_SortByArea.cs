@@ -6,7 +6,8 @@ using System.Linq;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Hu
 {
     public class Hu_SortByArea : GH_Component
@@ -17,10 +18,15 @@ namespace CSCECDEC.Okavango.Hu
         public Hu_SortByArea()
           : base("Hu_SortByArea", "SortByArea",
               "按面积大小的对面进行排序",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PERSONAL)
+              Setting.PLUGINNAME, Setting.PERSONAL)
         {
         }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
 
+        }
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>

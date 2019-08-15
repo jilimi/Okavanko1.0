@@ -14,7 +14,7 @@ namespace CSCECDEC.Okavango.BIM
         public AttachGeometry()
           : base("AttachGeometry", "AttachGeometry",
               "给物体附加几何体数据信息",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
+              Setting.PLUGINNAME, Setting.BIMCATATORY)
         {
         }
 

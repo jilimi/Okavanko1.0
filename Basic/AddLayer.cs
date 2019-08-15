@@ -10,7 +10,8 @@ using System.Drawing;
 
 using CSCECDEC.Okavango.Types;
 using CSCECDEC.Okavango.Params;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Basic
 {
     public class AddLayer : GH_Component
@@ -21,8 +22,14 @@ namespace CSCECDEC.Okavango.Basic
         public AddLayer()
           : base("AddLayer", "AddLayer",
               "添加图层",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         public override GH_Exposure Exposure
         {

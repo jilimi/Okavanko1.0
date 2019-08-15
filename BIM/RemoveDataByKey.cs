@@ -17,7 +17,7 @@ namespace CSCECDEC.Okavango.BIM
         public RemoveDataByKey()
           : base("RemoveDataByKey", "RemoveDataByKey",
               "根据Key值，清除指定字典数据",
-             GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
+             Setting.PLUGINNAME, Setting.BIMCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -31,7 +31,8 @@ namespace CSCECDEC.Okavango.BIM
         public override void CreateAttributes()
         {
             //   base.CustomAttributes(this,3);
-            m_attributes = new Hu_Attribute(this);
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new Grasshopper.Kernel.Attributes.GH_ComponentAttributes(this);
         }
         /// <summary>
         /// Registers all the input parameters for this component.

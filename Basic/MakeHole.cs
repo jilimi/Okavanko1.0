@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
+
 namespace CSCECDEC.Okavango.Basic
 {
     public class MakeHole : GH_Component
@@ -14,10 +17,15 @@ namespace CSCECDEC.Okavango.Basic
         public MakeHole()
           : base("MakeHole", "MakeHole",
               "Make hole for Brep Surface",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
 
+        }
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>

@@ -28,7 +28,7 @@ namespace CSCECDEC.Okavango.BIM
         public SetKeyValue()
           : base("SetKeyValue", "SetKeyValue",
               "为几何体（点除外）添加额外的信息,'编号'为预设键值，请不要作为键值输入",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
+              Setting.PLUGINNAME, Setting.BIMCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -42,7 +42,8 @@ namespace CSCECDEC.Okavango.BIM
         public override void CreateAttributes()
         {
             //   base.CustomAttributes(this,3);
-            m_attributes = new Hu_Attribute(this);
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new Grasshopper.Kernel.Attributes.GH_ComponentAttributes(this);
         }
         private void HandleMouseDubleClick()
         {

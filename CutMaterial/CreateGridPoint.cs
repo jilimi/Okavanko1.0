@@ -7,6 +7,8 @@ using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Data;
 using Rhino.Geometry;
 using System.Drawing;
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 
 namespace CSCECDEC.Okavango.CutDown
 {
@@ -18,7 +20,7 @@ namespace CSCECDEC.Okavango.CutDown
         public CreateGridPoint()
           : base("CreateGridPoint", "CreateGridPoint",
               "创建点集，一般需要结合Cplane来使用，主要用于Grasshopper中下料展平",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
+              Setting.PLUGINNAME, Setting.CUTDOWNCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -27,6 +29,12 @@ namespace CSCECDEC.Okavango.CutDown
             {
                 return GH_Exposure.secondary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

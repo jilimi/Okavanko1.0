@@ -4,6 +4,8 @@ using System.Drawing;
 
 using Grasshopper.Kernel;
 using Rhino.Geometry;
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 
 namespace CSCECDEC.Okavango.CutDown
 {
@@ -15,7 +17,7 @@ namespace CSCECDEC.Okavango.CutDown
         public HasHole()
           : base("DetectHole", "DetectHole",
               "检测面材是的开洞数目",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -31,6 +33,12 @@ namespace CSCECDEC.Okavango.CutDown
             {
                 return "判断一个平面开洞的数目";
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

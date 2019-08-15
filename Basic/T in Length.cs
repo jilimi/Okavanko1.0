@@ -7,7 +7,8 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Basic
 {
     public class T_in_Length : GH_Component
@@ -18,7 +19,7 @@ namespace CSCECDEC.Okavango.Basic
         public T_in_Length()
           : base("T in Length", "根据长度确定T值",
               "根据给定长度获取线的T值",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -27,6 +28,12 @@ namespace CSCECDEC.Okavango.Basic
             {
                 return GH_Exposure.secondary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <sum
         /// <summary>

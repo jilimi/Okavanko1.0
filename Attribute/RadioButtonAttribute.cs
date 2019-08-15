@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using Grasshopper;
+using Grasshopper.GUI;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel.Attributes;
@@ -13,25 +15,20 @@ using System.Drawing;
 
 using CSCECDEC.Okavango.Basic;
 using CSCECDEC.Okavango.BIM;
-using Grasshopper.GUI;
-using System.Windows.Forms;
+using CSCECDEC.Okavango.Control;
 
 namespace CSCECDEC.Okavango.Attribute
 {
-    class RadioButtonAttribute : GH_ComponentAttributes
+    class RadioButtonAttribute : Hu_Attribute
     {
-        RectangleF ButtonRectF;
-        public Hu_AttributeUtil AttributeUtil;
-        GH_Component Component;
         List<RadioButtonControl> RadioButtonList = new List<RadioButtonControl>();
         RadioButtonControl PressRadioButton = null;
         //构造函数不能使用obsolete方法
         public RadioButtonAttribute(GH_Component owner, List<RadioButtonControl> RadioButtonList) : base(owner)
         {
-
             this.Component = owner;
             this.RadioButtonList = RadioButtonList;
-            this.AttributeUtil = new Hu_AttributeUtil(this.Owner);
+            base.InnerControlNumber = RadioButtonList.Count;
         }
         private void LayoutRadioButton()
         {
@@ -40,9 +37,11 @@ namespace CSCECDEC.Okavango.Attribute
                 float Bottom = this.Bounds.Bottom;
                 float Left = this.Bounds.Left;
 
-                float Height = 18;
-                float Width = 18;
-                RadioButtonList[Index].Bounds = new RectangleF(Left, Bottom - 24 * (this.RadioButtonList.Count - Index), Width, Height);
+                float ControlBoxHeight = Setting.COMPONENTCONTROLBOXHEIGHT;
+                float ControlHeight = Setting.COMPONENTCONTROLHEIGHT;
+                float ControlWidth = this.Bounds.Width;
+
+                RadioButtonList[Index].Bounds = new RectangleF(Left, Bottom - ControlBoxHeight * (base.InnerControlNumber - Index), ControlWidth, ControlHeight);
             }
         }
         public override void ExpireLayout()
@@ -52,26 +51,22 @@ namespace CSCECDEC.Okavango.Attribute
         protected override void Layout()
         {
             base.Layout();
-            AttributeUtil.ComputeLayout(24 * this.RadioButtonList.Count);
             this.LayoutRadioButton();
         }
         protected override void Render(GH_Canvas canvas, System.Drawing.Graphics graphics, GH_CanvasChannel channel)
         {
-            if (channel == GH_CanvasChannel.Wires)
-            {
-                AttributeUtil.RenderBounds(graphics);
-                base.Render(canvas, graphics, channel);
-            }
+
+            base.Render(canvas, graphics, channel); 
             if (channel == GH_CanvasChannel.Objects)
             {
-                this.ButtonRectF = new RectangleF(Bounds.Left, Bounds.Bottom - 24, Bounds.Width, 18);
-                AttributeUtil.CompoundRender(graphics, canvas);
                 this.RadioButtonList.ForEach(item =>
                 {
                     item.OnDraw(graphics);
                 });
             }
         }
+
+        //Event Process
         public override GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e)
         {
             if (!Owner.Locked && e.Button != System.Windows.Forms.MouseButtons.Right)

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using GH_IO.Serialization;
 
+using Grasshopper.Kernel.Attributes;
 using CSCECDEC.Okavango.Attribute;
 
 namespace CSCECDEC.Okavango.CutMaterial
@@ -22,7 +23,7 @@ namespace CSCECDEC.Okavango.CutMaterial
         public TableCeller()
           : base("TableCeller", "TableCeller",
               "生成电子表格",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
+              Setting.PLUGINNAME, Setting.CUTDOWNCATATORY)
         {
             this.Message = "Align:Left to Right";
         }
@@ -35,8 +36,9 @@ namespace CSCECDEC.Okavango.CutMaterial
         }
         public override void CreateAttributes()
         {
-            //   base.CustomAttributes(this,3);
-            m_attributes = new Hu_Attribute(this);
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

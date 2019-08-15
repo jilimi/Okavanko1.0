@@ -20,7 +20,7 @@ namespace CSCECDEC.Okavango.Basic
         public TransformFromCplane()
           : base("GetTransByPlane", "GetTransByPlane",
               "对物体进行坐标系变换",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
         public override GH_Exposure Exposure

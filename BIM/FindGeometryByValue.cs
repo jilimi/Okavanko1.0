@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Attributes;
 using Rhino.Geometry;
 using CSCECDEC.Okavango.Attribute;
 
@@ -17,7 +18,7 @@ namespace CSCECDEC.Okavango.BIM
         public FindGeometryByValue()
           : base("GetGeometryByValue", "GetGeometryByValue",
               "根据给定的物体信息获取对应的几何体",
-             GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
+             Setting.PLUGINNAME, Setting.BIMCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -30,9 +31,9 @@ namespace CSCECDEC.Okavango.BIM
         //委托只要传入参数一样即可
         public override void CreateAttributes()
         {
-         //   base.CustomAttributes(this,3);
-            //m_attributes = new ButtonAttribute(this,this.HandleMouseDubleClick,"Click Me");
-            m_attributes = new Hu_Attribute(this);
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
        
         /// <summary>

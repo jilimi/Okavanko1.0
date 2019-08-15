@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Basic
 {
     public class CreateSolidByOffsetSrf : GH_Component
@@ -16,7 +17,7 @@ namespace CSCECDEC.Okavango.Basic
         public CreateSolidByOffsetSrf()
           : base("OffsetSolid", "OffsetSolid",
               "通过偏移面创建几何实体（用于生成有厚度的面板）",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -25,6 +26,12 @@ namespace CSCECDEC.Okavango.Basic
             {
                 return GH_Exposure.quinary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

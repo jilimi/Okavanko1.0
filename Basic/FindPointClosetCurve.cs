@@ -8,6 +8,8 @@ using Grasshopper.Kernel.Types;
 using Rhino.Geometry;
 using System.Drawing;
 using GH_IO.Serialization;
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 
 namespace CSCECDEC.Okavango.Basic
 {
@@ -22,10 +24,15 @@ namespace CSCECDEC.Okavango.Basic
         public FindPointClosetCurve()
           : base("PointClosetCurve", "PointClosetCurve",
               "找出距离点最近的N根曲线",
-             GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+             Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
 
+        }
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>

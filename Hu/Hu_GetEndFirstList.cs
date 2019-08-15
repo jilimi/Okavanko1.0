@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Hu
 {
     public class Hu_GetEndFirstList : GH_Component
@@ -16,7 +17,7 @@ namespace CSCECDEC.Okavango.Hu
         public Hu_GetEndFirstList()
           : base("Hu_EndFirstList", "Hu_EndFirstList",
               "获取列表的首尾两个元素",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PERSONAL)
+              Setting.PLUGINNAME, Setting.PERSONAL)
         {
         }
 
@@ -33,6 +34,12 @@ namespace CSCECDEC.Okavango.Hu
             {
                 return GH_Exposure.secondary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the output parameters for this component.

@@ -19,7 +19,7 @@ namespace CSCECDEC.Okavango.CutDown
         public ExcelTitleGenerate()
           : base("ExcelTitle", "生成表头行",
               "快速生成Excel表头,如果是输出长度数据的表头，请在Context Menu选择Line，如果是点坐标请选择Point‘",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
+              Setting.PLUGINNAME, Setting.CUTDOWNCATATORY)
         {
             this.Message = "线表头";
         }

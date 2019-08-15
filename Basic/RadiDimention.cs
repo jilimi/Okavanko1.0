@@ -15,7 +15,7 @@ namespace CSCECDEC.Okavango.Basic
         public RadiDimention()
           : base("RadiDimention", "RadiDimention",
               "对弧长进行标注，该标注可以与CAD中的弧长标注进行无缝对接",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
 

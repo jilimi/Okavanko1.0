@@ -19,17 +19,6 @@ namespace CSCECDEC.Okavango.Util
     {
         static ExcelWriter() { }
         //写一行线材数据
-        /*
-        public static void WriteHeaderValue(List<string> DataInRows, int RowNum, ref ExcelWorksheet Sheet)
-        {
-            Sheet.Row(RowNum).Height = 20;
-            Sheet.Row(RowNum).Style.Font.Bold = true;
-
-            for (int Index = 0; Index < DataInRows.Count; Index++)
-            {
-                Sheet.Cells[RowNum, Index+1].Value = DataInRows[Index];
-            }
-        }*/
         public static void WriteBodyValue(List<string> DataInRows, ref ExcelWorksheet Sheet)
         {
             //string a = 0;

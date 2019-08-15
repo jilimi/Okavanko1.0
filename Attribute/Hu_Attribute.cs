@@ -19,26 +19,20 @@ namespace CSCECDEC.Okavango.Attribute
     {
 
         public Hu_AttributeUtil AttributeUtil;
-        public Hu_Attribute(GH_Component Owner):base(Owner)
+        protected int InnerControlNumber = 0;
+        protected IGH_Component Component;
+        public Hu_Attribute(GH_Component Owner,int InnerControlNumber = 0):base(Owner)
         {
-            this.AttributeUtil = new Hu_AttributeUtil(this.Owner);
-        }
-        public override void ExpireLayout()
-        {
-            base.ExpireLayout();
+            this.AttributeUtil = new Hu_AttributeUtil(Owner);
+            this.InnerControlNumber = InnerControlNumber;
+            this.Component = Owner;
         }
         protected override void Layout()
         {
-            //这里会把GH_Capsule的大小重置到默认大小
             base.Layout();
-            AttributeUtil.ComputeLayout(0);
+            float Extend_Height = this.InnerControlNumber * Setting.COMPONENTCONTROLBOXHEIGHT;
+            AttributeUtil.ComputeLayout(Extend_Height);
         }
-        /*
-        private void SetParamGridPosition(IGH_Param Param,float Pos_X,float Pos_Y)
-        {
-            RectangleF Temp_RectF = Param.Attributes.Bounds;
-            Param.Attributes.Bounds = new RectangleF(Pos_X, Temp_RectF.Y + Pos_Y, Temp_RectF.Width, Temp_RectF.Height);
-        }*/
         protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel)
         {
             if(channel == GH_CanvasChannel.Wires)
@@ -47,7 +41,7 @@ namespace CSCECDEC.Okavango.Attribute
             }
             if(channel == GH_CanvasChannel.Objects)
             {
-                AttributeUtil.RenderBounds(graphics);
+                AttributeUtil.RenderComponentBounds(graphics);
                 AttributeUtil.CompoundRender(graphics, canvas);
             }
         }

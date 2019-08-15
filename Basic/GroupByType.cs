@@ -8,6 +8,9 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using System.Drawing;
 
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
+
 namespace CSCECDEC.Okavango.Basic
 {
     public class GroupByType : GH_Component
@@ -18,7 +21,7 @@ namespace CSCECDEC.Okavango.Basic
         public GroupByType()
           : base("GroupByType", "GroupByType",
               "根据物体的类型进行分类",
-             GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+             Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -27,6 +30,12 @@ namespace CSCECDEC.Okavango.Basic
             {
                 return GH_Exposure.quarternary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

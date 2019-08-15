@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Hu
 {
     public class Hu_SortSrfByAxis : GH_Component
@@ -16,7 +17,7 @@ namespace CSCECDEC.Okavango.Hu
         public Hu_SortSrfByAxis()
           : base("Hu_SortSrfByAxis", "Hu_SortSrfByAxis",
               "按坐标轴对面进行排序",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PERSONAL)
+              Setting.PLUGINNAME, Setting.PERSONAL)
         {
         }
         public override GH_Exposure Exposure
@@ -36,7 +37,12 @@ namespace CSCECDEC.Okavango.Hu
 
             pManager[1].Optional = true;
         }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
 
+        }
         /// <summary>
         /// Registers all the output parameters for this component.
         /// </summary>

@@ -14,7 +14,7 @@ namespace CSCECDEC.Okavango.Basic
         public ArcDimention()
           : base("ArcDimention", "ArcDimention",
               "弧长标注",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
             
         }

@@ -8,6 +8,8 @@ using Grasshopper.Kernel.Data;
 using Rhino.Geometry;
 using System.Windows.Forms;
 using System.Drawing;
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 
 namespace CSCECDEC.Okavango.Hu
 {
@@ -19,7 +21,7 @@ namespace CSCECDEC.Okavango.Hu
         public Hu_GroupCurveByCPt()
           : base("Hu_GroupCurveByCPt", "Hu_GroupCurveByCPt",
               "根据线的中点对线进行分组",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PERSONAL)
+              Setting.PLUGINNAME, Setting.PERSONAL)
         {
         }
         public override GH_Exposure Exposure
@@ -28,6 +30,12 @@ namespace CSCECDEC.Okavango.Hu
             {
                 return GH_Exposure.primary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

@@ -12,6 +12,8 @@ using CSCECDEC.Okavango.Params;
 using System.Drawing;
 using GH_IO.Serialization;
 
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Basic
 {
     public class GetLayer : GH_Component
@@ -24,7 +26,7 @@ namespace CSCECDEC.Okavango.Basic
         public GetLayer()
           : base("GetLayer", "GetLayer",
               "获取一个图层",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -33,6 +35,12 @@ namespace CSCECDEC.Okavango.Basic
             {
                 return GH_Exposure.senary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

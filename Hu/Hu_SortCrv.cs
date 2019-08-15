@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Hu
 {
     public class Hu_SortCrv : GH_Component
@@ -17,7 +18,7 @@ namespace CSCECDEC.Okavango.Hu
         public Hu_SortCrv()
           : base("Hu_SortCrv", "Hu_SortCrv",
               "Sort Curve By Axis Component Or Length",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PERSONAL)
+              Setting.PLUGINNAME, Setting.PERSONAL)
         {
         }
         public override GH_Exposure Exposure
@@ -35,7 +36,12 @@ namespace CSCECDEC.Okavango.Hu
             pManager.AddCurveParameter("Crvs", "C", "Curve Object", GH_ParamAccess.list);
             pManager.AddTextParameter("Sign", "S", "如何排序，只能是‘x’，‘y’，‘z’,‘l’(按长度进行排序)", GH_ParamAccess.item,",");
         }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
 
+        }
         /// <summary>
         /// Registers all the output parameters for this component.
         /// </summary>

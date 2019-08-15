@@ -7,6 +7,8 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Linq;
 using System.Drawing;
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 
 namespace CSCECDEC.Okavango.Basic
 {
@@ -18,7 +20,7 @@ namespace CSCECDEC.Okavango.Basic
         public ClassifyDataByTree()
           : base("ClassifyDataByTree", "ClassifyDataByTree",
               "对数据列按一定的区间进行分组",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -27,6 +29,12 @@ namespace CSCECDEC.Okavango.Basic
             {
                 return GH_Exposure.quarternary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

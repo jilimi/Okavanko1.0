@@ -7,7 +7,8 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 
 using Rhino.Geometry;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Preview
 {
     public class CurvePreview : GH_Component
@@ -21,7 +22,7 @@ namespace CSCECDEC.Okavango.Preview
         public CurvePreview()
           : base("CrvPreview", "CurvePreview",
               "对曲线进行预览",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PREVIEWCATATORY)
+              Setting.PLUGINNAME, Setting.PREVIEWCATATORY)
         {
         }
         protected override void BeforeSolveInstance()
@@ -29,6 +30,12 @@ namespace CSCECDEC.Okavango.Preview
             this.ExpirePreview(true);
            // this.ExpireSolution(true);
            // base.BeforeSolveInstance();
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

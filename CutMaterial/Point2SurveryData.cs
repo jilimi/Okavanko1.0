@@ -7,7 +7,8 @@ using Grasshopper.Kernel.Types;
 using Rhino;
 using Rhino.Geometry;
 using System.Drawing;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.CutDown
 {
     public class Point2SurveryData : GH_Component
@@ -18,7 +19,7 @@ namespace CSCECDEC.Okavango.CutDown
         public Point2SurveryData()
           : base("Point2SurveryData", "Point2SurveryData",
               "生成可供现场测量队伍使用的标准点位坐标字符串（单位：米）",
-             GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
+             Setting.PLUGINNAME, Setting.CUTDOWNCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -27,6 +28,12 @@ namespace CSCECDEC.Okavango.CutDown
             {
                 return GH_Exposure.primary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

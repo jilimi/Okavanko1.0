@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Basic
 {
     public class Hu_Series : GH_Component
@@ -18,7 +19,7 @@ namespace CSCECDEC.Okavango.Basic
         public Hu_Series()
           : base("Hu_Series", "Hu_Series",
               "使用字符串生成系列，如0：100：0.1表示生成一个起始为0，终止数为100，步距为0.1的系列",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PERSONAL)
+              Setting.PLUGINNAME, Setting.PERSONAL)
         {
             
         }
@@ -28,6 +29,12 @@ namespace CSCECDEC.Okavango.Basic
             {
                 return GH_Exposure.tertiary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

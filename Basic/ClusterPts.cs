@@ -7,7 +7,8 @@ using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 using System.Linq;
 using Rhino.Geometry;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Basic
 {
     public class ClusterPts : GH_Component
@@ -18,7 +19,7 @@ namespace CSCECDEC.Okavango.Basic
         public ClusterPts()
           : base("ClusterPoints", "ClusterPoints",
               "对点按坐标分量或者距离进行归类",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -27,6 +28,12 @@ namespace CSCECDEC.Okavango.Basic
             {
                 return GH_Exposure.tertiary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

@@ -15,7 +15,7 @@ namespace CSCECDEC.Okavango.CutMaterial
         public Optimization()
           : base("Optimization", "Optimization",
               "对长度进行切割优化,有局部最优解和全局最优解",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
+              Setting.PLUGINNAME, Setting.CUTDOWNCATATORY)
         {
         }
 

@@ -11,6 +11,7 @@ using Rhino.Geometry;
 using System.Drawing;
 
 using CSCECDEC.Okavango.Params;
+using CSCECDEC.Okavango.Attribute;
 
 namespace CSCECDEC.Okavango.Basic
 {
@@ -22,7 +23,7 @@ namespace CSCECDEC.Okavango.Basic
         public BakeGeometry()
           : base("BakeGeometry", "BakeGeometry",
               "将物体烘焙到图层当中",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -31,6 +32,12 @@ namespace CSCECDEC.Okavango.Basic
             {
                 return GH_Exposure.senary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

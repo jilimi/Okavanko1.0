@@ -8,7 +8,8 @@ using Grasshopper.Kernel.Types;
 
 using Rhino.Geometry;
 using System.Drawing;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Basic
 {
     public class UniformCrvDirect : GH_Component
@@ -19,7 +20,7 @@ namespace CSCECDEC.Okavango.Basic
         public UniformCrvDirect()
           : base("UniformDirection", "UniformDirection",
               "对多根靠的比较近统一方向",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -28,6 +29,12 @@ namespace CSCECDEC.Okavango.Basic
             {
                 return GH_Exposure.secondary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

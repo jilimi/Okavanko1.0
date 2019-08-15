@@ -6,6 +6,8 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using Rhino.Geometry.Collections;
 using System.Drawing;
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 
 namespace CSCECDEC.Okavango.Basic
 {
@@ -17,7 +19,7 @@ namespace CSCECDEC.Okavango.Basic
         public ExtendSurface()
           : base("ExtendSurface", "ExtendSurface",
               "延伸曲面,目前只适用于非修剪面，对于修剪面，在对面进行延伸的时候将会自动将面变成非修剪面后再延伸",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
             
         }
@@ -27,6 +29,12 @@ namespace CSCECDEC.Okavango.Basic
             {
                 return GH_Exposure.quinary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

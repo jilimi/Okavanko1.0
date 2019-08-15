@@ -4,6 +4,8 @@ using System.Drawing;
 
 using Grasshopper.Kernel;
 using Rhino.Geometry;
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 
 namespace CSCECDEC.Okavango.Basic
 {
@@ -15,7 +17,7 @@ namespace CSCECDEC.Okavango.Basic
         public CurveCounterWise()
           : base("CurveCounterWise", "CurveCounterWise",
               "检测闭合曲线的朝向，0表示为止，1表示顺时针，-1表示逆时针",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -24,6 +26,12 @@ namespace CSCECDEC.Okavango.Basic
             {
                 return GH_Exposure.secondary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

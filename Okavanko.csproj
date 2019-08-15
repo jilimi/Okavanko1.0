@@ -88,14 +88,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute\ButtonControl.cs" />
-    <Compile Include="Attribute\ObjectDraw.cs" />
-    <Compile Include="Attribute\HuAttributeUtil.cs" />
-    <Compile Include="Attribute\ButtonAttribute.cs" />
     <Compile Include="Attribute\DropDownAttribute.cs" />
+    <Compile Include="Control\ButtonControl.cs" />
+    <Compile Include="Control\DropDownControl.cs" />
+    <Compile Include="Other\GrasshopperPluginInfo.cs" />
+    <Compile Include="Other\HuAttributeUtil.cs" />
+    <Compile Include="Attribute\ButtonAttribute.cs" />
+    <Compile Include="Attribute\HuDropDownAttribute.cs" />
     <Compile Include="Attribute\Hu_Attribute.cs" />
     <Compile Include="Attribute\RadioButtonAttribute.cs" />
-    <Compile Include="Attribute\RadioButtonControl.cs" />
+    <Compile Include="Control\RadioButtonControl.cs" />
     <Compile Include="Basic\AddLayer.cs" />
     <Compile Include="Basic\ArcDimention.cs" />
     <Compile Include="Basic\BakeGeometry.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="Hu\Hu_SortByArea.cs" />
     <Compile Include="Hu\Hu_SortCrv.cs" />
     <Compile Include="Hu\Hu_SortPts.cs" />
+    <Compile Include="Other\Setting.cs" />
     <Compile Include="Params\GH_Adimention.cs" />
     <Compile Include="Params\GH_AngularDim.cs" />
     <Compile Include="Params\GH_DataList.cs" />
@@ -171,7 +174,6 @@
     <Compile Include="Types\Hu_ADimention.cs" />
     <Compile Include="Types\Hu_Layer.cs" />
     <Compile Include="Preview\CurveDirPreview.cs" />
-    <Compile Include="Other\GrasshopperPluginInfo.cs" />
     <Compile Include="Preview\FaceDir.cs" />
     <Compile Include="Preview\PlaneViewer.cs" />
     <Compile Include="Preview\PointPreview.cs" />

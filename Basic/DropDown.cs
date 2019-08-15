@@ -17,12 +17,8 @@ namespace CSCECDEC.Okavango.Basic
         public DropDown()
           : base("DropDown", "DropDown",
               "下拉列表",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BASICCATATORY)
+              Setting.PLUGINNAME, Setting.BASICCATATORY)
         {
-        }
-        public override void CreateAttributes()
-        {
-           // this.m_attributes = new DropDownAttribute(this);
         }
         /// <summary>
         /// Registers all the input parameters for this component.
@@ -31,7 +27,12 @@ namespace CSCECDEC.Okavango.Basic
         {
             pManager.AddTextParameter("Sign", "S", "聚类的标志，该数值只能输入x（x 轴）,y（y轴）,z(Z 轴),d(距离)等四个数值，输入其他数值则默认为d", GH_ParamAccess.item);
         }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
 
+        }
         /// <summary>
         /// Registers all the output parameters for this component.
         /// </summary>

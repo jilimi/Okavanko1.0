@@ -11,6 +11,8 @@ using Rhino.DocObjects;
 using System.Drawing;
 using GH_IO.Serialization;
 
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.CutMaterial
 {
     public struct PaperSize
@@ -37,13 +39,19 @@ namespace CSCECDEC.Okavango.CutMaterial
         public PaperFrame()
           : base("DrawFrame", "DrawFrame",
               "图框",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.CUTDOWNCATATORY)
+              Setting.PLUGINNAME, Setting.CUTDOWNCATATORY)
         {
             this.Message = "A0";
         }
         public override void RemovedFromDocument(GH_Document document)
         {
             
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         public override GH_Exposure Exposure
         {
@@ -139,6 +147,7 @@ namespace CSCECDEC.Okavango.CutMaterial
             Menu_AppendItem(menu, "A3图框", Do_Add_PaperFrame,true,this.DrawingFrameType == 3 ? true : false);
             Menu_AppendItem(menu, "A4图框", Do_Add_PaperFrame,true,this.DrawingFrameType == 4 ? true : false);
             Menu_AppendItem(menu, "矩形图框", Do_Add_PaperFrame,true,this.DrawingFrameType == 5 ? true : false);
+
         }
 
         private void Do_Add_PaperFrame(object sender, EventArgs e)

@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 using Rhino;
-
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Preview
 {
     public class PlaneViewer : GH_Component
@@ -19,10 +20,15 @@ namespace CSCECDEC.Okavango.Preview
         public PlaneViewer()
           : base("PlaneViewer", "PlaneViewer",
               "查看工作平面的X,Y,Z坐标轴，X，Y，Z轴的颜色分别为RGB,如果输入的是树状数据结果，请先对其执行Flatten操作",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PREVIEWCATATORY)
+              Setting.PLUGINNAME, Setting.PREVIEWCATATORY)
         {
         }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
 
+        }
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>

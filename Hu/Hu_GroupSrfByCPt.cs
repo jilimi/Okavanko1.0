@@ -9,6 +9,8 @@ using Rhino.Geometry;
 using System.Windows.Forms;
 using System.Drawing;
 
+using Grasshopper.Kernel.Attributes;
+using CSCECDEC.Okavango.Attribute;
 namespace CSCECDEC.Okavango.Hu
 {
     public class Hu_GroupSrfByCPt : GH_Component
@@ -19,7 +21,7 @@ namespace CSCECDEC.Okavango.Hu
         public Hu_GroupSrfByCPt()
           : base("Hu_GroupSrfByCPt", "Hu_GroupSrfByCPt",
               "根据面的中点对面进行分组",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PERSONAL)
+              Setting.PLUGINNAME, Setting.PERSONAL)
         {
         }
         public override GH_Exposure Exposure
@@ -28,6 +30,12 @@ namespace CSCECDEC.Okavango.Hu
             {
                 return GH_Exposure.primary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new GH_ComponentAttributes(this);
+
         }
         /// <summary>
         /// Registers all the input parameters for this component.

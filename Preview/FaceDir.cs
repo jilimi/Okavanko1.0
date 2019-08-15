@@ -21,7 +21,7 @@ namespace CSCECDEC.Okavango.Preview
         public FaceDir()
           : base("SurfaceDir", "SurfaceDir",
               "查看面的法线方向",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.PREVIEWCATATORY)
+              Setting.PLUGINNAME, Setting.PREVIEWCATATORY)
         {
         }
 

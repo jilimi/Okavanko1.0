@@ -17,7 +17,7 @@ namespace CSCECDEC.Okavango.BIM
         public GetKeys()
           : base("GetKeys", "GetKeys",
               "获取自定义用户数据的键值",
-              GrasshopperPluginInfo.PLUGINNAME, GrasshopperPluginInfo.BIMCATATORY)
+              Setting.PLUGINNAME, Setting.BIMCATATORY)
         {
         }
         public override GH_Exposure Exposure
@@ -37,7 +37,8 @@ namespace CSCECDEC.Okavango.BIM
         public override void CreateAttributes()
         {
             //   base.CustomAttributes(this,3);
-            m_attributes = new Hu_Attribute(this);
+            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            else m_attributes = new Grasshopper.Kernel.Attributes.GH_ComponentAttributes(this);
         }
         /// <summary>
         /// Registers all the input parameters for this component.
