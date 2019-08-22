@@ -27,10 +27,10 @@ namespace CSCECDEC.Okavango.CutDown
         /// </summary>
         /// 
         bool IsOutput = false;
-        string DefaultFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + "GrasshopperOutPut";
+        string DefaultFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         public CreateExcelFile()
           : base("ExportExcel", "ExportExcel",
-              "将输入的数据导出Excel,生成的文件默认位于桌面的GrasshopperOutPut文件夹",
+              "将输入的数据导出Excel,生成的文件默认位于桌面",
               Setting.PLUGINNAME, Setting.CUTDOWNCATATORY)
         {
             
@@ -49,11 +49,23 @@ namespace CSCECDEC.Okavango.CutDown
             RectangleF Bounds = base.Attributes.Bounds;
 
             */
-            ButtonControl Btn1 = new ButtonControl("Bounds1", Do_ButtonMouseDown, Do_ButtonMouseUp,this);
-            ButtonControl Btn2 = new ButtonControl("Bounds2", Do_ButtonMouseDown, Do_ButtonMouseUp,this);
-            ButtonControl Btn3 = new ButtonControl("Bounds3", Do_ButtonMouseDown, Do_ButtonMouseUp,this);
+            ButtonControl Btn1 = new ButtonControl(this,"ClickMe");
+            RadioButtonControl RadioBtn = new RadioButtonControl(this, "ClickMe");
+            Btn1.MouseDownCallback = Do_ButtonMouseDown;
+            Btn1.MouseUpCallback = Do_ButtonMouseUp;
 
-            m_attributes = new ButtonAttribute(this,new List<ButtonControl> { Btn1,Btn2,Btn3});
+            RadioBtn.ClickCallback = Do_ClickMe;
+
+            Hu_AttributeWithControl Hu_Attr = new Hu_AttributeWithControl(this,new List<HuControl> {Btn1,RadioBtn});
+            NormalAttributeWithControl Attr = new NormalAttributeWithControl(this,new List<HuControl> {Btn1,RadioBtn});
+
+            if (Properties.Settings.Default.Is_Hu_Attribute)
+            {
+                m_attributes = Hu_Attr;
+            }else
+            {
+                m_attributes = Attr;
+            }
         }
         public void Do_ButtonMouseDown(IGH_Component Component)
         {
@@ -64,6 +76,10 @@ namespace CSCECDEC.Okavango.CutDown
         {
             this.IsOutput = false;
             this.ExpireSolution(true);
+        }
+        private void Do_ClickMe(IGH_Component Component)
+        {
+            Rhino.RhinoApp.WriteLine("Hello World");
         }
         protected override string HelpDescription
         {
@@ -80,7 +96,7 @@ namespace CSCECDEC.Okavango.CutDown
             pManager.AddTextParameter("FileName", "F", "导出的Excel文件的名称", GH_ParamAccess.item);
             pManager.AddTextParameter("SheetName", "S", "Excel表格名称", GH_ParamAccess.list);
             pManager.AddTextParameter("Data", "D", "需要导出的数据，每个树枝会生成一个表格，有多少个树枝就会生成多少个表格,每个数据之间用逗号隔开", GH_ParamAccess.tree);
-            pManager.AddTextParameter("FilePath", "P", "保存输出文件的路径,如果不输入", GH_ParamAccess.item, DefaultFolder);
+            pManager.AddTextParameter("FilePath", "P", "保存输出文件的路径,如果不输入,则文件输出至桌面", GH_ParamAccess.item, DefaultFolder);
 
             pManager[1].Optional = true;
             pManager[3].Optional = true;

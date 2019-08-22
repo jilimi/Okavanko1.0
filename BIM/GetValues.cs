@@ -36,7 +36,7 @@ namespace CSCECDEC.Okavango.BIM
         public override void CreateAttributes()
         {
             //   base.CustomAttributes(this,3);
-            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            if (Properties.Settings.Default.Is_Hu_Attribute) m_attributes = new Hu_Attribute(this);
             else m_attributes = new Grasshopper.Kernel.Attributes.GH_ComponentAttributes(this);
         }
         /// <summary>
@@ -44,7 +44,7 @@ namespace CSCECDEC.Okavango.BIM
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("Values", "V", "获取的值", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Datas", "D", "获取的值", GH_ParamAccess.list);
         }
         protected override string HelpDescription
         {
@@ -63,12 +63,8 @@ namespace CSCECDEC.Okavango.BIM
 
             if(!DA.GetData(0, ref Geom))return;
             List<object> TempOutPutString = Geom.UserDictionary.Values.ToList();
-            List<Grasshopper.Kernel.Types.GH_String> OutPutStringList = (from item in TempOutPutString
-                                                                    where item as string != null
-                                                                    select new Grasshopper.Kernel.Types.GH_String(item.ToString())).ToList();
-            if (OutPutStringList.Count == 0) this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "该物体没有任何几何信息");
-
-            DA.SetDataList(0, OutPutStringList);
+            if (TempOutPutString.Count == 0) this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "该物体没有任何几何信息");
+            DA.SetDataList(0, TempOutPutString);
         }
 
         /// <summary>

@@ -31,7 +31,7 @@ namespace CSCECDEC.Okavango.BIM
         //委托只要传入参数一样即可
         public override void CreateAttributes()
         {
-            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            if (Properties.Settings.Default.Is_Hu_Attribute) m_attributes = new Hu_Attribute(this);
             else m_attributes = new GH_ComponentAttributes(this);
 
         }
@@ -43,7 +43,7 @@ namespace CSCECDEC.Okavango.BIM
         {
             pManager.AddGeometryParameter("Geom", "G", "待查找的几何体范围,目前点还不支持自定义集合数据", GH_ParamAccess.list);
             pManager.AddTextParameter("Key", "K", "Key值，必须单个，如果是多个将查找失败", GH_ParamAccess.item);
-            pManager.AddTextParameter("Value", "V", "带查找的Value值或需要过滤的正则表达式", GH_ParamAccess.item);
+            pManager.AddTextParameter("Data", "D", "带查找的Value值或需要过滤的正则表达式", GH_ParamAccess.item);
         }
 
         /// <summary>

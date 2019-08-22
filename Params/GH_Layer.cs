@@ -13,8 +13,8 @@ using CSCECDEC.Okavango.Types;
 using System.Windows.Forms;
 using System.Drawing;
 using GH_IO.Serialization;
-using Grasshopper.Kernel.Attributes;
 using CSCECDEC.Okavango.Attribute;
+
 namespace CSCECDEC.Okavango.Params
 {
     public class GH_Layer : GH_PersistentParam<Types.Hu_Layer>
@@ -30,6 +30,12 @@ namespace CSCECDEC.Okavango.Params
             {
                 return GH_Exposure.primary;
             }
+        }
+        public override void CreateAttributes()
+        {
+            if (Properties.Settings.Default.Is_Hu_Attribute) m_attributes = new Hu_ParamAttribute(this);
+            else m_attributes = new GH_FloatingParamAttributes(this);
+
         }
         public override void AppendAdditionalMenuItems(ToolStripDropDown menu)
         {
@@ -80,7 +86,6 @@ namespace CSCECDEC.Okavango.Params
             {
                 return GH_GetterResult.cancel;
             }
-
         }
         //按需要使用，
         /*

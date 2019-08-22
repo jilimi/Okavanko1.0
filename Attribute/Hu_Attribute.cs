@@ -18,20 +18,17 @@ namespace CSCECDEC.Okavango.Attribute
     class Hu_Attribute:GH_ComponentAttributes
     {
 
-        public Hu_AttributeUtil AttributeUtil;
-        protected int InnerControlNumber = 0;
+        public AttributeUtil AttributeUtil;
         protected IGH_Component Component;
-        public Hu_Attribute(GH_Component Owner,int InnerControlNumber = 0):base(Owner)
+
+        public Hu_Attribute(GH_Component Owner):base(Owner)
         {
-            this.AttributeUtil = new Hu_AttributeUtil(Owner);
-            this.InnerControlNumber = InnerControlNumber;
+            this.AttributeUtil = new AttributeUtil(Owner);
             this.Component = Owner;
         }
         protected override void Layout()
         {
             base.Layout();
-            float Extend_Height = this.InnerControlNumber * Setting.COMPONENTCONTROLBOXHEIGHT;
-            AttributeUtil.ComputeLayout(Extend_Height);
         }
         protected override void Render(GH_Canvas canvas, Graphics graphics, GH_CanvasChannel channel)
         {
@@ -42,7 +39,7 @@ namespace CSCECDEC.Okavango.Attribute
             if(channel == GH_CanvasChannel.Objects)
             {
                 AttributeUtil.RenderComponentBounds(graphics);
-                AttributeUtil.CompoundRender(graphics, canvas);
+                AttributeUtil.SetupRender(graphics, canvas);
             }
         }
     }

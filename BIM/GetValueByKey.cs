@@ -29,7 +29,7 @@ namespace CSCECDEC.Okavango.BIM
         public override void CreateAttributes()
         {
             //   base.CustomAttributes(this,3);
-            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            if (Properties.Settings.Default.Is_Hu_Attribute) m_attributes = new Hu_Attribute(this);
             else m_attributes = new Grasshopper.Kernel.Attributes.GH_ComponentAttributes(this);
         }
         /// <summary>
@@ -46,7 +46,7 @@ namespace CSCECDEC.Okavango.BIM
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("Value", "V", "获取的信息", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Datas", "D", "获取的信息", GH_ParamAccess.item);
         }
         protected override string HelpDescription
         {
@@ -63,21 +63,20 @@ namespace CSCECDEC.Okavango.BIM
         {
             GeometryBase Geom  =default(GeometryBase);
             string Key = null;
-            string Value = null;
+            dynamic Value = null;
 
             if(!DA.GetData(0, ref Geom))return;
             if(!DA.GetData(1, ref Key))return;
 
             try
             {
-                Value = Geom.UserDictionary.GetString(Key);
+                Value = Geom.UserDictionary[Key];
                 DA.SetData(0, Value);
             }catch
             {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The Key " + Key + " is not found");
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The key " + Key + " is not found");
             }
         }
-
         /// <summary>
         /// Provides an Icon for the component.
         /// </summary>

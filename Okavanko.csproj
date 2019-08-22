@@ -88,15 +88,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute\DropDownAttribute.cs" />
+    <Compile Include="Attribute\Hu_DropDownAttribute.cs" />
+    <Compile Include="Attribute\NormalAttributeWithControl.cs" />
+    <Compile Include="Attribute\Normal_DropDownAttribute.cs" />
+    <Compile Include="Attribute\Hu_ParamAtribute.cs" />
+    <Compile Include="BIM\ArchivesData.cs" />
+    <Compile Include="BIM\UnArchives.cs" />
     <Compile Include="Control\ButtonControl.cs" />
     <Compile Include="Control\DropDownControl.cs" />
+    <Compile Include="Control\HuControl.cs" />
+    <Compile Include="Dimension\AlignPoint.cs" />
+    <Compile Include="Dimension\AngularDimension.cs" />
+    <Compile Include="Dimension\LeaderDimension.cs" />
+    <Compile Include="Dimension\TextDot.cs" />
+    <Compile Include="Dimension\TextEntity.cs" />
     <Compile Include="Other\GrasshopperPluginInfo.cs" />
-    <Compile Include="Other\HuAttributeUtil.cs" />
-    <Compile Include="Attribute\ButtonAttribute.cs" />
-    <Compile Include="Attribute\HuDropDownAttribute.cs" />
+    <Compile Include="Other\HuAttributeUtilParam.cs" />
+    <Compile Include="Other\AttributeUtil.cs" />
+    <Compile Include="Attribute\Hu_AttributeWithControl.cs" />
     <Compile Include="Attribute\Hu_Attribute.cs" />
-    <Compile Include="Attribute\RadioButtonAttribute.cs" />
     <Compile Include="Control\RadioButtonControl.cs" />
     <Compile Include="Basic\AddLayer.cs" />
     <Compile Include="Basic\ArcDimention.cs" />
@@ -104,7 +114,6 @@
     <Compile Include="Basic\ClassifyDataByTree.cs" />
     <Compile Include="Basic\ClusterPts.cs" />
     <Compile Include="Basic\ObjectAttribute.cs" />
-    <Compile Include="Basic\DropDown.cs" />
     <Compile Include="Basic\ExtrudeBothSide.cs" />
     <Compile Include="Basic\GetLayer.cs" />
     <Compile Include="Basic\MakeHole.cs" />
@@ -115,7 +124,6 @@
     <Compile Include="Basic\CreateSolidByOffsetSrf.cs" />
     <Compile Include="Basic\RadiDimention.cs" />
     <Compile Include="Basic\SplitCurve.cs" />
-    <Compile Include="BIM\AttachGeometry.cs" />
     <Compile Include="CutMaterial\Optimization.cs" />
     <Compile Include="CutMaterial\PaperFrame.cs" />
     <Compile Include="CutMaterial\TableCeller.cs" />
@@ -163,15 +171,13 @@
     <Compile Include="Hu\Hu_SortCrv.cs" />
     <Compile Include="Hu\Hu_SortPts.cs" />
     <Compile Include="Other\Setting.cs" />
-    <Compile Include="Params\GH_Adimention.cs" />
-    <Compile Include="Params\GH_AngularDim.cs" />
     <Compile Include="Params\GH_DataList.cs" />
-    <Compile Include="Params\GH_Dimention.cs" />
+    <Compile Include="Params\GH_Font.cs" />
     <Compile Include="Params\GH_Layer.cs" />
-    <Compile Include="Params\GH_ObjectAttribute.cs" />
-    <Compile Include="Types\Hu_AngularDim.cs" />
-    <Compile Include="Types\Hu_Dimention.cs" />
-    <Compile Include="Types\Hu_ADimention.cs" />
+    <Compile Include="Other\PreviewUtil.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Set\Distinct.cs" />
+    <Compile Include="Types\Hu_Font.cs" />
     <Compile Include="Types\Hu_Layer.cs" />
     <Compile Include="Preview\CurveDirPreview.cs" />
     <Compile Include="Preview\FaceDir.cs" />
@@ -189,7 +195,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Types\Hu_ObjectAttribute.cs" />
+    <Compile Include="Workflow\CreateAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\LayerDialog.resx">
@@ -213,7 +219,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
@@ -280,6 +286,7 @@
     <Content Include="Resources\GroupGeometry.png" />
     <None Include="Resources\GroupSrfByCenterPoint.png" />
     <None Include="Resources\Hu_Rhino.ico" />
+    <None Include="Resources\HuIcon.png" />
     <Content Include="Resources\IsHydroSrf.png" />
     <Content Include="Resources\Key.png" />
     <Content Include="Resources\List2Tree.png" />

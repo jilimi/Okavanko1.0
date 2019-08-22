@@ -27,56 +27,18 @@ using Grasshopper;
 
 using Rhino;
 using Rhino.UI;
+using System.Linq;
 using Rhino.Geometry;
+using CSCECDEC.Okavango.Attribute;
 
 namespace CSCECDEC.Okavango
 {
-   
+
     //Grasshopper Setting is under here
     public class GrasshopperPluginInfo : GH_AssemblyInfo
     {
-        //是否渲染Hu_Attribute
-        /*
-        public static readonly bool ISRENDERHUATTRIBUTE = false;
-        //C#最佳实践 使用readonly 替代const
-        //
-        public static readonly string PLUGINNAME = "Okavango";
-        public static readonly string BASICCATATORY = "基础"; 
-        public static readonly string BIMCATATORY = "BIM"; 
-        public static readonly string PREVIEWCATATORY = "预览";
-        public static readonly string CUTDOWNCATATORY = "下料";
-        public static readonly string DIMENSIONCATATORY = "标注";
-        public static readonly string PERSONAL = "For Hudson Personal";
-        public static readonly string PARAMS = "params";
-        //Control Color Control
-        public static readonly Color BUTTONPRESSCOLOR = Color.FromArgb(255, 209, 212, 214);
-        public static readonly Color BUTTONUNPRESSCOLOR = Color.FromArgb(255, 157, 159, 161);
-        public static readonly Color BORDERCOLOR = Color.FromArgb(255, 30, 44, 51);
-        public static readonly Color HOWERCOLOR = Color.FromArgb(255, 80, 94, 101);
-        public static readonly Color TEXTCOLOR = Color.FromArgb(255, 30, 44, 51);
-        //Component Color Control
-        //error
-        //warning
-        //normal
-        //selected
-        //Lock
-        public static readonly Color COMPONENTERRORCOLOR = Color.FromArgb(255, 239, 62, 71); 
-        public static readonly Color COMPONENTWARNINGCOLOR = Color.FromArgb(255, 252, 228, 76);
-        public static readonly Color COMPONENTNORMALCOLOR = Color.FromArgb(255, 209, 212, 214);
-        public static readonly Color COMPONENTSELECTCOLOR = Color.FromArgb(255, 46, 186, 62);
-        public static readonly Color COMPONENTLOCKCOLOR = Color.FromArgb(255, 157, 159, 161);
-        //Hu_Attribute 中的拓展宽度
-        //Component中控件如按钮和Radio的外包框高度
-        //Component中控件如按钮和Radio的高度
-        public static readonly float EXTEND_WIDTH = 18;
-        public static readonly float EXTEND_HEIGHT = 8;
-        public static readonly float COMPONENTCONTROLBOXHEIGHT = 24;
-        public static readonly float COMPONENTCONTROLHEIGHT = 18;
-        //DROPDOWN Attribute Size
-        public static readonly float DROPDOWNCOMPONENTHEIGHT = 20;
-        public static readonly float DROPDOWNTRIANGLEWIDTH = 10;
-        public static readonly float DROPDOWNTRIANGLEHEIGHT = 10;
-        */
+        Timer _timer;
+        bool Is_Hu_Attribute = false;
         public GrasshopperPluginInfo():base()
         {
            if(Rhino.RhinoApp.Version.Major < 6)
@@ -84,12 +46,88 @@ namespace CSCECDEC.Okavango
                 Dialogs.ShowMessage("OKavango 插件需运行于Rhino6及以上版本中", "提示");
                 return;
             }
+            //Server_GHAFileLoaded();
+            AddToMenu();
+            Rhino.RhinoApp.Closing += RhinoApp_Closing;
         }
 
-       private void Server_GHAFileLoaded(object sender, GH_GHALoadingEventArgs e)
+        private void RhinoApp_Closing(object sender, EventArgs e)
         {
+            Properties.Settings.Default.Is_Hu_Attribute = Is_Hu_Attribute;
+            Properties.Settings.Default.Save();
         }
 
+        private void AddToMenu()
+        {
+            if (_timer != null)
+                return;
+            _timer = new Timer();
+            _timer.Interval = 1;
+            _timer.Tick += _timer_Tick;
+            _timer.Start();
+        }
+        private void _timer_Tick(object sender, EventArgs e)
+       // private void Server_GHAFileLoaded()
+        {
+            var editor = Grasshopper.Instances.DocumentEditor;
+            if (null == editor || editor.Handle == IntPtr.Zero)
+                return;
+            var controls = editor.Controls;
+            if (null == controls || controls.Count == 0)
+                return;
+            _timer.Stop();
+            foreach (var ctrl in controls)
+            {
+                var menu = ctrl as Grasshopper.GUI.GH_MenuStrip;
+                if (menu == null)
+                    continue;
+                for (int i = 0; i < menu.Items.Count; i++)
+                {
+                    var menuitem = menu.Items[i] as ToolStripMenuItem;
+                    if (menuitem != null && menuitem.Text == "Display")
+                    {
+                        var Hu_AttrMenuItem = new ToolStripMenuItem("Hu_Attribute",Properties.Resources.HuIcon);
+                        //这时程序会管理MenuteItem的状态
+                        if (Properties.Settings.Default.Is_Hu_Attribute) Hu_AttrMenuItem.Checked = true;
+                        else Hu_AttrMenuItem.Checked = false;
+                        Hu_AttrMenuItem.Click += Hu_AttrMenuItem_CheckHandle;
+                        menuitem.DropDownItems.Insert(3, Hu_AttrMenuItem);
+                        menuitem.DropDownOpened += (s, args) =>
+                        {
+                            if (Properties.Settings.Default.Is_Hu_Attribute)
+                            {
+                                Hu_AttrMenuItem.Checked = true;
+                            }else
+                            {
+                                Hu_AttrMenuItem.Checked = false;
+                            }
+                        };
+                        break;
+                    }
+                }
+            }
+        }
+        //下面的代码还是不符合逻辑
+        private void Hu_AttrMenuItem_CheckHandle(object sender, EventArgs e)
+        {
+            ToolStripMenuItem MenuItem = sender as ToolStripMenuItem;
+
+            if (MenuItem.Checked)
+            {
+                MenuItem.Checked = false;
+                Is_Hu_Attribute = false;
+                //最好修改成关闭时保存
+            }else
+            {
+                MenuItem.Checked = true;
+                Is_Hu_Attribute = true;
+            }
+            MessageBox.Show("重启Rhino软件后将会运用设置");
+        }
+        private void Traverse()
+        {
+            //TODO
+        }
         public override string Name
         {
             get

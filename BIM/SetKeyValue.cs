@@ -12,6 +12,7 @@ using System.Linq;
 using Grasshopper.Kernel.Types;
 
 using CSCECDEC.Okavango.Attribute;
+using System.Runtime.Serialization.Formatters.Binary;
 //using GH_IO;
 
 namespace CSCECDEC.Okavango.BIM
@@ -42,12 +43,8 @@ namespace CSCECDEC.Okavango.BIM
         public override void CreateAttributes()
         {
             //   base.CustomAttributes(this,3);
-            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            if (Properties.Settings.Default.Is_Hu_Attribute) m_attributes = new Hu_Attribute(this);
             else m_attributes = new Grasshopper.Kernel.Attributes.GH_ComponentAttributes(this);
-        }
-        private void HandleMouseDubleClick()
-        {
-            System.Windows.Forms.MessageBox.Show("Hello World");
         }
         /// <summary>
         /// Registers all the input parameters for this component.
@@ -56,13 +53,14 @@ namespace CSCECDEC.Okavango.BIM
         {
             pManager.AddGeometryParameter("Geom", "G", "需要添加信息的几何体", GH_ParamAccess.item);
             pManager.AddTextParameter("Key", "K", "附加信息的键", GH_ParamAccess.item);
-            pManager.AddTextParameter("Value", "V", "附加信息的值", GH_ParamAccess.item);
+            //Will not unbox himself
+            pManager.AddGenericParameter("Data", "D", "附加的数据，这些信息包括文字，几何体等",GH_ParamAccess.item);
         }
         protected override string HelpDescription
         {
             get
             {
-                return "为给定几何体设置用户自定义数据信息,不适用于点";
+                return "为给定几何体设置用户自定义数据信息,不适用于给点添加信息";
             }
         }
         /// <summary>
@@ -83,8 +81,9 @@ namespace CSCECDEC.Okavango.BIM
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             GeometryBase Geom = default(GeometryBase);
-            string InfoKey = null;
-            string InfoValue = null;
+            string InfoKey = default(string);
+            //特别注意
+            dynamic InfoValue  =default(dynamic);
 
             if(!DA.GetData(0, ref Geom))return;
             if(!DA.GetData(1, ref InfoKey))return;
@@ -98,14 +97,7 @@ namespace CSCECDEC.Okavango.BIM
                 this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "目前尚不支持Point的户自定义数据写入");
                 return;
             }
-            //如果不存在
-            if (TempGeom.UserDictionary.Keys.Contains<string>(InfoKey))
-            {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "几何体中包含同名‘键’值");
-            }else
-            {
-                TempGeom.UserDictionary.Set(InfoKey, InfoValue);
-            }
+            TempGeom.UserDictionary.Set(InfoKey, InfoValue.Value);
             DA.SetData(0, TempGeom);
         }
         protected override System.Drawing.Bitmap Icon

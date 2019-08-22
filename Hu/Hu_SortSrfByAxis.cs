@@ -39,7 +39,7 @@ namespace CSCECDEC.Okavango.Hu
         }
         public override void CreateAttributes()
         {
-            if (Setting.ISRENDERHUATTRIBUTE) m_attributes = new Hu_Attribute(this);
+            if (Properties.Settings.Default.Is_Hu_Attribute) m_attributes = new Hu_Attribute(this);
             else m_attributes = new GH_ComponentAttributes(this);
 
         }
