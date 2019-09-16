@@ -88,7 +88,6 @@ namespace CSCECDEC.Okavango.BIM
             if(!DA.GetData(0, ref Geom))return;
             if(!DA.GetData(1, ref InfoKey))return;
             if(!DA.GetData(2, ref InfoValue))return;
-
             //这句代码至关重要
             GeometryBase TempGeom = Geom.Duplicate();
 

@@ -110,7 +110,27 @@ namespace CSCECDEC.Okavango.Preview
                 args.Display.DrawArrow(ZLine, Color.Blue);
             }
         }
-       /// <summary>
+        public override BoundingBox ClippingBox
+        {
+            get
+            {
+                BoundingBox _Box = BoundingBox.Empty;
+
+                foreach(var Plane in this.ViewPlanes)
+                {
+                    Point3d Origin = Plane.Origin;
+                    Line XLine = new Line(Origin, Plane.XAxis, Scale * 1000);
+                    Line YLine = new Line(Origin, Plane.YAxis, Scale * 1000);
+                    Line ZLine = new Line(Origin, Plane.ZAxis, Scale * 1000);
+
+                    _Box.Union(XLine.BoundingBox);
+                    _Box.Union(YLine.BoundingBox);
+                    _Box.Union(ZLine.BoundingBox);
+                }
+                return _Box;
+            }
+        }
+        /// <summary>
         /// Provides an Icon for the component.
         /// </summary>
         protected override System.Drawing.Bitmap Icon

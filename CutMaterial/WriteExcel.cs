@@ -49,16 +49,13 @@ namespace CSCECDEC.Okavango.CutDown
             RectangleF Bounds = base.Attributes.Bounds;
 
             */
-            ButtonControl Btn1 = new ButtonControl(this,"ClickMe");
-            RadioButtonControl RadioBtn = new RadioButtonControl(this, "ClickMe");
+            ButtonControl Btn1 = new ButtonControl(this,"Output");
+            //RadioButtonControl RadioBtn = new RadioButtonControl(this, "ClickMe");
             Btn1.MouseDownCallback = Do_ButtonMouseDown;
             Btn1.MouseUpCallback = Do_ButtonMouseUp;
-
-            RadioBtn.ClickCallback = Do_ClickMe;
-
-            Hu_AttributeWithControl Hu_Attr = new Hu_AttributeWithControl(this,new List<HuControl> {Btn1,RadioBtn});
-            NormalAttributeWithControl Attr = new NormalAttributeWithControl(this,new List<HuControl> {Btn1,RadioBtn});
-
+           // RadioBtn.ClickCallback = Do_ClickMe;
+            Hu_AttributeWithControl Hu_Attr = new Hu_AttributeWithControl(this,new List<HuControl> {Btn1});
+            NormalAttributeWithControl Attr = new NormalAttributeWithControl(this,new List<HuControl> {Btn1});
             if (Properties.Settings.Default.Is_Hu_Attribute)
             {
                 m_attributes = Hu_Attr;
@@ -94,7 +91,7 @@ namespace CSCECDEC.Okavango.CutDown
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("FileName", "F", "导出的Excel文件的名称", GH_ParamAccess.item);
-            pManager.AddTextParameter("SheetName", "S", "Excel表格名称", GH_ParamAccess.list);
+            pManager.AddTextParameter("SheetName", "S", "Excel表格名称", GH_ParamAccess.list,new List<string>());
             pManager.AddTextParameter("Data", "D", "需要导出的数据，每个树枝会生成一个表格，有多少个树枝就会生成多少个表格,每个数据之间用逗号隔开", GH_ParamAccess.tree);
             pManager.AddTextParameter("FilePath", "P", "保存输出文件的路径,如果不输入,则文件输出至桌面", GH_ParamAccess.item, DefaultFolder);
 
@@ -119,13 +116,13 @@ namespace CSCECDEC.Okavango.CutDown
         {
             List<GH_String> SheetNames = new List<GH_String>();
             GH_Structure<GH_String> BodyData = new GH_Structure<GH_String>();
-            List<GH_String> ReConstructSheetNames = new List<GH_String>();
+            List<GH_String> ReComputeSheetNames;
 
             string FileName = null;
             string FilePath = null;
 
             if(!DA.GetData(0, ref FileName))return;
-            if(!DA.GetDataList<GH_String>(1, SheetNames))return;
+            DA.GetDataList<GH_String>(1, SheetNames);
             if(!DA.GetDataTree<GH_String>(2, out BodyData))return;
             if(!DA.GetData(3, ref FilePath))return;
 
@@ -136,10 +133,16 @@ namespace CSCECDEC.Okavango.CutDown
 
             //Write Excel
             int BodyBranchsCount = BodyData.Branches.Count;
-            List<GH_String> ReComputeSheetNames = this.ReConstructSheetNames(BodyData.Branches.Count, SheetNames);
+            if (SheetNames.Count != 0)
+            {
+                ReComputeSheetNames = this.ReConstructSheetNames(BodyData.Branches.Count, SheetNames);
+            }else
+            {
+                ReComputeSheetNames = new List<GH_String>();
+            }
             for (int Index = 0; Index < BodyData.Branches.Count; Index++)
             {
-                string SheetName = ReComputeSheetNames[Index].Value;
+                string SheetName = ReComputeSheetNames.Count == 0?BodyData.Paths[Index].ToString():ReComputeSheetNames[Index].Value;
                 ExcelWorksheet Ws = Wb.Worksheets.Add(SheetName);
 
                 Ws.Cells.Style.Font.Size = 10;

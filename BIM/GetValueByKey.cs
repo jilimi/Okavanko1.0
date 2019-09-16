@@ -74,7 +74,7 @@ namespace CSCECDEC.Okavango.BIM
                 DA.SetData(0, Value);
             }catch
             {
-                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The key " + Key + " is not found");
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "The key:" +"\""+ Key + "\""+ " is not found");
             }
         }
         /// <summary>

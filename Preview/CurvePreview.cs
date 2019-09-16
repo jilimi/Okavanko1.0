@@ -70,6 +70,19 @@ namespace CSCECDEC.Okavango.Preview
                 args.Display.DrawCurve(Crv.Value, CurrentCrvColor.Value,Thickness);
             }
         }
+        public override BoundingBox ClippingBox
+        {
+            get
+            {
+                BoundingBox _Box = BoundingBox.Empty;
+
+                foreach(var Crv in this.CrvList)
+                {
+                    _Box.Union(Crv.Value.GetBoundingBox(true));
+                }
+                return _Box;
+            }
+        }
         /// <summary>
         /// This is the method that actually does the work.
         /// </summary>

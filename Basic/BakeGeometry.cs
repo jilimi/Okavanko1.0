@@ -37,20 +37,15 @@ namespace CSCECDEC.Okavango.Basic
         {
             if (Properties.Settings.Default.Is_Hu_Attribute) m_attributes = new Hu_Attribute(this);
             else m_attributes = new GH_ComponentAttributes(this);
-
         }
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddParameter(new GH_Layer(), "Layer", "L", "需要烘培到的图层", GH_ParamAccess.item);
             pManager.AddGeometryParameter("Geometry", "G", "需要烘焙的几何体", GH_ParamAccess.list);
-            pManager.AddColourParameter("Color", "C", "需要烘焙几何体的颜色", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Attributes", "A", "需要烘培物体的属性", GH_ParamAccess.item);
             pManager.AddBooleanParameter("isBake", "B", "是否进行烘焙", GH_ParamAccess.item, false);
-
-            pManager[2].Optional = true;
-            pManager[3].Optional = true;
         }
 
         /// <summary>
@@ -60,22 +55,19 @@ namespace CSCECDEC.Okavango.Basic
         {
            //TODO 
         }
-
         /// <summary>
         /// This is the method that actually does the work.
         /// </summary>
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Layer La = null;
             List<IGH_GeometricGoo> Geoms = new List<IGH_GeometricGoo>();
             bool IsBake = false;
-            GH_Colour GeomColor = null;
+            Rhino.DocObjects.ObjectAttributes Attr = null;
 
-            if (!DA.GetData(0, ref La)) return;
-            if (!DA.GetDataList(1, Geoms)) return;
-            if (!DA.GetData(2, ref GeomColor)) return;
-            if (!DA.GetData(3, ref IsBake)) return;
+            if (!DA.GetDataList(0, Geoms)) return;
+            if (!DA.GetData(1, ref Attr)) return;
+            if (!DA.GetData(2, ref IsBake)) return;
 
             if (!IsBake) return;
 
@@ -83,17 +75,10 @@ namespace CSCECDEC.Okavango.Basic
             {
                 if(Geom != null)
                 {
-                    ObjectAttributes Attr = new ObjectAttributes();
-                    Attr.LayerIndex = La.Index;
-                    if(GeomColor == null) Attr.ColorSource = ObjectColorSource.ColorFromLayer;
-                    else Attr.ColorSource = ObjectColorSource.ColorFromObject;
-                    Attr.ObjectColor = GeomColor.Value;
-                    //GH_Convert这个很重要
                     Rhino.RhinoDoc.ActiveDoc.Objects.Add(GH_Convert.ToGeometryBase(Geom), Attr);
                 }
             }
         }
-
         /// <summary>
         /// Provides an Icon for the component.
         /// </summary>

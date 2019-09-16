@@ -64,6 +64,18 @@ namespace CSCECDEC.Okavango.Preview
             args.Display.DrawArrows(Lines, CurrentArrowColor.Value); 
                 
         }
+        public override BoundingBox ClippingBox
+        {
+            get
+            {
+                BoundingBox _Box = BoundingBox.Empty;
+                foreach(var line in this.CrvList)
+                {
+                    _Box.Union(line.Value.GetBoundingBox(true));
+                }
+                return _Box;
+            }
+        }
         /// <summary>
         /// This is the method that actually does the work.
         /// </summary>
