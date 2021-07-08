@@ -67,7 +67,11 @@ namespace CSCECDEC.Okavango.BIM
             if (!DA.GetData(0, ref Geom)) return;
             List<string> TempOutPutString = Geom.UserDictionary.Keys.ToList();
             if (TempOutPutString.Count == 0) this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "该物体没有任何几何信息");
-            DA.SetDataList(0, TempOutPutString);
+            if(TempOutPutString.Count == 1){
+                DA.SetDataList(0,TempOutPutString[0]);
+            }else{
+                DA.SetDataList(0, TempOutPutString);
+            }
         }
 
         /// <summary>
