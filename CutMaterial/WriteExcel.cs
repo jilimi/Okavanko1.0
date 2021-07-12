@@ -20,15 +20,15 @@ using CSCECDEC.Okavango.Control;
 
 namespace CSCECDEC.Okavango.CutDown
 {
-    public class CreateExcelFile : GH_Component
+    public class WriteExcelFile : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the CreateExcelFile class.
+        /// Initializes a new instance of the WriteExcelFile class.
         /// </summary>
         /// 
         bool IsOutput = false;
         string DefaultFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        public CreateExcelFile()
+        public WriteExcelFile()
           : base("ExportExcel", "ExportExcel",
               "将输入的数据导出Excel,生成的文件默认位于桌面",
               Setting.PLUGINNAME, Setting.CUTDOWNCATATORY)

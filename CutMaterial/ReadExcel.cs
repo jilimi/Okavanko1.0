@@ -20,17 +20,17 @@ using CSCECDEC.Okavango.Control;
 
 namespace CSCECDEC.Okavango.CutDown
 {
-    public class CreateExcelFile : GH_Component
+    public class ReadExcelFile : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the CreateExcelFile class.
+        /// Initializes a new instance of the ReadExcelFile class.
         /// </summary>
         /// 
         bool IsOutput = false;
         string DefaultFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        public CreateExcelFile()
-          : base("ExportExcel", "ExportExcel",
-              "将输入的数据导出Excel,生成的文件默认位于桌面",
+        public ReadExcelFile()
+          : base("ReadExcelFile", "ReadExcelFile",
+              "读取Excel表格中的数据",
               Setting.PLUGINNAME, Setting.CUTDOWNCATATORY)
         {
             
@@ -82,20 +82,20 @@ namespace CSCECDEC.Okavango.CutDown
         {
             get
             {
-                return "将给定数据以Excel表格的形式输出,每一个叶子节点生成一个Sheet，每一个叶子节点（List）下面的Item生成一行，行里面的数据请用','或者';'隔开，以生成单元格";
-            }
+                return "读取Excel表格中的数据";
         }
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("FileName", "F", "导出的Excel文件的名称", GH_ParamAccess.item);
+            pManager.AddTextParameter("File", "F","文件名称", GH_ParamAccess.item);
             pManager.AddTextParameter("SheetName", "S", "Excel表格名称", GH_ParamAccess.list,new List<string>());
-            pManager.AddTextParameter("Data", "D", "需要导出的数据，每个树枝会生成一个表格，有多少个树枝就会生成多少个表格,每个数据之间用逗号隔开", GH_ParamAccess.tree);
-            pManager.AddTextParameter("FilePath", "P", "保存输出文件的路径,如果不输入,则文件输出至桌面", GH_ParamAccess.item, DefaultFolder);
+            pManager.AddIntegerParameter("StartRow", "R", "表格起始", GH_ParamAccess.item,0);
+            pManager.AddIntegerParameter("StartColumn", "C", "需要导出的数据，每个树枝会生成一个表格，有多少个树枝就会生成多少个表格,每个数据之间用逗号隔开", GH_ParamAccess.item,0);
 
             pManager[1].Optional = true;
+            pManager[2].Optional = true;
             pManager[3].Optional = true;
 
         }
@@ -116,15 +116,15 @@ namespace CSCECDEC.Okavango.CutDown
         {
             List<GH_String> SheetNames = new List<GH_String>();
             GH_Structure<GH_String> BodyData = new GH_Structure<GH_String>();
-            List<GH_String> ReComputeSheetNames;
 
             string FileName = null;
-            string FilePath = null;
+            int StartRow = 0;
+            int StartColumn = 0;
 
             if(!DA.GetData(0, ref FileName))return;
             DA.GetDataList<GH_String>(1, SheetNames);
-            if(!DA.GetDataTree<GH_String>(2, out BodyData))return;
-            if(!DA.GetData(3, ref FilePath))return;
+            DA.GetData(2, ref StartRow);
+            DA.GetData(3, ref StartColumn);
 
             ExcelPackage ExcelFile = new ExcelPackage();
             ExcelWorkbook Wb = ExcelFile.Workbook;
@@ -145,11 +145,6 @@ namespace CSCECDEC.Okavango.CutDown
                 string SheetName = ReComputeSheetNames.Count == 0?BodyData.Paths[Index].ToString():ReComputeSheetNames[Index].Value;
                 ExcelWorksheet Ws = Wb.Worksheets.Add(SheetName);
 
-                Ws.Cells.Style.Font.Size = 10;
-                Ws.Cells.Style.Font.Name = "宋体";
-                Ws.Cells[1, 1, 100, 100].AutoFitColumns();
-                Ws.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                Ws.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
                 IList<GH_String> DataBranchs = BodyData.Branches[Index];
                 List<string> BodyTextList = DataBranchs.Select(item => item.Value).ToList();
